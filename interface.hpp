@@ -73,5 +73,9 @@ namespace magi {
         std::shared_ptr<Bullet> bullet;
         std::shared_ptr<Character> character;
         std::shared_ptr<std::string> music;
+
+        // 关卡入口
+        static std::shared_ptr<Stage> get(size_t index);
+        static size_t size();
     };
 }
