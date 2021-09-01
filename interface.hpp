@@ -27,6 +27,7 @@ namespace magi {
         Vec2 operator-(Vec2 v) const { return *this + (-v); }
         Vec2 operator*(double s) const { return Vec2 {x * s, y * s}; }
         friend Vec2 operator*(double s, const Vec2 &v) { return v * s; }
+        Vec2 operator/(double s) const { return Vec2 {x / s, y / s}; }
         // 点乘
         double dot(Vec2 v) const { return x * v.x + y * v.y; }
         // 叉乘
@@ -42,7 +43,7 @@ namespace magi {
     };
 
     // 每次绘制时调用
-    struct Bullet {
+    struct Bullets {
         // 当前时间所有弹幕数量
         virtual size_t size() const = 0;
         // 每个弹的信息
@@ -70,7 +71,7 @@ namespace magi {
 
     struct Stage {
         std::string name;
-        std::shared_ptr<Bullet> bullet;
+        std::shared_ptr<Bullets> bullet;
         std::shared_ptr<Character> character;
         std::shared_ptr<std::string> music;
 
