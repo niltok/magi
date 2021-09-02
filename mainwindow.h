@@ -7,18 +7,30 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+namespace magiUI {
+    class MainWindow : public QMainWindow
+    {
+        Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-private:
-    Ui::MainWindow *ui;
+    public:
+        MainWindow(QWidget *parent = nullptr);
+        ~MainWindow();
+    private:
+        Ui::MainWindow *ui;
 
-    // QObject interface
-public:
-    bool eventFilter(QObject *watched, QEvent *event);
-};
+        // QObject interface
+    public:
+        bool eventFilter(QObject *watched, QEvent *event);
+
+        // QObject interface
+    protected:
+        void timerEvent(QTimerEvent *event);
+
+        // QWidget interface
+    protected:
+        void keyPressEvent(QKeyEvent *event);
+    private slots:
+        void on_startGameButton_clicked();
+    };
+}
 #endif // MAINWINDOW_H

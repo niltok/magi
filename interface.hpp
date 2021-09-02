@@ -3,10 +3,13 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <cmath>
 
 typedef unsigned char byte;
 
 namespace magi {
+    const double PI = std::acos(-1), PI2 = 2 * PI;
+
     struct Color {
         byte r, g, b, a;
 
@@ -22,12 +25,23 @@ namespace magi {
         Vec2(double a): Vec2(a, a) {}
         Vec2(): Vec2(0) {}
 
-        Vec2 operator+(Vec2 v) const { return Vec2 {x + v.x, y + v.y}; }
+        Vec2 operator+(const Vec2 &v) const { return Vec2 {x + v.x, y + v.y}; }
+        Vec2 &operator+=(const Vec2 &v) { x += v.x, y += v.y; return *this; }
         Vec2 operator-() const { return Vec2 {-x, -y}; }
-        Vec2 operator-(Vec2 v) const { return *this + (-v); }
+        Vec2 operator-(const Vec2 &v) const { return *this + (-v); }
+        Vec2 &operator-=(const Vec2 &v) { x -= v.x, y -= v.y; return *this; }
         Vec2 operator*(double s) const { return Vec2 {x * s, y * s}; }
+        Vec2 &operator*=(double s) { x *= s, y *= s; return *this; }
         friend Vec2 operator*(double s, const Vec2 &v) { return v * s; }
         Vec2 operator/(double s) const { return Vec2 {x / s, y / s}; }
+
+        double length() const { return std::sqrt(x * x + y * y); }
+        Vec2 abs() const { return Vec2 {std::abs(x), std::abs(y)}; }
+        Vec2 rotate(double angle) const {
+            return Vec2 { x * (std::cos(angle) - std::sin(angle)),
+                          y * (std::sin(angle) + std::cos(angle)) };
+        }
+
         // 点乘
         double dot(Vec2 v) const { return x * v.x + y * v.y; }
         // 叉乘
@@ -40,6 +54,7 @@ namespace magi {
         Color c;
         double r; // 半径
         Vec2 pos;
+        size_t id;
     };
 
     // 每次绘制时调用
@@ -63,17 +78,18 @@ namespace magi {
     };
 
     struct Character {
-        // 键盘/鼠标/触摸 触发
-        virtual void move(Vec2 delta) = 0;
-        //绘制时调用
-        virtual Vec2 pos() const = 0;
+        Vec2 pos;
+        double r;
     };
 
     struct Stage {
         std::string name;
         std::shared_ptr<Bullets> bullet;
-        std::shared_ptr<Character> character;
+        Character character;
         std::shared_ptr<std::string> music;
+
+        void check() {
+        }
 
         // 关卡入口
         static std::shared_ptr<Stage> get(size_t index);

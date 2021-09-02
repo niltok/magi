@@ -33,6 +33,8 @@ if(ANDROID)
     mainwindow.h
     mainwindow.ui
     interface.hpp
+    utils.h
+    handler.h
   )
 else()
   add_executable(magi
@@ -41,6 +43,8 @@ else()
     mainwindow.h
     mainwindow.ui
     interface.hpp
+    utils.h
+    handler.h
   )
 endif()
 
