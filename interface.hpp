@@ -4,10 +4,11 @@
 #include <memory>
 #include <string>
 #include <cmath>
+#include <vector>
 
-typedef unsigned char byte;
 
 namespace magi {
+    typedef unsigned char byte;
     const double PI = std::acos(-1), PI2 = 2 * PI;
 
     struct Color {
@@ -51,6 +52,8 @@ namespace magi {
     };
 
     struct Point {
+        Point () {}
+        Point ( long long id , Color c , double r ) : id(id) , c(c) , r(r) {}
         Color c;
         double r; // 半径
         Vec2 pos;
@@ -92,7 +95,6 @@ namespace magi {
         }
 
         // 关卡入口
-        static std::shared_ptr<Stage> get(size_t index);
-        static size_t size();
+        static std::vector<Stage> stage;
     };
 }
