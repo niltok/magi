@@ -5,12 +5,12 @@
 #include <string>
 #include <cmath>
 #include <vector>
-
+#include <functional>
 
 namespace magi {
     typedef unsigned char byte;
     const double PI = std::acos(-1), PI2 = 2 * PI;
-
+    
     struct Color {
         byte r, g, b, a;
 
@@ -65,7 +65,7 @@ namespace magi {
         // 当前时间所有弹幕数量
         virtual size_t size() const = 0;
         // 每个弹的信息
-        virtual Point operator[](size_t index) const = 0;
+        virtual Point operator[](size_t index) = 0;
     };
 
     namespace Timer {
@@ -84,12 +84,12 @@ namespace magi {
         Vec2 pos;
         double r;
     };
-
+    
     struct Stage {
         std::string name;
-        std::shared_ptr<Bullets> bullet;
+        std::function<std::shared_ptr<Bullets>()> getBullet;
         Character character;
-        std::shared_ptr<std::string> music;
+        std::string music;
 
         void check() {
         }
