@@ -9,10 +9,12 @@
 #include <iostream>
 
 namespace magiUI {
+    size_t s;
     void drawState(QPainter &painter) {
         painter.save();
         std::stringstream ss;
         ss << "Time: " << Timer::get() << std::endl;
+        ss << "Size: " << s << std::endl;
         QFont font;
         font.setFamily("Microsoft YaHei");
         font.setPointSize(10);
@@ -31,15 +33,14 @@ namespace magiUI {
 
     void drawBullets(QPainter &painter, double t, Vec2 center) {
         painter.save();
-        painter.setPen(QColor(0, 0, 0, 0));
         std::shared_ptr<Bullets> bullets = stage->getBullet();
-        size_t s = bullets->size();
+        s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
             int r = p.r * t;
+            painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
             painter.drawEllipse(VPoint(p.pos * t + center), r, r);
-            std::cout << "(" << p.pos.x << ", " << p.pos.y << ")" << std::endl;
         }
         painter.restore();
     }
@@ -52,7 +53,7 @@ namespace magiUI {
                             (widget.y - 30) / rSize.y);
         Vec2 center = widget / 2;
         drawBorder(painter, t, center);
-        drawBorder(painter, t, center);
+        drawBullets(painter, t, center);
         drawState(painter);
     }
 }
