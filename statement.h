@@ -19,7 +19,6 @@ struct stage;
 struct StageInfo;
 struct CharacterInfo;
 
-const double PI=3.1415926;
 const double SMALL_ = 5.0 , MIDDLE_ = 10.0 , LARGE_ = 15.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 012 ;              // 弹幕速度
 enum Kind { Line , Circle };                                             // 弹幕类型
@@ -80,9 +79,8 @@ struct Bullet_Result : public Bullet_Line , public Bullet_Circal {
 
 vector<Bullet_Result> LineType ( long long &ID , int n , magi::Color c , double r , double speed , long long StartT ) {
     vector<Bullet_Result> Re { Bullet_Result ( ID , c , r , 0.0 , speed , StartT , Line ) }; ID++;
-    double angle ;
     for ( int i=1 ; i<n ; i++ ) {
-        Re.push_back ( Bullet_Result ( ID , c , r , ((PI/(double)n)*i) , speed , StartT , Line ) ), ID++ ;
+        Re.push_back ( Bullet_Result ( ID , c , r , ((magi::PI2/(double)n)*i) , speed , StartT , Line ) ), ID++ ;
     }
     return Re;
 }
@@ -90,9 +88,8 @@ vector<Bullet_Result> LineType ( long long &ID , int n , magi::Color c , double 
 
 vector<Bullet_Result> CircalType ( long long &ID , int n , magi::Color c , double r , double speed , long long StartT ) {
     vector<Bullet_Result> Re { Bullet_Result ( ID , c , r , 0.0 , speed , StartT , Circle ) }; ID++;
-    double angle ;
     for ( int i=1 ; i<n ; i++ ) {
-        Re.push_back ( Bullet_Result ( ID , c , r , ((PI/(double)n)*i) , speed , StartT , Circle ) ), ID++ ;
+        Re.push_back ( Bullet_Result ( ID , c , r , ((magi::PI2/(double)n)*i) , speed , StartT , Circle ) ), ID++ ;
     }
     return Re;
 }

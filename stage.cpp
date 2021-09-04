@@ -1,3 +1,4 @@
+#pragma once
 #include "statement.h"
 
 using namespace std;
@@ -43,7 +44,7 @@ struct bullets_effect : public magi::Bullets {
 
 struct getBullet_Re {
     int Num;
-    auto operator()() -> shared_ptr<bullets_effect> {
+    auto operator()() -> shared_ptr<magi::Bullets> {
         bullets_effect Re ;
         Re.Num = Num;
         Re.Size = 0;
@@ -55,7 +56,7 @@ struct getBullet_Re {
             Re.Size += info_stage[Num][i].n;
             i++;
         }
-        return make_shared<bullets_effect> (Re);
+        return make_shared<magi::Bullets> (Re);
     }
 };
 
@@ -75,5 +76,6 @@ struct getBullet_Re {
 
 vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Stage1", getBullet_Re{0}, ch, ""},
-    magi::Stage{"Stage1", getBullet_Re{1}, ch, ""}
+    magi::Stage{"Stage2", getBullet_Re{1}, ch, ""}
+    
 };
