@@ -8,7 +8,9 @@ using namespace std;
 vector<vector<Bullets_Info>> info_stage {
     // 关卡1
     {
-        Bullets_Info (1000,10,magi::Color(0,0,0),SMALL_,LOW_,Line),
+        Bullets_Info (1000,10,c1,SMALL_,LOW_,Line),
+        Bullets_Info (3000,10,c2,SMALL_,LOW_,Line),
+        Bullets_Info (5000,10,c2,SMALL_,LOW_,Line)
 
     },
     // 关卡2

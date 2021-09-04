@@ -28,6 +28,8 @@ long Size = 0;
 long long ID = 0;
 magi::Character ch;             // test 用
 
+const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
+
 
 // 弹幕样式
 struct Bullet_Style {
