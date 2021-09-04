@@ -2,7 +2,7 @@
 
 #include "qpainter.h"
 #include <cmath>
-#include "interface.hpp"
+#include "interface.h"
 #include <memory>
 
 using namespace magi;
@@ -10,7 +10,7 @@ using namespace magi;
 namespace magiUI {
     const Vec2 rSize(300, 500);
 
-    std::shared_ptr<Stage> stage;
+    Stage *stage;
 
     QPoint VPoint(Vec2 p) {
         return QPoint(p.x, p.y);

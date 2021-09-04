@@ -44,9 +44,15 @@
       <widget class="QWidget" name="mainMenu">
        <layout class="QVBoxLayout">
         <item>
-         <widget class="QListWidget" name="listWidget">
-          <property name="viewMode">
-           <enum>QListView::IconMode</enum>
+         <widget class="QListWidget" name="stageChooser">
+          <property name="flow">
+           <enum>QListView::TopToBottom</enum>
+          </property>
+          <property name="isWrapping" stdset="0">
+           <bool>false</bool>
+          </property>
+          <property name="spacing">
+           <number>5</number>
           </property>
          </widget>
         </item>

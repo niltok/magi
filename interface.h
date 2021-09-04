@@ -68,14 +68,14 @@ namespace magi {
         virtual Point operator[](size_t index) = 0;
     };
 
-    namespace Timer {
-        using namespace std::chrono;
-        time_point<system_clock> t;
+    using namespace std::chrono;
+    struct Timer {
+        static time_point<system_clock> t;
         // 关卡开始时调用
-        void reset() {
+        static void reset() {
             t = system_clock::now();
         }
-        long long get() {
+        static long long get() {
             return duration_cast<milliseconds>(system_clock::now() - t).count();
         }
     };

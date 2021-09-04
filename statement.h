@@ -6,7 +6,7 @@
 #include <memory>
 #include <list>
 #include <vector>
-#include "interface.hpp"
+#include "interface.h"
 
 using namespace std;
 

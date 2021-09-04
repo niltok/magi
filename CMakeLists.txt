@@ -32,9 +32,11 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    interface.hpp
+    interface.h
     utils.h
     handler.h
+    stage.cpp
+    statement.h
   )
 else()
   add_executable(magi
@@ -42,9 +44,11 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    interface.hpp
+    interface.h
     utils.h
     handler.h
+    stage.cpp
+    statement.h
   )
 endif()
 

@@ -2,11 +2,13 @@
 #include "./ui_mainwindow.h"
 #include "qpainter.h"
 #include <cmath>
-#include "interface.hpp"
+#include "interface.h"
 #include "qevent.h"
 #include "handler.h"
 
 using namespace magi;
+
+std::chrono::time_point<system_clock> Timer::t;
 
 namespace magiUI{
     MainWindow::MainWindow(QWidget *parent)
@@ -16,6 +18,10 @@ namespace magiUI{
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
         // ui->views->setCurrentIndex(1);
+        //ui->stageChooser->addItems(QStringList({"test1", "test2", "test3"}));
+        for (auto s : Stage::stage)
+            ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
+        ui->stageChooser->setCurrentRow(0);
         startTimer(50);
     }
 
@@ -56,6 +62,7 @@ namespace magiUI{
     }
 
     void MainWindow::on_startGameButton_clicked() {
+        stage = &Stage::stage[ui->stageChooser->currentRow()];
         ui->views->setCurrentIndex(1);
         Timer::reset();
     }

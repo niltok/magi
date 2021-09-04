@@ -2,9 +2,11 @@
 
 #include "qwidget.h"
 #include "qpainter.h"
-#include "utils.h"
+#include "Utils.h"
 #include <sstream>
 #include <string>
+#include <memory>
+#include <iostream>
 
 namespace magiUI {
     void drawState(QPainter &painter) {
@@ -27,6 +29,21 @@ namespace magiUI {
         painter.restore();
     }
 
+    void drawBullets(QPainter &painter, double t, Vec2 center) {
+        painter.save();
+        painter.setPen(QColor(0, 0, 0, 0));
+        std::shared_ptr<Bullets> bullets = stage->getBullet();
+        size_t s = bullets->size();
+        for (size_t i = 0; i < s; i++) {
+            Point p = (*bullets)[i];
+            int r = p.r * t;
+            painter.setBrush(VColor(p.c));
+            painter.drawEllipse(VPoint(p.pos * t + center), r, r);
+            std::cout << "(" << p.pos.x << ", " << p.pos.y << ")" << std::endl;
+        }
+        painter.restore();
+    }
+
     void drawStage(QWidget *stage) {
         QPainter painter(stage);
         Vec2 widget(stage->geometry().width(),
@@ -34,6 +51,7 @@ namespace magiUI {
         double t = std::min((widget.x - 18) / rSize.x,
                             (widget.y - 30) / rSize.y);
         Vec2 center = widget / 2;
+        drawBorder(painter, t, center);
         drawBorder(painter, t, center);
         drawState(painter);
     }
