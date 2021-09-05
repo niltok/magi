@@ -23,8 +23,9 @@ const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 
 // 弹幕样式
 struct Bullet_Style {
     Bullet_Style () { speed = LOW_ ; point = magi::Point ( 0 , magi::Color() , SMALL_ ) ; angle = 0.0 ; StartT = 0 ; };
-    Bullet_Style ( long long id , magi::Color c , double r , double angle , double speed , long long StartT ) : point (magi::Point(id,c,r)) ,angle (angle) , speed (speed) , StartT (StartT) {}
+    Bullet_Style ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT ) : point (magi::Point(id,c,r)) ,angle (angle) , speed (speed) , StartT (StartT) , center(center) {}
     magi::Point point;
+    magi::Vec2 center;
     double angle , speed ;
     long long StartT;
     virtual magi::Vec2 Pos() {}
@@ -34,11 +35,11 @@ struct Bullet_Style {
 // 直线
 struct Bullet_Line : public Bullet_Style {
     Bullet_Line () {}
-    Bullet_Line ( long long id , magi::Color c , double r , double angle , double speed , long long StartT ) : Bullet_Style (id,c,r,angle,speed,StartT) {}
+    Bullet_Line ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT ) : Bullet_Style (id,c,r,center,angle,speed,StartT) {}
     magi::Vec2 Pos () {
         long long RelaT = magi::Timer::get() - StartT ;
-        this -> point.pos.x = cos(angle)*speed*RelaT ;
-        this -> point.pos.y = sin(angle)*speed*RelaT ;
+        this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
+        this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
 
         return this -> point.pos;
     }
@@ -47,7 +48,7 @@ struct Bullet_Line : public Bullet_Style {
 // 曲线
 struct Bullet_Circal : public Bullet_Style {
     Bullet_Circal () {}
-    Bullet_Circal ( long long id , magi::Color c , double r , double angle , double speed , long long StartT ) : Bullet_Style (id,c,r,angle,speed,StartT) {}
+    Bullet_Circal ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT ) : Bullet_Style (id,c,r,center,angle,speed,StartT) {}
     magi::Vec2 Pos () {
         long long RelaT = magi::Timer::get() - StartT ;
         point.pos.x = cos(angle)*speed*RelaT*RelaT ;                                                                                       // !!!待定
@@ -57,15 +58,15 @@ struct Bullet_Circal : public Bullet_Style {
     }
 };
 
-shared_ptr<Bullet_Style> Creat ( long long StartT , magi::Color c , double r , double angle , double speed , Kind kind ) {
+shared_ptr<Bullet_Style> Creat ( long long StartT , magi::Color c , double r , magi::Vec2 center , double angle , double speed , Kind kind ) {
     shared_ptr<Bullet_Style> Re;
     switch (kind) {
             case Line:
-                Re = make_shared<Bullet_Line> ( Bullet_Line(ID,c,r,angle,speed,StartT) );
+                Re = make_shared<Bullet_Line> ( Bullet_Line(ID,c,r,center,angle,speed,StartT) );
                 ID++;
                 break;
             case Circle:
-                Re = make_shared<Bullet_Circal> ( Bullet_Circal(ID,c,r,angle,speed,StartT) );
+                Re = make_shared<Bullet_Circal> ( Bullet_Circal(ID,c,r,center,angle,speed,StartT) );
                 ID++;
                 break;
         }
@@ -74,10 +75,10 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , magi::Color c , double r , d
 
 
 struct Bullets_Info {
-    Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
+    Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
             for ( int i = 0 ; i < n ; i++ ) {
-                this -> bullets.push_back( Creat ( StartT , c , r , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
+                this -> bullets.push_back( Creat ( StartT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
     }
     int n;
