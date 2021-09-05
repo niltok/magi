@@ -66,7 +66,6 @@ struct bullets_effect : public magi::Bullets {
     int Num , Size ;
     long Before ;
     size_t size() const {
-        std::cout << Before << std::endl;
         return Size ;
     }
     magi::Point operator[](size_t index) {
