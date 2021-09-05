@@ -87,8 +87,6 @@ namespace magi {
     };
 
     struct Character {
-        Vec2 pos;
-        double r;
     };
     
     struct Stage {

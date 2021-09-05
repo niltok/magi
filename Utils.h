@@ -10,7 +10,10 @@ using namespace magi;
 namespace magiUI {
     const Vec2 rSize(300, 500);
 
-    Stage *stage;
+    Stage stage;
+
+    double cR = 5;
+    Vec2 cPos;
 
     QPoint VPoint(Vec2 p) {
         return QPoint(p.x, p.y);

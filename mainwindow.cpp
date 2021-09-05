@@ -43,8 +43,8 @@ namespace magiUI{
     }
 
     void MainWindow::keyPressEvent(QKeyEvent *event) {
-        Vec2 widget(width(),
-                    height());
+        if (event->isAutoRepeat()) return;
+        Vec2 widget(width(), height());
         double t = std::min((widget.x - 18) / rSize.x,
                             (widget.y - 30) / rSize.y);
         setWindowTitle(QString::number(event->key()));
@@ -56,19 +56,23 @@ namespace magiUI{
             {68, step, 0},  // 右(D)
             {65, -step, 0}  // 左(A)
         };
-        Vec2 pos = stage->character.pos;
         for (int i = 0; i < 4; i++)
             if (event->key() == mover[i][0])
-                pos += Vec2(mover[i][1], mover[i][2]) * t;
-        stage->character.pos = pos.max(-rSize / 2).min(rSize / 2);
+                cPos += Vec2(mover[i][1], mover[i][2]) * t;
+        cPos = cPos.max(-rSize / 2).min(rSize / 2);
         if (event->key() == 16777216 && ui->views->currentIndex() == 1)
             ui->views->setCurrentIndex(0);
     }
 
+    void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+        if (event->isAutoRepeat()) return;
+    }
+
     void MainWindow::on_startGameButton_clicked() {
-        stage = &Stage::stage[ui->stageChooser->currentRow()];
+        stage = Stage::stage[ui->stageChooser->currentRow()];
         ui->views->setCurrentIndex(1);
         Timer::reset();
     }
 }
+
 

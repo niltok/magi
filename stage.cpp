@@ -2,7 +2,7 @@
 
 using namespace std;
 
-magi::Character ch{magi::Vec2(), 5};             // test 用 （删）
+magi::Character ch{};             // test 用 （删）
 
 
 long Size = 0;

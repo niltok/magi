@@ -34,7 +34,7 @@ namespace magiUI {
 
     void drawBullets(QPainter &painter, double t, Vec2 center) {
         painter.save();
-        std::shared_ptr<Bullets> bullets = stage->getBullet();
+        std::shared_ptr<Bullets> bullets = stage.getBullet();
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
@@ -51,8 +51,8 @@ namespace magiUI {
     void drawCharacter(QPainter &painter, double t, Vec2 center) {
         painter.save();
         painter.setPen(QPen(QColor(230, 57, 70), 2, Qt::PenStyle::DotLine));
-        int r = stage->character.r * t;
-        painter.drawEllipse(VPoint(stage->character.pos * t + center), r, r);
+        int r = cR * t;
+        painter.drawEllipse(VPoint(cPos * t + center), r, r);
         painter.restore();
     }
 

@@ -31,6 +31,10 @@ namespace magiUI {
         void keyPressEvent(QKeyEvent *event);
     private slots:
         void on_startGameButton_clicked();
+
+        // QWidget interface
+    protected:
+        void keyReleaseEvent(QKeyEvent *event);
     };
 }
 #endif // MAINWINDOW_H
