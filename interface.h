@@ -42,6 +42,12 @@ namespace magi {
             return Vec2 { x * (std::cos(angle) - std::sin(angle)),
                           y * (std::sin(angle) + std::cos(angle)) };
         }
+        Vec2 max(const Vec2 &v) const {
+            return Vec2 {std::max(x, v.x), std::max(y, v.y)};
+        }
+        Vec2 min(const Vec2 &v) const {
+            return Vec2 {std::min(x, v.x), std::min(y, v.y)};
+        }
 
         // 点乘
         double dot(Vec2 v) const { return x * v.x + y * v.y; }

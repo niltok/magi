@@ -43,7 +43,12 @@ namespace magiUI{
     }
 
     void MainWindow::keyPressEvent(QKeyEvent *event) {
+        Vec2 widget(width(),
+                    height());
+        double t = std::min((widget.x - 18) / rSize.x,
+                            (widget.y - 30) / rSize.y);
         setWindowTitle(QString::number(event->key()));
+        if (event->key() == 32) Timer::reset();
         int step = 1;
         int mover[4][3] = {
             {87, 0, -step}, // 上(W)
@@ -51,10 +56,11 @@ namespace magiUI{
             {68, step, 0},  // 右(D)
             {65, -step, 0}  // 左(A)
         };
-        if (event->key() == 32) Timer::reset();
+        Vec2 pos = stage->character.pos;
         for (int i = 0; i < 4; i++)
             if (event->key() == mover[i][0])
-                stage->character.pos += Vec2(mover[i][1], mover[i][2]);
+                pos += Vec2(mover[i][1], mover[i][2]) * t;
+        stage->character.pos = pos.max(-rSize / 2).min(rSize / 2);
         if (event->key() == 16777216 && ui->views->currentIndex() == 1)
             ui->views->setCurrentIndex(0);
     }

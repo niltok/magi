@@ -43,7 +43,16 @@ namespace magiUI {
             painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
             painter.drawEllipse(VPoint(p.pos * t + center), r, r);
+            std::cout << p.id << std::endl;
         }
+        painter.restore();
+    }
+
+    void drawCharacter(QPainter &painter, double t, Vec2 center) {
+        painter.save();
+        painter.setPen(QPen(QColor(230, 57, 70), 2, Qt::PenStyle::DotLine));
+        int r = stage->character.r * t;
+        painter.drawEllipse(VPoint(stage->character.pos * t + center), r, r);
         painter.restore();
     }
 
@@ -56,6 +65,7 @@ namespace magiUI {
         Vec2 center = widget / 2;
         drawBorder(painter, t, center);
         drawBullets(painter, t, center);
+        drawCharacter(painter, t, center);
         drawState(painter);
     }
 }
