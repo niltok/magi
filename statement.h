@@ -47,10 +47,10 @@ struct Bullet_Line : public Bullet_Style {
 struct Bullet_Circal : public Bullet_Style {
     Bullet_Circal ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
+        angle += 0.1 * speed ;
         long long RelaT = magi::Timer::get() - StartT ;
-        point.pos.x = cos(angle)*speed*RelaT*RelaT ;                                                                                       // !!!待定
-        point.pos.y = sin(angle)*speed*RelaT*RelaT ;
-
+        this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
+        this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
         return this -> point.pos;
     }
 };
