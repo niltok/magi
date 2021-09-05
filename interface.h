@@ -87,6 +87,7 @@ namespace magi {
     };
 
     struct Character {
+        std::string pic;
     };
     
     struct Stage {
@@ -96,7 +97,7 @@ namespace magi {
         std::string music;
         long long endTime;
 
-        bool check() {
+        bool check(Vec2 pos, double r) {
             return false;
         }
 
