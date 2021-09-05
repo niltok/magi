@@ -10,19 +10,19 @@ long long ID = 0;
 
 
 
-// 开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) , 半径(double) ,速度 (double), 运动类型 (Kind)
+// 开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double), 运动类型 (Kind)
 
 vector<vector<Bullets_Info>> info_stage {
     // 关卡1
     {
-        Bullets_Info (1000,10,c1,SMALL_,LOW_,Line),
-        Bullets_Info (3000,10,c2,MIDDLE_,LOW_,Line),
-        Bullets_Info (5000,10,c2,LARGE_,LOW_,Line),
+        Bullets_Info ( 1000 , 10 , c1 , (0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 3000 , 5 , c2 , (1.57,magi::PI2) , MIDDLE_ , LOW_ , Line ),
+        Bullets_Info ( 5000 , 1 , c2 , (1.178,1.178) , LARGE_ , LOW_ , Line ),
 
     },
     // 关卡2
     {
-        Bullets_Info (1000,10,magi::Color(0,0,0),SMALL_,LOW_,Line),
+        Bullets_Info ( 1000 , 10 , c1 , (0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
     }
 };
 
