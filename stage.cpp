@@ -102,7 +102,7 @@ vector<vector<Bullets_Info>> info_stage {
     {
         Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Circle ),
         Bullets_Info ( 3000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , NORMAL_ , Circle ),
-        Bullets_Info ( 5000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Circle ),
+        Bullets_Info ( 4000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Circle ),
     }
 };
 
