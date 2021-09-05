@@ -98,7 +98,14 @@ namespace magi {
         long long endTime;
 
         bool check(Vec2 pos, double r) {
-            return false;
+            bool Judge;
+            shared_ptr<Bullets> Re = this -> getBullet();
+            int size = Re -> size();
+            for (int i = 0 ; i < size ; i++){
+                if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r) ) Judge = 0;
+            }
+            
+            return Judge;
         }
 
         // 关卡入口

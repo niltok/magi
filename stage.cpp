@@ -33,24 +33,27 @@ vector<vector<Bullets_Info>> info_stage {
         Bullets_Info ( 8500 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
         Bullets_Info ( 9000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
         Bullets_Info ( 9500 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 10000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 15000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 20000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 25000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 30000 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 35000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 40000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 45000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 50000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 55000 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 60000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 65000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 70000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 75000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 80000 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 85000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 90000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 95000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 10000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 10500 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 11000 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 11500 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 12000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 12500 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 13000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 13500 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 14000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 14500 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 15000 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 15500 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 16000 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 16500 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 17000 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 17500 , 60 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 18000 , 60 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 18500 , 60 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 19000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 19500 , 60 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 20000 , 60 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
 
     },
     // 关卡2
@@ -63,6 +66,7 @@ struct bullets_effect : public magi::Bullets {
     int Num , Size ;
     long Before ;
     size_t size() const {
+        std::cout << Before << std::endl;
         return Size ;
     }
     magi::Point operator[](size_t index) {
@@ -82,9 +86,9 @@ struct getBullet_Re {
         Re.Size = 0;
         long long RelT = magi::Timer::get();
         int i = 0;
-        while ( info_stage[Num][i].EndT < RelT ) { i++ ; }
+        while ( i < info_stage[Num].size() && info_stage[Num][i].EndT < RelT ) { i++ ; }
         Re.Before = i;
-        while ( info_stage[Num][i].StartT < RelT ) {
+        while ( i < info_stage[Num].size() && info_stage[Num][i].StartT < RelT ) {
             Re.Size += info_stage[Num][i].n;
             i++;
         }

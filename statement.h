@@ -76,7 +76,7 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , magi::Color c , double r , m
 
 struct Bullets_Info {
     Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
-        this -> EndT = StartT + 5000;                                                  // EndT 计算
+        this -> EndT = StartT + 10000;                                                  // EndT 计算
             for ( int i = 0 ; i < n ; i++ ) {
                 this -> bullets.push_back( Creat ( StartT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
