@@ -94,8 +94,10 @@ namespace magi {
         std::function<std::shared_ptr<Bullets>()> getBullet;
         Character character;
         std::string music;
+        long long endTime;
 
-        void check() {
+        bool check() {
+            return false;
         }
 
         // 关卡入口
