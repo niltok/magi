@@ -15,14 +15,14 @@ long long ID = 0;
 vector<vector<Bullets_Info>> info_stage {
     // 关卡1
     {
-        Bullets_Info ( 1000 , 10 , c1 , (0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 3000 , 5 , c2 , (1.57,magi::PI2) , MIDDLE_ , LOW_ , Line ),
-        Bullets_Info ( 5000 , 1 , c2 , (1.178,1.178) , LARGE_ , LOW_ , Line ),
+        Bullets_Info ( 1000 , 10 , c1 , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 3000 , 5 , c2 , magi::Vec2(1.57,magi::PI2) , MIDDLE_ , LOW_ , Line ),
+        Bullets_Info ( 5000 , 1 , c2 , magi::Vec2(1.178,1.178) , LARGE_ , LOW_ , Line ),
 
     },
     // 关卡2
     {
-        Bullets_Info ( 1000 , 10 , c1 , (0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
+        Bullets_Info ( 1000 , 10 , c1 , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
     }
 };
 

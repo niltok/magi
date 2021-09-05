@@ -77,7 +77,7 @@ struct Bullets_Info {
     Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
             for ( int i = 0 ; i < n ; i++ ) {
-                this -> bullets.push_back( Creat ( StartT , c , r , (range.x + ( (range.y-range.x)/(double)n) * i) , speed , kind ) );
+                this -> bullets.push_back( Creat ( StartT , c , r , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
     }
     int n;

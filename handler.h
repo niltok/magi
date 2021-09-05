@@ -43,7 +43,7 @@ namespace magiUI {
             painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
             painter.drawEllipse(VPoint(p.pos * t + center), r, r);
-            std::cout << p.id << std::endl;
+            // std::cout << p.id << std::endl;
         }
         painter.restore();
     }
