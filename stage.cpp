@@ -34,7 +34,7 @@ struct bullets_effect : public magi::Bullets {
     }
     magi::Point operator[](size_t index) {
         long push = 0;
-        while ( index > info_stage[Num][Before+push].n){ index = index - info_stage[Num][Before+push].n; push++;}
+        while ( index > info_stage[Num][Before+push].n - 1 ){ index = index - info_stage[Num][Before+push].n; push++;}
         (info_stage[Num][Before+push].bullets[index]) -> Pos();
         return (info_stage[Num][Before+push].bullets[index]) -> point ;
 

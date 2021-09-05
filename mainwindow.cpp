@@ -17,8 +17,6 @@ namespace magiUI{
     {
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
-        // ui->views->setCurrentIndex(1);
-        //ui->stageChooser->addItems(QStringList({"test1", "test2", "test3"}));
         for (auto s : Stage::stage)
             ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
         ui->stageChooser->setCurrentRow(0);
