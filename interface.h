@@ -99,7 +99,7 @@ namespace magi {
 
         bool check(Vec2 pos, double r) {
             bool Judge;
-            shared_ptr<Bullets> Re = this -> getBullet();
+            std::shared_ptr<Bullets> Re = this -> getBullet();
             int size = Re -> size();
             for (int i = 0 ; i < size ; i++){
                 if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r) ) Judge = 0;
