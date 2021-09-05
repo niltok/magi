@@ -20,7 +20,7 @@ namespace magiUI{
         for (auto s : Stage::stage)
             ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
         ui->stageChooser->setCurrentRow(0);
-        startTimer(10);
+        startTimer(1000 / fps);
     }
 
     MainWindow::~MainWindow()
@@ -39,39 +39,51 @@ namespace magiUI{
 
     void MainWindow::timerEvent(QTimerEvent *event) {
         Q_UNUSED(event);
+        {
+            int step = 100;
+            int mover[4][3] = {
+                {87, 0, -step}, // 上(W)
+                {83, 0, step},  // 下(S)
+                {68, step, 0},  // 右(D)
+                {65, -step, 0}  // 左(A)
+            };
+            for (int i = 0; i < 4; i++) {
+                auto iter = keyDown.find(mover[i][0]);
+                if (iter != keyDown.end() && iter->second)
+                    cPos += Vec2(mover[i][1], mover[i][2]) / fps;
+            }
+            cPos = cPos.max(-rSize / 2).min(rSize / 2);
+        }
         update();
     }
 
     void MainWindow::keyPressEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
-        Vec2 widget(width(), height());
-        double t = std::min((widget.x - 18) / rSize.x,
-                            (widget.y - 30) / rSize.y);
+        keyDown[event->key()] = true;
         setWindowTitle(QString::number(event->key()));
         if (event->key() == 32) Timer::reset();
-        int step = 1;
-        int mover[4][3] = {
-            {87, 0, -step}, // 上(W)
-            {83, 0, step},  // 下(S)
-            {68, step, 0},  // 右(D)
-            {65, -step, 0}  // 左(A)
-        };
-        for (int i = 0; i < 4; i++)
-            if (event->key() == mover[i][0])
-                cPos += Vec2(mover[i][1], mover[i][2]) * t;
-        cPos = cPos.max(-rSize / 2).min(rSize / 2);
         if (event->key() == 16777216 && ui->views->currentIndex() == 1)
             ui->views->setCurrentIndex(0);
     }
 
     void MainWindow::keyReleaseEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
+        keyDown[event->key()] = false;
     }
 
     void MainWindow::on_startGameButton_clicked() {
         stage = Stage::stage[ui->stageChooser->currentRow()];
         ui->views->setCurrentIndex(1);
         Timer::reset();
+        cPos = Vec2 { 0, 100 };
+    }
+
+    void MainWindow::resizeEvent(QResizeEvent *event) {
+        Q_UNUSED(event);
+        widget = Vec2(width(), height());
+        scale = std::min((widget.x - 18) / rSize.x,
+                         (widget.y - 30) / rSize.y);
+        center = widget / 2;
     }
 }
 

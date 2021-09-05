@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "interface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 namespace magiUI {
+    using namespace magi;
     class MainWindow : public QMainWindow
     {
         Q_OBJECT
@@ -35,6 +37,10 @@ namespace magiUI {
         // QWidget interface
     protected:
         void keyReleaseEvent(QKeyEvent *event);
+
+        // QWidget interface
+    protected:
+        void resizeEvent(QResizeEvent *event);
     };
 }
 #endif // MAINWINDOW_H
