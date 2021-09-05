@@ -26,7 +26,7 @@ namespace magiUI {
 
     void drawBorder(QPainter &painter, double t, Vec2 center) {
         painter.save();
-        painter.setBrush(QColor(255, 160, 90));
+        //painter.setBrush(QColor(255, 160, 90));
         painter.drawRect(VRect(-0.5 * rSize * t + center,
                                0.5 * rSize * t + center));
         painter.restore();
@@ -34,14 +34,10 @@ namespace magiUI {
 
     void drawBullets(QPainter &painter, double t, Vec2 center) {
         painter.save();
-        std::cout << "#1" << std::endl;
         std::shared_ptr<Bullets> bullets = stage->getBullet();
-        std::cout << "#2" << std::endl;
         s = bullets->size();
-        std::cout << "#3" << std::endl;
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
-            std::cout << "#4" << std::endl;
             c = p.c;
             int r = p.r * t;
             painter.setPen(VColor(p.c));

@@ -16,8 +16,8 @@ vector<vector<Bullets_Info>> info_stage {
     // 关卡1
     {
         Bullets_Info (1000,10,c1,SMALL_,LOW_,Line),
-        Bullets_Info (3000,10,c2,SMALL_,LOW_,Line),
-        Bullets_Info (5000,10,c2,SMALL_,LOW_,Line)
+        Bullets_Info (3000,10,c2,MIDDLE_,LOW_,Line),
+        Bullets_Info (5000,10,c2,LARGE_,LOW_,Line),
 
     },
     // 关卡2

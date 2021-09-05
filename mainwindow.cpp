@@ -20,7 +20,7 @@ namespace magiUI{
         for (auto s : Stage::stage)
             ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
         ui->stageChooser->setCurrentRow(0);
-        startTimer(100);
+        startTimer(10);
     }
 
     MainWindow::~MainWindow()

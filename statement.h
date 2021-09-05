@@ -22,7 +22,7 @@ struct stage;
 struct StageInfo;
 struct CharacterInfo; */
 
-const double SMALL_ = 5.0 , MIDDLE_ = 10.0 , LARGE_ = 15.0 ;           // 弹幕大小
+const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
 enum Kind { Line , Circle };                                             // 弹幕类型
 
@@ -59,8 +59,8 @@ struct Bullet_Circal : public Bullet_Style {
     Bullet_Circal ( long long id , magi::Color c , double r , double angle , double speed , long long StartT ) : Bullet_Style (id,c,r,angle,speed,StartT) {}
     magi::Vec2 Pos () {
         long long RelaT = magi::Timer::get() - StartT ;
-        point.pos.x = 0 ;                                                                                       // !!!待定
-        point.pos.y = 0 ;
+        point.pos.x = cos(angle)*speed*RelaT*RelaT ;                                                                                       // !!!待定
+        point.pos.y = sin(angle)*speed*RelaT*RelaT ;
 
         return point.pos;
     }
