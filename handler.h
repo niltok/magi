@@ -39,7 +39,7 @@ namespace magiUI {
 
     void drawBullets(QPainter &painter) {
         painter.save();
-        std::shared_ptr<Bullets> bullets = stage.getBullet();
+        std::shared_ptr<Bullets> bullets = stage->getBullet();
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];

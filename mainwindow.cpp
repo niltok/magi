@@ -40,7 +40,7 @@ namespace magiUI{
     void MainWindow::timerEvent(QTimerEvent *event) {
         Q_UNUSED(event);
         {
-            int step = 100;
+            int step = 50;
             int mover[4][3] = {
                 {87, 0, -step}, // 上(W)
                 {83, 0, step},  // 下(S)
@@ -53,6 +53,10 @@ namespace magiUI{
                     cPos += Vec2(mover[i][1], mover[i][2]) / fps;
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
+        }
+        if (stage && stage->check(cPos, cR)) {
+            ui->views->setCurrentIndex(0);
+            stage = nullptr;
         }
         update();
     }
@@ -72,7 +76,7 @@ namespace magiUI{
     }
 
     void MainWindow::on_startGameButton_clicked() {
-        stage = Stage::stage[ui->stageChooser->currentRow()];
+        stage = &Stage::stage[ui->stageChooser->currentRow()];
         ui->views->setCurrentIndex(1);
         Timer::reset();
         cPos = Vec2 { 0, 100 };
