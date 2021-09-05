@@ -23,7 +23,7 @@ namespace magi {
         double x, y;
 
         Vec2(double x, double y): x(x), y(y) {}
-        Vec2(double a): Vec2(a, a) {}
+        explicit Vec2(double a): Vec2(a, a) {}
         Vec2(): Vec2(0) {}
 
         Vec2 operator+(const Vec2 &v) const { return Vec2 {x + v.x, y + v.y}; }
