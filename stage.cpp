@@ -2,7 +2,9 @@
 
 using namespace std;
 
-magi::Character ch{};             // test 用 （删）
+magi::Character ch{};                    // test 用 （删）
+long long EndTime = 1000000;             // test 用 （删）
+
 
 
 long Size = 0;
@@ -10,7 +12,7 @@ long long ID = 0;
 
 
 
-// 开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double), 运动类型 (Kind)
+// Bullets_Info : 开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double), 运动类型 (Kind)
 
 vector<vector<Bullets_Info>> info_stage {
     // 关卡1
@@ -59,53 +61,55 @@ vector<vector<Bullets_Info>> info_stage {
     // 关卡2
     {
         Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 1500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 1500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 2000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 2500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 2500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 3000 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 3500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 3500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 4000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 4500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 4500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 5000 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 5500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 5500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 6000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 6500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 6500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 7000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 7500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 7500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 8000 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 8500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 8500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 9000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 9500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 9500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 10000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 10500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 10500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 11000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 11500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 11500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 12000 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 12500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 12500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 13000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 13500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 13500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 14000 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 14500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 14500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 15000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 15500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 15500 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 16000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 16500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 16500 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 17000 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 17500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 17500 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 18000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 18500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 18500 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 19000 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
-        Bullets_Info ( 19500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ArcLine ),
+        Bullets_Info ( 19500 , 30 , c5 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ),
         Bullets_Info ( 20000 , 30 , c4 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ),
     },
     // 关卡3
     {
-        Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Circle ),
-        Bullets_Info ( 3000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , NORMAL_ , Circle ),
-        Bullets_Info ( 4000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Circle ),
+        Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Arc ),
+        Bullets_Info ( 3000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , NORMAL_ , Arc ),
+        Bullets_Info ( 4000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Arc ),
     }
 };
 
+
+// 当前时间弹幕信息类
 struct bullets_effect : public magi::Bullets {
     int Num , Size ;
     long Before ;
@@ -117,10 +121,10 @@ struct bullets_effect : public magi::Bullets {
         while ( index > info_stage[Num][Before+push].n - 1 ){ index = index - info_stage[Num][Before+push].n; push++;}
         (info_stage[Num][Before+push].bullets[index]) -> Pos();
         return (info_stage[Num][Before+push].bullets[index]) -> point ;
-
     }
 };
 
+// 获取当前时间弹幕信息
 struct getBullet_Re {
     int Num;
     auto operator()() -> shared_ptr<bullets_effect> {
@@ -154,7 +158,8 @@ struct getBullet_Re {
 } */
 
 vector<magi::Stage> magi::Stage::stage {
-    magi::Stage{"Stage1", getBullet_Re{0}, ch, ""},
-    magi::Stage{"Stage2", getBullet_Re{1}, ch, ""},
-    magi::Stage{"Stage3", getBullet_Re{2}, ch, ""}
+    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "",EndTime},
+    magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime},
+    magi::Stage{"Arc Bullets Test", getBullet_Re{2}, ch, "",EndTime},
+    magi::Stage{"Circle Bullets Try",getBullet_Re{3},ch,"",EndTime}
 };

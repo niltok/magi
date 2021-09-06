@@ -15,7 +15,7 @@ extern long long ID;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
-enum Kind { Line , Circle , ArcLine };                                             // 弹幕类型
+enum Kind { Line , Arc , ReverseLine };                                             // 弹幕类型
 
 const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
 
@@ -44,8 +44,8 @@ struct Bullet_Line : public Bullet_Style {
 };
 
 // 曲线
-struct Bullet_Circal : public Bullet_Style {
-    Bullet_Circal ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
+struct Bullet_Arc : public Bullet_Style {
+    Bullet_Arc ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
         angle += 0.003 ;
         long long RelaT = magi::Timer::get() - StartT ;
@@ -56,8 +56,8 @@ struct Bullet_Circal : public Bullet_Style {
 };
 
 // 反向直线
-struct Bullet_ArcLine : public Bullet_Style {
-    Bullet_ArcLine ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
+struct Bullet_ReverseLine : public Bullet_Style {
+    Bullet_ReverseLine ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
         long long RelaT = EndT - magi::Timer::get() ;
         this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
@@ -74,12 +74,12 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
                 Re = make_shared<Bullet_Line> ( Bullet_Line(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
-            case Circle:
-                Re = make_shared<Bullet_Circal> ( Bullet_Circal(ID,c,r,center,angle,speed,StartT,EndT) );
+            case Arc:
+                Re = make_shared<Bullet_Arc> ( Bullet_Arc(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
-            case ArcLine:
-                Re = make_shared<Bullet_ArcLine> ( Bullet_ArcLine(ID,c,r,center,angle,speed,StartT,EndT) );
+            case ReverseLine:
+                Re = make_shared<Bullet_ReverseLine> ( Bullet_ReverseLine(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
                 break;
