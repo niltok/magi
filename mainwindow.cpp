@@ -29,8 +29,9 @@ namespace magiUI{
         startTimer(1000 / fps);
         // std::cout << QDir::current().path().toStdString() << std::endl;
         player = new QMediaPlayer(this);
-        player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
-        player->play();
+        // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
+        // player->play();
+        play = false;
     }
 
     MainWindow::~MainWindow()
@@ -49,6 +50,7 @@ namespace magiUI{
 
     void MainWindow::timerEvent(QTimerEvent *event) {
         Q_UNUSED(event);
+        if (!play) return;
         {
             int step = 50;
             int mover[4][3] = {
@@ -64,12 +66,13 @@ namespace magiUI{
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
-        if (!debug && stage && stage->check(cPos, cR) ||
-                stage && Timer::get() > stage->endTime) {
+        if (!debug && stage->check(cPos, cR) ||
+                Timer::get() > stage->endTime) {
             ui->views->setCurrentIndex(2);
             auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
             ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + " s");
-            stage = nullptr;
+            player->stop();
+            play = false;
         }
         update();
     }
@@ -88,16 +91,21 @@ namespace magiUI{
         keyDown[event->key()] = false;
     }
 
-    void MainWindow::on_startGameButton_clicked() {
-        stage = &Stage::stage[ui->stageChooser->currentRow()];
-        ui->views->setCurrentIndex(1);
+    void stateReset() {
         Timer::reset();
         cPos = Vec2 { 0, 100 };
-        debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
         if (stage->music != "") {
             player->setMedia(QUrl(QString::fromLocal8Bit(stage->music.c_str())));
             player->play();
         }
+        play = true;
+    }
+
+    void MainWindow::on_startGameButton_clicked() {
+        stage = &Stage::stage[ui->stageChooser->currentRow()];
+        ui->views->setCurrentIndex(1);
+        debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
+        stateReset();
     }
 
     void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -109,7 +117,13 @@ namespace magiUI{
     }
 
     void MainWindow::on_againButton_clicked() {
+        ui->views->setCurrentIndex(1);
+        stateReset();
+    }
 
+    void MainWindow::on_backButton_clicked() {
+        stage = nullptr;
+        ui->views->setCurrentIndex(0);
     }
 }
 

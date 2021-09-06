@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "interface.h"
-#include "QtMultimedia/QMediaPlayer"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,7 +18,6 @@ namespace magiUI {
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
 
-        QMediaPlayer *player;
     private:
         Ui::MainWindow *ui;
 
@@ -39,6 +37,8 @@ namespace magiUI {
 
         // QWidget interface
         void on_againButton_clicked();
+
+        void on_backButton_clicked();
 
     protected:
         void keyReleaseEvent(QKeyEvent *event);
