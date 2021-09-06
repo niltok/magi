@@ -59,7 +59,7 @@ struct Bullet_Circal : public Bullet_Style {
 struct Bullet_ArcLine : public Bullet_Style {
     Bullet_ArcLine ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
-        long long RelaT = EndT - (magi::Timer::get() - StartT) ;
+        long long RelaT = EndT - magi::Timer::get() ;
         this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
         this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
         return this -> point.pos;
