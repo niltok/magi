@@ -22,6 +22,8 @@ namespace magiUI {
     double cR = 2;
     Vec2 cPos;
 
+    bool debug;
+
     QPoint VPoint(Vec2 p) {
         return QPoint(p.x, p.y);
     }

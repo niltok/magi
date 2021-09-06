@@ -73,6 +73,13 @@
             </spacer>
            </item>
            <item>
+            <widget class="QCheckBox" name="debugBox">
+             <property name="text">
+              <string>调式模式</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="startGameButton">
              <property name="text">
               <string>开始</string>

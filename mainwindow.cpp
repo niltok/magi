@@ -54,7 +54,7 @@ namespace magiUI{
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
-        if (stage && stage->check(cPos, cR)) {
+        if (!debug && stage && stage->check(cPos, cR) || stage && Timer::get() > stage->endTime) {
             ui->views->setCurrentIndex(0);
             stage = nullptr;
         }
@@ -80,6 +80,7 @@ namespace magiUI{
         ui->views->setCurrentIndex(1);
         Timer::reset();
         cPos = Vec2 { 0, 100 };
+        debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
     }
 
     void MainWindow::resizeEvent(QResizeEvent *event) {

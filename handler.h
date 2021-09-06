@@ -17,6 +17,7 @@ namespace magiUI {
         std::stringstream ss;
         ss << "Time: " << Timer::get() << "\t ";
         ss << "Size: " << s << "\t ";
+        ss << "Debug: " << debug << "\t ";
         ss << "Key: ";
         for (auto kv : keyDown)
             if (kv.second) ss << kv.first << " ";
