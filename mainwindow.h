@@ -38,6 +38,8 @@ namespace magiUI {
         void on_startGameButton_clicked();
 
         // QWidget interface
+        void on_againButton_clicked();
+
     protected:
         void keyReleaseEvent(QKeyEvent *event);
 

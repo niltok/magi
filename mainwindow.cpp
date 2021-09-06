@@ -8,10 +8,12 @@
 #include "QtMultimedia/QMediaPlayer"
 #include <iostream>
 #include "QDir"
+#include <chrono>
 
 using namespace magi;
+using namespace std::chrono;
 
-std::chrono::time_point<system_clock> Timer::t;
+time_point<system_clock> Timer::t;
 
 namespace magiUI{
     MainWindow::MainWindow(QWidget *parent)
@@ -20,6 +22,7 @@ namespace magiUI{
     {
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
+        ui->views->setCurrentIndex(0);
         for (auto s : Stage::stage)
             ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
         ui->stageChooser->setCurrentRow(0);
@@ -63,7 +66,9 @@ namespace magiUI{
         }
         if (!debug && stage && stage->check(cPos, cR) ||
                 stage && Timer::get() > stage->endTime) {
-            ui->views->setCurrentIndex(0);
+            ui->views->setCurrentIndex(2);
+            auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
+            ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + " s");
             stage = nullptr;
         }
         update();
@@ -101,6 +106,10 @@ namespace magiUI{
         scale = std::min((widget.x - 18) / rSize.x,
                          (widget.y - 30) / rSize.y);
         center = widget / 2;
+    }
+
+    void MainWindow::on_againButton_clicked() {
+
     }
 }
 

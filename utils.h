@@ -5,10 +5,12 @@
 #include "interface.h"
 #include <memory>
 #include <map>
+#include <chrono>
 
 using namespace magi;
 
 namespace magiUI {
+    using namespace std::chrono;
     const Vec2 rSize(300, 500);
 
     Stage *stage;
@@ -23,6 +25,8 @@ namespace magiUI {
     Vec2 cPos;
 
     bool debug;
+
+    time_point<system_clock> dura;
 
     QPoint VPoint(Vec2 p) {
         return QPoint(p.x, p.y);
