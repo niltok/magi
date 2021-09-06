@@ -105,6 +105,14 @@ vector<vector<Bullets_Info>> info_stage {
         Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Arc ),
         Bullets_Info ( 3000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , NORMAL_ , Arc ),
         Bullets_Info ( 4000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Arc ),
+    },
+    // 关卡4
+    {
+
+    },
+    // 关卡5
+    {
+
     }
 };
 
@@ -161,5 +169,6 @@ vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "",EndTime},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime},
     magi::Stage{"Arc Bullets Test", getBullet_Re{2}, ch, "",EndTime},
-    magi::Stage{"Circle Bullets Try",getBullet_Re{3},ch,"",EndTime}
+    magi::Stage{"Circle Bullets Try",getBullet_Re{3},ch,"",EndTime},
+    magi::Stage{"Imagine Type Test",getBullet_Re{4},ch,"",EndTime}
 };
