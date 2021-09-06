@@ -5,6 +5,9 @@
 #include "interface.h"
 #include "qevent.h"
 #include "handler.h"
+#include "QtMultimedia/QMediaPlayer"
+#include <iostream>
+#include "QDir"
 
 using namespace magi;
 
@@ -21,6 +24,10 @@ namespace magiUI{
             ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
         ui->stageChooser->setCurrentRow(0);
         startTimer(1000 / fps);
+        // std::cout << QDir::current().path().toStdString() << std::endl;
+        player = new QMediaPlayer(this);
+        player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
+        player->play();
     }
 
     MainWindow::~MainWindow()
@@ -54,7 +61,8 @@ namespace magiUI{
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
-        if (!debug && stage && stage->check(cPos, cR) || stage && Timer::get() > stage->endTime) {
+        if (!debug && stage && stage->check(cPos, cR) ||
+                stage && Timer::get() > stage->endTime) {
             ui->views->setCurrentIndex(0);
             stage = nullptr;
         }
@@ -81,6 +89,10 @@ namespace magiUI{
         Timer::reset();
         cPos = Vec2 { 0, 100 };
         debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
+        if (stage->music != "") {
+            player->setMedia(QUrl(QString::fromLocal8Bit(stage->music.c_str())));
+            player->play();
+        }
     }
 
     void MainWindow::resizeEvent(QResizeEvent *event) {

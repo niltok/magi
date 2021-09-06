@@ -24,35 +24,26 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED Multimedia)
 
-if(ANDROID)
-  add_library(magi SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    interface.h
-    utils.h
-    handler.h
-    stage.cpp
-    statement.h
-  )
-else()
-  add_executable(magi
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    interface.h
-    utils.h
-    handler.h
-    stage.cpp
-    statement.h
-  )
-endif()
+set(CMAKE_AUTORCC ON)
+set(QRC_FILE resource.qrc)
+qt5_add_resources(QRC ${QRC_FILE})
 
-target_link_libraries(magi PRIVATE Qt5::Widgets)
+add_executable(magi
+main.cpp
+mainwindow.cpp
+mainwindow.h
+mainwindow.ui
+interface.h
+utils.h
+handler.h
+stage.cpp
+statement.h
+${QRC}
+)
+
+target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia)
 
 #隐藏console
 if(WIN32)

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "interface.h"
+#include "QtMultimedia/QMediaPlayer"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,8 @@ namespace magiUI {
     public:
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
+
+        QMediaPlayer *player;
     private:
         Ui::MainWindow *ui;
 
