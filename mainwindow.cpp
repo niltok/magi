@@ -53,6 +53,8 @@ namespace magiUI{
         if (!play) return;
         {
             int step = 50;
+            if (keyDown[74]) step += 50;
+            if (keyDown[75]) step += 100;
             int mover[4][3] = {
                 {87, 0, -step}, // 上(W)
                 {83, 0, step},  // 下(S)
@@ -80,7 +82,7 @@ namespace magiUI{
     void MainWindow::keyPressEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
         keyDown[event->key()] = true;
-        setWindowTitle(QString::number(event->key()));
+        // setWindowTitle(QString::number(event->key()));
         if (event->key() == 32) Timer::reset();
         if (event->key() == 16777216 && ui->views->currentIndex() == 1)
             ui->views->setCurrentIndex(0);
