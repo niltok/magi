@@ -9,6 +9,7 @@
 #include <iostream>
 #include "QDir"
 #include <chrono>
+#include "colors.h"
 
 using namespace magi;
 using namespace std::chrono;
@@ -32,6 +33,9 @@ namespace magiUI{
         // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
         // player->play();
         play = false;
+        for (auto c : colors::radToWhite) {
+            std::cout << c.toHexRGB() << std::endl;
+        }
     }
 
     MainWindow::~MainWindow()

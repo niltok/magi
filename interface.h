@@ -6,6 +6,9 @@
 #include <cmath>
 #include <vector>
 #include <functional>
+#include <QString>
+#include <QUrl>
+#include <QList>
 
 namespace magi {
     typedef unsigned char byte;
@@ -17,7 +20,76 @@ namespace magi {
         Color(byte r, byte g, byte b, byte a): r(r), g(g), b(b), a(a) {}
         Color(byte r, byte g, byte b): Color(r, g, b, 255) {}
         Color(): Color(0, 0, 0) {}
+
+        Color(std::string s) {
+            switch (s.size()) {
+            case 3:
+                r = fromHex(s[0]) * 17;
+                g = fromHex(s[1]) * 17;
+                b = fromHex(s[2]) * 17;
+                break;
+            case 8:
+                a = fromHex(s[6]) * 16 + fromHex(s[7]);
+            case 6:
+                r = fromHex(s[0]) * 16 + fromHex(s[1]);
+                g = fromHex(s[2]) * 16 + fromHex(s[3]);
+                b = fromHex(s[4]) * 16 + fromHex(s[5]);
+                break;
+            default:
+                r = g = b = 0;
+                a = 255;
+                break;
+            }
+        }
+
+        std::string toHexRGBA() {
+            return std::string {
+                toHex(r / 16),
+                toHex(r % 16),
+                toHex(g / 16),
+                toHex(g % 16),
+                toHex(b / 16),
+                toHex(b % 16),
+                toHex(a % 16),
+                toHex(a / 16)
+            };
+        }
+
+        std::string toHexRGB() {
+            return std::string {
+                toHex(r / 16),
+                toHex(r % 16),
+                toHex(g / 16),
+                toHex(g % 16),
+                toHex(b / 16),
+                toHex(b % 16)
+            };
+        }
+
+        static char toHex(byte c) {
+            if (c <= 9) return '0' + c;
+            if (c <= 15) return 'A' + c - 10;
+            return '?';
+        }
+
+        static byte fromHex(char c) {
+            if ('0' <= c && c <= '9') return c - '0';
+            if ('a' <= c && c <= 'f') return c - 'a' + 10;
+            if ('A' <= c && c <= 'F') return c - 'A' + 10;
+            return 0;
+        }
+
+        static std::vector<Color> fromCoolors(QString s) {
+            auto colors = QUrl(s).fileName().split("-");
+            std::vector<Color> v(colors.size());
+            for (int i = 0; i < colors.size(); i++) {
+                v[i] = colors[i].toStdString();
+            }
+            return v;
+        }
     };
+
+    typedef std::vector<Color> ColorPattern;
 
     struct Vec2 {
         double x, y;
