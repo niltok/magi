@@ -7,6 +7,7 @@
 #include <list>
 #include <vector>
 #include "interface.h"
+#include "colors.h"
 
 using namespace std;
 
@@ -14,13 +15,8 @@ extern long Size;
 extern long long ID;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
-const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
-enum Kind { Line , Arc , ReverseLine , ReverseArc };                                             // 弹幕类型
-
-// 
-// orangeToWhite
-const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
-
+const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
+enum Kind { Line , Arc , ReverseLine , ReverseArc , Arc_SpeedUp };                  // 弹幕类型
 
 // 弹幕样式
 struct Bullet_Style {
@@ -49,10 +45,24 @@ struct Bullet_Line : public Bullet_Style {
 struct Bullet_Arc : public Bullet_Style {
     Bullet_Arc ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
-        angle += 0.003 ;
+        double Angle;
         long long RelaT = magi::Timer::get() - StartT ;
-        this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
-        this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
+        Angle = 0.0001875 * RelaT + this -> angle ;
+        this -> point.pos.x = cos(Angle)*speed*RelaT + center.x ;
+        this -> point.pos.y = sin(Angle)*speed*RelaT + center.y ;
+        return this -> point.pos;
+    }
+};
+// 变速曲线
+struct BulletArc_SpeedUp : public Bullet_Style {
+    BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
+    magi::Vec2 Pos () {
+        double Angle,Speed;
+        long long RelaT = magi::Timer::get() - StartT ;
+        Angle = 0.0001875 * RelaT + this -> angle ;
+        Speed = 0.0001 *RelaT + this -> speed ;
+        this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
+        this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
         return this -> point.pos;
     }
 };
@@ -72,10 +82,11 @@ struct Bullet_ReverseLine : public Bullet_Style {
 struct Bullet_ReverseArc : public Bullet_Style {
     Bullet_ReverseArc ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
-        angle += 0.003 ;
+        double Angle;
         long long RelaT = EndT - magi::Timer::get() ;
-        this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
-        this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
+        Angle = 0.0001875 * RelaT + this -> angle ;
+        this -> point.pos.x = cos(Angle)*speed*RelaT + center.x ;
+        this -> point.pos.y = sin(Angle)*speed*RelaT + center.y ;
         return this -> point.pos;
     }
 };
@@ -100,6 +111,10 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
                 Re = make_shared<Bullet_ReverseArc> ( Bullet_ReverseArc(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
+            case Arc_SpeedUp:
+                Re = make_shared<BulletArc_SpeedUp> ( BulletArc_SpeedUp(ID,c,r,center,angle,speed,StartT,EndT) );
+                ID++;
+                break;
         }
     return Re;
 }
@@ -111,7 +126,6 @@ struct Bullets_Info {
             for ( int i = 0 ; i < n ; i++ ) {
                 this -> bullets.push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
-        
     }
     int n;
     long long StartT;
@@ -120,9 +134,15 @@ struct Bullets_Info {
     vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
-struct Creat_BulletsInfo : public Bullets_Info {
-    Creat_BulletsInfo ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (StartT,n,c,center,range,r,speed,kind) {}
-
+struct Creat_BulletsInfo_Circle : public Bullets_Info {
+    Creat_BulletsInfo_Circle ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (StartT,n,c,center,range,r,speed,kind) {
+        this -> EndT = StartT + 10000;                                                  // EndT 计算
+        double startt = this -> StartT;
+            for ( int i = 0 ; i < n ; i++ ) {
+                this -> bullets.push_back( Creat ( startt , EndT , c , r , center , 0.0 , speed , kind ) );
+                startt += 100 ;
+        }
+    }
 };
 
 
