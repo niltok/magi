@@ -17,11 +17,8 @@ const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕�
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
 enum Kind { Line , Arc , ReverseLine , ReverseArc };                                             // 弹幕类型
 
-<<<<<<< HEAD
 // 
-=======
 // orangeToWhite
->>>>>>> 837c1d2082e125f643eab657adce9d29271dfefa
 const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
 
 
