@@ -23,7 +23,7 @@ vector<Color> rainbowLight {
     {189, 178, 255},
     {255, 198, 255}
 };
-vector<Color> orengeToWhite {
+vector<Color> orangeToWhite {
     {240, 128, 128},
     {244, 151, 142},
     {248, 173, 157},
