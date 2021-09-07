@@ -166,7 +166,7 @@ struct getBullet_Re {
 } */
 
 vector<magi::Stage> magi::Stage::stage {
-    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "",EndTime},
+    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "qrc:/music/OdeToJoy1",EndTime},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime},
     magi::Stage{"Arc Bullets Test", getBullet_Re{2}, ch, "",EndTime},
     magi::Stage{"Circle Bullets Try",getBullet_Re{3},ch,"",EndTime},

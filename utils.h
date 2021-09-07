@@ -6,6 +6,7 @@
 #include <memory>
 #include <map>
 #include <chrono>
+#include "QtMultimedia/QMediaPlayer"
 
 using namespace magi;
 
@@ -24,7 +25,9 @@ namespace magiUI {
     double cR = 2;
     Vec2 cPos;
 
-    bool debug;
+    bool debug, play;
+
+    QMediaPlayer *player;
 
     time_point<system_clock> dura;
 
