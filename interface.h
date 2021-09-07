@@ -136,6 +136,7 @@ namespace magi {
         double r; // 半径
         Vec2 pos;
         size_t id;
+        bool enable = true;
     };
 
     // 每次绘制时调用

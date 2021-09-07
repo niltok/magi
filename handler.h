@@ -44,6 +44,7 @@ namespace magiUI {
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
+            if (!p.enable) continue;
             c = p.c;
             int r = p.r * scale;
             painter.setPen(VColor(p.c));

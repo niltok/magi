@@ -33,13 +33,9 @@ namespace magiUI{
         // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
         // player->play();
         play = false;
-        for (auto c : colors::radToWhite) {
-            std::cout << c.toHexRGB() << std::endl;
-        }
     }
 
-    MainWindow::~MainWindow()
-    {
+    MainWindow::~MainWindow() {
         delete ui;
     }
 
