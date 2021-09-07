@@ -17,6 +17,7 @@ const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕�
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
 enum Kind { Line , Arc , ReverseLine , ReverseArc };                                             // 弹幕类型
 
+// 
 const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
 
 
@@ -102,7 +103,7 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
     return Re;
 }
 
-
+// 当前时间所有弹幕信息
 struct Bullets_Info {
     Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
@@ -118,11 +119,16 @@ struct Bullets_Info {
     vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
+struct Creat_BulletsInfo : public Bullets_Info {
+    Creat_BulletsInfo ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (StartT,n,c,center,range,r,speed,kind) {}
 
-// bulletsinfo 构建函数
+};
+
+
+/* // bulletsinfo 构建函数
 size_t Creat_bulletsinfo () {
 
-}
+} */
 
 struct CharacterInfo : public magi::Character {
 
