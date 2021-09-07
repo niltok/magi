@@ -41,6 +41,7 @@ handler.h
 stage.cpp
 statement.h
 ${QRC}
+colors.h
 )
 
 target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia)
