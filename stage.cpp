@@ -102,9 +102,9 @@ vector<vector<Bullets_Info>> info_stage {
     },
     // 关卡3
     {
-        Bullets_Info ( 1000 , 30 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Arc ),
-        Bullets_Info ( 3000 , 30 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , NORMAL_ , Arc ),
-        Bullets_Info ( 4000 , 30 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , FAST_ , Arc ),
+        Bullets_Info ( 1000 , 10 , c1 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ),
+        Bullets_Info ( 3000 , 10 , c2 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ),
+        Bullets_Info ( 5000 , 10 , c3 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ),
     },
     // 关卡4
     {

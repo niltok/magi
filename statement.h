@@ -15,7 +15,7 @@ extern long long ID;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;              // 弹幕速度
-enum Kind { Line , Arc , ReverseLine };                                             // 弹幕类型
+enum Kind { Line , Arc , ReverseLine , ReverseArc };                                             // 弹幕类型
 
 const magi::Color c1(240, 128, 128),c2(244, 151, 142),c3(248, 173, 157),c4(251, 196, 171),c5(255, 218, 185);
 
@@ -66,6 +66,18 @@ struct Bullet_ReverseLine : public Bullet_Style {
     }
 };
 
+// 反向曲线
+struct Bullet_ReverseArc : public Bullet_Style {
+    Bullet_ReverseArc ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
+    magi::Vec2 Pos () {
+        angle += 0.003 ;
+        long long RelaT = EndT - magi::Timer::get() ;
+        this -> point.pos.x = cos(angle)*speed*RelaT + center.x ;
+        this -> point.pos.y = sin(angle)*speed*RelaT + center.y ;
+        return this -> point.pos;
+    }
+};
+
 
 shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color c , double r , magi::Vec2 center , double angle , double speed , Kind kind ) {
     shared_ptr<Bullet_Style> Re;
@@ -82,6 +94,9 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
                 Re = make_shared<Bullet_ReverseLine> ( Bullet_ReverseLine(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
+            case ReverseArc:
+                Re = make_shared<Bullet_ReverseArc> ( Bullet_ReverseArc(ID,c,r,center,angle,speed,StartT,EndT) );
+                ID++;
                 break;
         }
     return Re;
@@ -94,6 +109,7 @@ struct Bullets_Info {
             for ( int i = 0 ; i < n ; i++ ) {
                 this -> bullets.push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
+        
     }
     int n;
     long long StartT;
@@ -102,6 +118,11 @@ struct Bullets_Info {
     vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
+
+// bulletsinfo 构建函数
+size_t Creat_bulletsinfo () {
+
+}
 
 struct CharacterInfo : public magi::Character {
 
