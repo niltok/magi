@@ -6,6 +6,7 @@
 #include <memory>
 #include <list>
 #include <vector>
+#include <algorithm>
 #include "interface.h"
 
 using namespace std;
@@ -14,6 +15,7 @@ struct Bullet_Style;
 
 extern long Size;
 extern long long ID;
+extern int StageNum;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
@@ -159,3 +161,11 @@ struct CharacterInfo : public magi::Character {
 
 };
 
+bool subtract () {
+    
+}
+void magi:: initBullets () {
+    for (int i = 0 ; i < StageNum ; i++) {
+        sort (bullets[i][0],bullets[i][bullets[i].size()]);
+    }
+}
