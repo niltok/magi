@@ -144,9 +144,11 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (NUM,StartT,n,c,center,range,r,speed,kind) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
         double startt = this -> StartT;
+        double endt = this -> EndT;
             for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM - 1].push_back( Creat ( startt , EndT , c , r , center , 0.0 , speed , kind ) );
+                bullets[NUM - 1].push_back( Creat ( startt , endt , c , r , center , 0.0 , speed , kind ) );
                 startt += 100 ;
+                endt += 100;
         }
     }
 };
@@ -161,11 +163,14 @@ struct CharacterInfo : public magi::Character {
 
 };
 
-bool subtract () {
-    
+bool Less_Than ( const Bullet_Style* &a , const Bullet_Style* &b ) {
+    if ( a -> StartT < b -> StartT ) { return true; }
+    else if ( a -> StartT > b -> StartT ) { return false; }
+    else if ( a -> EndT < b -> EndT ) { return true; }
+    else { return false; }
 }
 void magi:: initBullets () {
     for (int i = 0 ; i < StageNum ; i++) {
-        sort (bullets[i][0],bullets[i][bullets[i].size()]);
+        sort ( bullets[i][0] , bullets[i][bullets[i].size()] , Less_Than );
     }
 }
