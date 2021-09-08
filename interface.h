@@ -91,6 +91,7 @@ namespace magi {
     };
 
     typedef std::vector<Color> ColorPattern;
+    ColorPattern &colors(const std::string &name);
 
     struct Vec2 {
         double x, y;
@@ -192,8 +193,7 @@ namespace magi {
         // 关卡入口
         static std::vector<Stage> stage;
 
-    private:
-        std::set<size_t> collision;
+        std::set<size_t> collision{};
     };
 
     void initBullets();
