@@ -6,18 +6,67 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>636</width>
-    <height>500</height>
+    <width>679</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
-    <height>500</height>
+    <width>450</width>
+    <height>750</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Magi</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	font: 12pt &quot;苹方 常规, 思源黑体 CN Regular, 黑体&quot;;
+}
+
+*:focus {
+	outline: none;
+}
+
+QWidget {
+	color: #212529;
+	background-color: #f8f9fa;
+}
+
+QPushButton {
+	border: 1px solid #212529;
+	padding: 10px 20px;
+}
+
+QPushButton:hover {
+	background-color: #212529;
+	color: #f8f9fa;
+}
+QListWidget {
+	border: 0;
+}
+QListWidget::item {
+	padding: 5px 10px;
+}
+QListWidget::item:hover {
+	padding-left: 10px;
+	border: 0;
+}
+QListWidget::item:selected {
+	background-color: #212529;
+	color: #f8f9fa;
+	border: 0;
+}
+QCheckBox::indicator {
+	border: 1px solid #adb5bd;
+}
+QCheckBox::indicator:checked {
+	background-color: #212529;
+	border: 1px solid #212529;
+}
+QCheckBox::indicator:hover {
+	border: 1px solid #212529;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -39,7 +88,7 @@
     <item>
      <widget class="QStackedWidget" name="views">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="mainMenu">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -70,6 +119,15 @@
            </item>
            <item>
             <widget class="QListWidget" name="stageChooser">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
              <property name="flow">
               <enum>QListView::TopToBottom</enum>
              </property>
@@ -89,6 +147,9 @@
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Expanding</enum>
+                </property>
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>40</width>
@@ -103,6 +164,22 @@
                  <string>调式模式</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item>
                <widget class="QPushButton" name="startGameButton">
@@ -218,8 +295,17 @@
            <widget class="QLabel" name="finalDisp">
             <property name="font">
              <font>
-              <pointsize>50</pointsize>
+              <family>苹方 常规, 思源黑体 CN Regular, 黑体</family>
+              <pointsize>64</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	font-size: 64pt;
+}</string>
             </property>
             <property name="text">
              <string>test</string>
@@ -233,9 +319,25 @@
            </widget>
           </item>
           <item>
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <spacer name="horizontalSpacer_5">
+             <spacer name="horizontalSpacer_8">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -255,9 +357,25 @@
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QPushButton" name="backButton">
               <property name="text">
-               <string>返回</string>
+               <string>返回菜单</string>
               </property>
              </widget>
             </item>

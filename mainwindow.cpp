@@ -73,7 +73,7 @@ namespace magiUI{
             if (--cLife == 0) {
                 ui->views->setCurrentIndex(2);
                 auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-                ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + " s");
+                ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + "s");
                 player->stop();
                 play = false;
             }
@@ -103,6 +103,7 @@ namespace magiUI{
         }
         play = true;
         cLife = 10;
+        stage->collision.clear();
     }
 
     void MainWindow::on_startGameButton_clicked() {

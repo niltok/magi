@@ -161,11 +161,11 @@ struct CharacterInfo : public magi::Character {
 
 };
 
-bool subtract () {
+//bool subtract () {
     
-}
-void magi:: initBullets () {
-    for (int i = 0 ; i < StageNum ; i++) {
-        sort (bullets[i][0],bullets[i][bullets[i].size()]);
-    }
-}
+//}
+//void magi:: initBullets () {
+//    for (int i = 0 ; i < StageNum ; i++) {
+//        sort (bullets[i][0],bullets[i][bullets[i].size()]);
+//    }
+//}
