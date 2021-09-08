@@ -10,20 +10,18 @@
 
 namespace magiUI {
     size_t s;
-    Color c;
 
     void drawState(QPainter &painter) {
         painter.save();
         std::stringstream ss;
         ss << "Time: " << Timer::get() << "\t ";
         ss << "Size: " << s << "\t ";
-        ss << "Debug: " << debug << "\t ";
+        ss << "Life: " << cLife << "/" << stage->character.lifeBase << "\t ";
         ss << "Key: ";
         for (auto kv : keyDown)
             if (kv.second) ss << kv.first << " ";
         ss << "\t ";
         QFont font;
-        font.setFamily("Microsoft YaHei");
         font.setPointSize(10);
         painter.setFont(font);
         painter.drawText(10, 30, QString::fromLocal8Bit(ss.str().c_str()));
@@ -44,8 +42,7 @@ namespace magiUI {
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
-            if (!p.enable) continue;
-            c = p.c;
+            if (!stage->visible(p)) continue;
             int r = p.r * scale;
             painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));

@@ -24,6 +24,7 @@ namespace magiUI {
 
     double cR = 2;
     Vec2 cPos;
+    size_t cLife;
 
     bool debug, play;
 
