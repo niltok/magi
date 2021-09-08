@@ -9,7 +9,7 @@ long long EndTime = 1000000;             // test 用 （删）
 
 long Size = 0;
 long long ID = 0;
-vector<vector<shared_ptr<Bullet_Style>>> bullets;
+vector<vector<shared_ptr<Bullet_Style>>> bullets(5);
 
 
 
