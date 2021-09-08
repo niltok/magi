@@ -9,7 +9,6 @@
 #include <iostream>
 #include "QDir"
 #include <chrono>
-#include "colors.h"
 
 using namespace magi;
 using namespace std::chrono;

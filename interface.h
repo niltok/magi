@@ -91,6 +91,7 @@ namespace magi {
     };
 
     typedef std::vector<Color> ColorPattern;
+    ColorPattern &colors(const std::string &name);
 
     struct Vec2 {
         double x, y;
