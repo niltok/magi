@@ -7,7 +7,6 @@
 #include <list>
 #include <vector>
 #include "interface.h"
-#include "colors.h"
 
 using namespace std;
 
@@ -15,7 +14,6 @@ struct Bullet_Style;
 
 extern long Size;
 extern long long ID;
-vector<vector<shared_ptr<Bullet_Style>>> bullets;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
@@ -31,6 +29,8 @@ struct Bullet_Style {
     long long StartT , EndT ;
     virtual magi::Vec2 Pos() {}
 };
+
+extern vector<vector<shared_ptr<Bullet_Style>>> bullets;
 
 // 弹幕运动方式实现
 // 直线
@@ -126,8 +126,8 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
 struct Bullets_Info {
     Bullets_Info ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
-            for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM -1].push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
+        for ( int i = 0 ; i < n ; i++ ) {
+            bullets[NUM -1].push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
     }
     // int n;

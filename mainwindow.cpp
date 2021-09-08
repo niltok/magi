@@ -32,7 +32,7 @@ namespace magiUI{
         // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
         // player->play();
         play = false;
-        initBullets();
+        // initBullets();
     }
 
     MainWindow::~MainWindow() {
