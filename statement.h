@@ -11,8 +11,11 @@
 
 using namespace std;
 
+struct Bullet_Style;
+
 extern long Size;
 extern long long ID;
+vector<vector<shared_ptr<Bullet_Style>>> bullets;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
@@ -121,25 +124,25 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
 
 // 当前时间所有弹幕信息
 struct Bullets_Info {
-    Bullets_Info ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : n(n) , StartT(StartT) , range(range) {
+    Bullets_Info ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
             for ( int i = 0 ; i < n ; i++ ) {
-                this -> bullets.push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
+                bullets[NUM -1].push_back( Creat ( StartT , EndT , c , r , center , (range.x + ((range.y-range.x)/n * i)) , speed , kind ) );
         }
     }
-    int n;
+    // int n;
     long long StartT;
     long long EndT;
-    magi::Vec2 range;
-    vector<shared_ptr<Bullet_Style>> bullets ;
+    // magi::Vec2 range;
+    // vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
-    Creat_BulletsInfo_Circle ( long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (StartT,n,c,center,range,r,speed,kind) {
+    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (NUM,StartT,n,c,center,range,r,speed,kind) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
         double startt = this -> StartT;
             for ( int i = 0 ; i < n ; i++ ) {
-                this -> bullets.push_back( Creat ( startt , EndT , c , r , center , 0.0 , speed , kind ) );
+                bullets[NUM - 1].push_back( Creat ( startt , EndT , c , r , center , 0.0 , speed , kind ) );
                 startt += 100 ;
         }
     }
