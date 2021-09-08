@@ -163,7 +163,7 @@ struct CharacterInfo : public magi::Character {
 
 };
 
-bool Less_Than ( const Bullet_Style* &a , const Bullet_Style* &b ) {
+bool Less_Than ( shared_ptr<Bullet_Style> a , shared_ptr<Bullet_Style> b ) {
     if ( a -> StartT < b -> StartT ) { return true; }
     else if ( a -> StartT > b -> StartT ) { return false; }
     else if ( a -> EndT < b -> EndT ) { return true; }
@@ -171,6 +171,6 @@ bool Less_Than ( const Bullet_Style* &a , const Bullet_Style* &b ) {
 }
 void magi:: initBullets () {
     for (int i = 0 ; i < StageNum ; i++) {
-        sort ( bullets[i][0] , bullets[i][bullets[i].size()] , Less_Than );
+        sort ( bullets[i].begin() , bullets[i].end() , Less_Than );
     }
 }
