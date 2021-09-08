@@ -137,6 +137,7 @@ struct Bullets_Info {
     // vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
+// 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (NUM,StartT,n,c,center,range,r,speed,kind) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
