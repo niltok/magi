@@ -9,6 +9,7 @@
 #include <QString>
 #include <QUrl>
 #include <QList>
+#include <set>
 
 namespace magi {
     typedef unsigned char byte;
@@ -136,6 +137,7 @@ namespace magi {
         double r; // 半径
         Vec2 pos;
         size_t id;
+        bool enable = true;
     };
 
     // 每次绘制时调用
@@ -160,6 +162,7 @@ namespace magi {
 
     struct Character {
         std::string pic;
+        size_t lifeBase;
     };
     
     struct Stage {
@@ -170,16 +173,28 @@ namespace magi {
         long long endTime;
 
         bool check(Vec2 pos, double r) {
-            bool Judge = false;
             std::shared_ptr<Bullets> Re = this -> getBullet();
             int size = Re -> size();
             for (int i = 0 ; i < size ; i++){
-                if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r) ) Judge = true;
+                if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r)
+                        && collision.find((*Re)[i].id) == collision.end() ) {
+                    collision.insert((*Re)[i].id);
+                    return true;
+                }
             }
-            return Judge;
+            return false;
+        }
+
+        bool visible(const Point &p) {
+            return p.enable && collision.find(p.id) == collision.end();
         }
 
         // 关卡入口
         static std::vector<Stage> stage;
+
+    private:
+        std::set<size_t> collision;
     };
+
+    void initBullets();
 }

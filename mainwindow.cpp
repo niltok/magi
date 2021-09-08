@@ -33,13 +33,10 @@ namespace magiUI{
         // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
         // player->play();
         play = false;
-        for (auto c : colors::radToWhite) {
-            std::cout << c.toHexRGB() << std::endl;
-        }
+        initBullets();
     }
 
-    MainWindow::~MainWindow()
-    {
+    MainWindow::~MainWindow() {
         delete ui;
     }
 
@@ -72,14 +69,15 @@ namespace magiUI{
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
-        if (!debug && stage->check(cPos, cR) ||
-                Timer::get() > stage->endTime) {
-            ui->views->setCurrentIndex(2);
-            auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-            ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + " s");
-            player->stop();
-            play = false;
-        }
+        bool collision = stage->check(cPos, cR);
+        if (!debug && collision || Timer::get() > stage->endTime)
+            if (--cLife == 0) {
+                ui->views->setCurrentIndex(2);
+                auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
+                ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + " s");
+                player->stop();
+                play = false;
+            }
         update();
     }
 
@@ -105,6 +103,7 @@ namespace magiUI{
             player->play();
         }
         play = true;
+        cLife = 10;
     }
 
     void MainWindow::on_startGameButton_clicked() {
