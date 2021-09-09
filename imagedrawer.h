@@ -1,33 +1,40 @@
 #pragma once
 
-#include "qwidget.h"
-#include "qpainter.h"
 #include "utils.h"
-#include <sstream>
+#include "interface.h"
+#include <QApplication>
+#include <QThread>
+#include <QDebug>
+#include <QPixmap>
+#include <QMutex>
 #include <string>
-#include <memory>
-#include <iostream>
+#include <sstream>
 #include <iomanip>
+#include <QTimer>
 
 namespace magiUI {
+class ImageDrawer : public QThread {
+    Q_OBJECT
+
     size_t s;
 
     void drawState(QPainter &painter) {
         painter.save();
         std::stringstream ss;
         ss << std::setprecision(2) << std::fixed;
-        ss << "Time: " << Timer::get() << "\t ";
-        ss << "Size: " << s << "\t ";
-        ss << "FPS: " << realFps << "\t ";
-        ss << "Life: " << cLife << "/" << stage->character.lifeBase << "\t ";
-        ss << "Key: ";
-        for (auto kv : keyDown)
-            if (kv.second) ss << kv.first << " ";
-        ss << "\t ";
+        ss << "Time: " << Timer::get() << "    ";
+        ss << "Size: " << s << "    ";
+        ss << "drawFPS: " << std::setw(7) << drawFps << "    ";
+        ss << "mainFPS: " << std::setw(7) << mainFps << "    ";
+        ss << "Life: " << cLife << " / " << stage->character.lifeBase << "    ";
+//        ss << "Key: [";
+//        for (auto kv : keyDown)
+//            if (kv.second) ss << kv.first << ",";
+//        ss << "]    ";
         QFont font;
         font.setPointSize(10);
         painter.setFont(font);
-        painter.drawText(10, 30, QString::fromLocal8Bit(ss.str().c_str()));
+        painter.drawText(10, 30, QString::fromStdString(ss.str()));
         painter.restore();
     }
 
@@ -72,13 +79,49 @@ namespace magiUI {
         painter.restore();
     }
 
-    void drawStage(QWidget *stage) {
-        QPainter painter(stage);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    void drawPixmap(QPixmap &pixmap) {
+        QPainter painter(&pixmap);
+        painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
         drawBorder(painter);
         drawCharacter(painter);
         drawBullets(painter);
         drawState(painter);
     }
+public:
+    QPixmap buffer;
+    QMutex bufferLock;
+
+    QTimer *timer;
+
+    ImageDrawer() {}
+
+    void run() {
+        timer = new QTimer();
+        connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()), Qt::DirectConnection);
+        timer->start();
+        exec();
+    }
+
+    // QObject interface
+public slots:
+
+    void onTimeout() {
+
+        if (!play) return;
+
+        QPixmap pixmap(VSize(widget));
+
+        drawPixmap(pixmap);
+
+        bufferLock.lock();
+        buffer.swap(pixmap);
+        bufferLock.unlock();
+
+        bool collision = stage->check(cPos, cR);
+        if (!debug && collision || Timer::get() > stage->endTime)
+            if (--cLife == 0) {
+                play = false;
+            }
+    }
+};
 }

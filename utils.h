@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QMutex>
 #include "qpainter.h"
 #include <cmath>
 #include "interface.h"
@@ -12,37 +13,33 @@ using namespace magi;
 
 namespace magiUI {
     using namespace std::chrono;
-    const Vec2 rSize(300, 500);
 
-    Stage *stage;
+    extern Vec2 rSize;
 
-    double fps = 80, realFps;
-    std::map<int, bool> keyDown;
+    extern Stage *stage;
 
-    Vec2 widget, center;
-    double scale;
+    extern double fps, mainFps, drawFps;
+    extern std::map<int, bool> keyDown;
 
-    double cR = 3;
-    Vec2 cPos;
-    size_t cLife;
+    extern QMutex sizeLock;
+    extern Vec2 widget, center;
+    extern double scale;
 
-    bool debug, play;
+    extern QMutex cLock;
+    extern double cR;
+    extern Vec2 cPos;
+    extern size_t cLife;
 
-    QMediaPlayer *player;
+    extern bool debug, play;
 
-    time_point<system_clock> dura;
+    extern QMediaPlayer *player;
 
-    std::shared_ptr<QImage> cPic;
+    extern time_point<system_clock> dura;
 
-    QPoint VPoint(Vec2 p) {
-        return QPoint(p.x, p.y);
-    }
+    extern std::shared_ptr<QImage> cPic;
 
-    QRect VRect(Vec2 lr, Vec2 rb) {
-        return QRect(VPoint(lr), VPoint(rb));
-    }
-
-    QColor VColor(Color c) {
-        return QColor(c.r, c.g, c.b, c.a);
-    }
+    extern QPoint VPoint(Vec2 p);
+    extern QRect VRect(Vec2 lr, Vec2 rb);
+    extern QColor VColor(Color c);
+    extern QSize VSize(Vec2 s);
 }

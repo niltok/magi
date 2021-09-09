@@ -37,11 +37,12 @@ mainwindow.h
 mainwindow.ui
 interface.h
 utils.h
-handler.h
+utils.cpp
 stage.cpp
 statement.h
 ${QRC}
 colors.cpp
+imagedrawer.h
 )
 
 target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia)

@@ -136,16 +136,16 @@ struct bullets_effect : public magi::Bullets {
 // 获取当前时间弹幕信息
 struct getBullet_Re {
     int Num;
+    size_t i = 0;
     auto operator()() -> shared_ptr<bullets_effect> {
         bullets_effect Re ;
         Re.Num = Num;
         Re.Size = 0;
         long long RelT = magi::Timer::get();
-        size_t i = 0;
         while ( i < bullets[Num].size() && bullets[Num][i] -> EndT < RelT ) { i++ ; }
         Re.Before = i;
-        while ( i < bullets[Num].size() && bullets[Num][i] -> StartT < RelT ) {
-            Re.Size++ ; i++ ;
+        for ( size_t j = i; j < bullets[Num].size() && bullets[Num][j] -> StartT < RelT; j++ ) {
+            Re.Size++ ;
         }
         return make_shared<bullets_effect> (Re);
     }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "interface.h"
+#include "imagedrawer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,7 @@ namespace magiUI {
 
     private:
         Ui::MainWindow *ui;
+        std::shared_ptr<ImageDrawer> drawer;
 
         // QObject interface
     public:

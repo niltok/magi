@@ -90,7 +90,7 @@ QCheckBox::indicator:hover {
     <item>
      <widget class="QStackedWidget" name="views">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainMenu">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -249,7 +249,28 @@ QCheckBox::indicator:hover {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="stageView"/>
+      <widget class="QWidget" name="stagePage">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="stageView" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="finalPage">
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">

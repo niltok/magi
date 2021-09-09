@@ -3,8 +3,8 @@
 #include "qpainter.h"
 #include <cmath>
 #include "interface.h"
+#include "utils.h"
 #include "qevent.h"
-#include "handler.h"
 #include "QtMultimedia/QMediaPlayer"
 #include <iostream>
 #include "QDir"
@@ -33,16 +33,23 @@ namespace magiUI{
         // player->play();
         play = false;
         initBullets();
+        drawer = std::make_shared<ImageDrawer>();
+        drawer->start();
     }
 
     MainWindow::~MainWindow() {
+        drawer->quit();
+        drawer->wait();
         delete ui;
     }
 
     bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
         if (watched == ui->stageView
                 && event->type() == QEvent::Paint) {
-            drawStage(ui->stageView);
+            drawer->bufferLock.lock();
+            QPainter painter(ui->stageView);
+            painter.drawPixmap(0, 0, drawer->buffer);
+            drawer->bufferLock.unlock();
             return true;
         }
         return false;
@@ -50,11 +57,26 @@ namespace magiUI{
 
     void MainWindow::timerEvent(QTimerEvent *event) {
         Q_UNUSED(event);
-        if (!play) return;
+        if (!play) {
+            if (ui->views->currentIndex() == 1) {
+                ui->views->setCurrentIndex(2);
+                auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
+                ui->finalDisp->setText(
+                            QString::fromStdString("Time: " + std::to_string(d) +
+                                                   " s\nLife: " + std::to_string(cLife) + " / " +
+                                                   std::to_string(stage->character.lifeBase))
+                            );
+                player->stop();
+            }
+            return;
+        }
+
+        static time_point<system_clock> last = system_clock::now();
+        auto offset = system_clock::now() - last;
+        mainFps = 1e9 / duration_cast<nanoseconds>(offset).count();
+        last = system_clock::now();
+
         {
-            static time_point<system_clock> last = system_clock::now();
-            realFps = 1e9 / duration_cast<nanoseconds>(system_clock::now() - last).count();
-            last = system_clock::now();
             int step = 50;
             if (keyDown[74]) step += 50;
             if (keyDown[75]) step += 100;
@@ -67,41 +89,21 @@ namespace magiUI{
             for (int i = 0; i < 4; i++) {
                 auto iter = keyDown.find(mover[i][0]);
                 if (iter != keyDown.end() && iter->second)
-                    cPos += Vec2(mover[i][1], mover[i][2]) / fps;
+                    cPos += Vec2(mover[i][1], mover[i][2]) * duration_cast<milliseconds>(offset).count() / 1000;
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
-        bool collision = stage->check(cPos, cR);
-        if (!debug && collision || Timer::get() > stage->endTime)
-            if (--cLife == 0) {
-                ui->views->setCurrentIndex(2);
-                auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-                ui->finalDisp->setText(
-                            QString::fromStdString("Time: " + std::to_string(d) +
-                            " s\nLife: " + std::to_string(cLife) + " / " + std::to_string(stage->character.lifeBase))
-                );
-                player->stop();
-                play = false;
-            }
-        update();
+        ui->stageView->update();
     }
 
     void MainWindow::keyPressEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
         keyDown[event->key()] = true;
-        // setWindowTitle(QString::number(event->key()));
         if (event->key() == 32) {
             stage->collision.clear();
             Timer::reset();
         }
-        if (event->key() == 16777216 && play) {
-            ui->views->setCurrentIndex(2);
-            auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-            ui->finalDisp->setText(
-                        QString::fromStdString("Time: " + std::to_string(d) +
-                        " s\nLife: " + std::to_string(cLife) + " / " + std::to_string(stage->character.lifeBase))
-            );
-            player->stop();
+        if (event->key() == 16777216) {
             play = false;
         }
     }
@@ -119,11 +121,11 @@ namespace magiUI{
             player->setMedia(QUrl(QString::fromLocal8Bit(stage->music.c_str())));
             player->play();
         }
-        play = true;
         cLife = stage->character.lifeBase;
         if (stage->character.pic != "")
             cPic = std::make_shared<QImage>(QString::fromStdString(stage->character.pic));
         stage->collision.clear();
+        play = true;
     }
 
     void MainWindow::on_startGameButton_clicked() {
