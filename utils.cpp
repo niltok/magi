@@ -6,6 +6,12 @@
 #include <map>
 #include <chrono>
 #include "QtMultimedia/QMediaPlayer"
+#include <QReadWriteLock>
+
+namespace magi {
+std::set<size_t> collision{};
+QReadWriteLock collisionLock;
+}
 
 namespace magiUI {
 using namespace magi;
@@ -15,14 +21,12 @@ Vec2 rSize(300, 500);
 
 Stage *stage;
 
-double fps = 100, mainFps, drawFps;
+double fps = 100, mainFps, drawFps, checkFps;
 std::map<int, bool> keyDown;
 
-QMutex sizeLock;
 Vec2 widget, center;
 double scale;
 
-QMutex cLock;
 double cR = 3;
 Vec2 cPos;
 size_t cLife;

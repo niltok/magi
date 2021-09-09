@@ -10,8 +10,11 @@
 #include <QUrl>
 #include <QList>
 #include <set>
+#include <QReadWriteLock>
 
 namespace magi {
+    extern std::set<size_t> collision;
+    extern QReadWriteLock collisionLock;
     typedef unsigned char byte;
     const double PI = std::acos(-1), PI2 = 2 * PI;
     
@@ -130,6 +133,10 @@ namespace magi {
             return Vec2 {std::min(x, v.x), std::min(y, v.y)};
         }
 
+        bool inRect(const Vec2 &lt, const Vec2 &rb) const {
+            return lt.x < x && x < rb.x && lt.y < y && y < rb.y;
+        }
+
         // 点乘
         double dot(Vec2 v) const { return x * v.x + y * v.y; }
         // 叉乘
@@ -186,9 +193,14 @@ namespace magi {
             std::shared_ptr<Bullets> Re = this -> getBullet();
             int size = Re -> size();
             for (int i = 0 ; i < size ; i++){
-                if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r)
-                        && collision.find((*Re)[i].id) == collision.end() ) {
+                if( ((*Re)[i].pos - pos).length() < ((*Re)[i].r + r)) {
+                    collisionLock.lockForRead();
+                    auto exist = collision.find((*Re)[i].id) != collision.end();
+                    collisionLock.unlock();
+                    if (exist) continue;
+                    collisionLock.lockForWrite();
                     collision.insert((*Re)[i].id);
+                    collisionLock.unlock();
                     return true;
                 }
             }
@@ -196,13 +208,15 @@ namespace magi {
         }
 
         bool visible(const Point &p) {
-            return p.enable && collision.find(p.id) == collision.end();
+            if (!p.enable) return false;
+            collisionLock.lockForRead();
+            auto res = collision.find(p.id) == collision.end();
+            collisionLock.unlock();
+            return res;
         }
 
         // 关卡入口
         static std::vector<Stage> stage;
-
-        std::set<size_t> collision{};
     };
 
     void initBullets();
