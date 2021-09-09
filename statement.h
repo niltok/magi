@@ -174,6 +174,13 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
     }
 };
 
+// 烟花
+struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
+    Creat_BulletsInfo_Fireworks () {
+        
+    }
+};
+
 
 /* // bulletsinfo 构建函数
 size_t Creat_bulletsinfo () {

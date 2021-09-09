@@ -105,16 +105,16 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     },
     // 关卡3
     {
-        make_shared<Bullets_Info> ( Bullets_Info ( 3 , 1000 , 10 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 3 , 3000 , 10 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 3 , 5000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , SMALL_ , FAST_ , ReverseArc ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( 3 , 1000 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , LARGE_ , LOW_ , ReverseLine ) ),
+        
     },
     // 关卡4
     {
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
     },
     // 关卡5
     {
+        make_shared<Bullets_Info> ( Bullets_Info ( 5 , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
 
     }
 };
@@ -168,9 +168,9 @@ struct getBullet_Re {
 vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "qrc:/music/OdeToJoy1",EndTime},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime},
-    magi::Stage{"Arc Bullets Test", getBullet_Re{2}, ch, "",EndTime},
+    magi::Stage{"迷宫", getBullet_Re{2}, ch, "",EndTime},
     magi::Stage{"缩圈",getBullet_Re{3},ch,"",EndTime},
-    magi::Stage{"Imagine Type Test",getBullet_Re{4},ch,"",EndTime}
+    magi::Stage{"烟花",getBullet_Re{4},ch,"",EndTime}
 };
 
 
