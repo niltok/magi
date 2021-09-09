@@ -62,14 +62,31 @@ struct Bullet_Arc : public Bullet_Style {
 struct BulletArc_SpeedUp : public Bullet_Style {
     BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
-        double Speed;
+        double Speed,Angle;
         long long RealT = magi::Timer::get() ;
-        Speed = this -> speed + 0.000001 * RealT ;
-        this -> point.pos.x = cos(angle)*Speed*RealT + center.x ;
-        this -> point.pos.y = sin(angle)*Speed*RealT + center.y ;
+        long long RelaT = magi::Timer::get() - StartT ;
+        Angle = 0.00628 * RelaT + this -> angle ;
+        Speed = this -> speed - 0.000001 * RealT ;
+        this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
+        this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
+        // cout << "(" << this -> point.pos.x << "," << this -> point.pos.y << ")" << Speed << endl ;
+
+        // cout << this -> center.x << "," << this -> center.y << endl ;
         return this -> point.pos;
     }
 };
+/* struct BulletArc_SpeedUp : public Bullet_Style {
+    BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
+    magi::Vec2 Pos () {
+        double Angle,Speed;
+        long long RelaT = magi::Timer::get() - StartT ;
+        Angle = 0.0001875 * RelaT + this -> angle ;
+        Speed = 0.0001 *RelaT + this -> speed ;
+        this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
+        this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
+        return this -> point.pos;
+    }
+}; */
 
 // 反向直线
 struct Bullet_ReverseLine : public Bullet_Style {
@@ -99,7 +116,7 @@ struct Bullet_ReverseArc : public Bullet_Style {
 shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color c , double r , magi::Vec2 center , double angle , double speed , Kind kind ) {
     shared_ptr<Bullet_Style> Re;
     switch (kind) {
-            case Line:0
+            case Line:
                 Re = make_shared<Bullet_Line> ( Bullet_Line(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
@@ -145,10 +162,12 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
         this -> EndT = StartT + 100000;                                                  // EndT 计算
         double startt = this -> StartT;
         double endt = this -> EndT;
+        double angle = range.x ;
             for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM - 1].push_back( Creat ( startt , endt , c , r , center , 0.0 , speed , kind ) );
-                startt += 100 ;
-                endt += 100;
+                bullets[NUM - 1].push_back( Creat ( startt , endt , c , r , center , angle , speed , kind ) );
+                startt += 10 ;
+                endt += 10 ;
+                angle += 0.01 ;
         }
     }
 };
