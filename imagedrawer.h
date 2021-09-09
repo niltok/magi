@@ -11,6 +11,7 @@
 #include <sstream>
 #include <iomanip>
 #include <QTimer>
+#include <iostream>
 
 namespace magiUI {
 class ImageDrawer : public QThread {

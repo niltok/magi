@@ -160,7 +160,7 @@ struct Bullets_Info {
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         this -> EndT = StartT + 100000;                                                  // EndT 计算
-        double startt = this -> StartT;
+        double startt = StartT;
         double endt = this -> EndT;
         double angle = range.x ;
         int size_ = magi::colors("graduatedBlue").size() ;
