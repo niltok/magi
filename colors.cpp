@@ -37,6 +37,10 @@ ColorPattern &colors(const std::string &name) {
         {
             "radToWhite",
             Color::fromCoolors("https://coolors.co/ff0a54-ff477e-ff5c8a-ff7096-ff85a1-ff99ac-fbb1bd-f9bec7-f7cad0-fae0e4")
+        },
+        {
+            "graduatedBlue",
+            Color::fromCoolors("https://coolors.co/03045e-023e8a-0077b6-0096c7-00b4d8-48cae4-90e0ef-ade8f4-caf0f8")
         }
     };
     return c[name];
