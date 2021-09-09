@@ -62,12 +62,11 @@ struct Bullet_Arc : public Bullet_Style {
 struct BulletArc_SpeedUp : public Bullet_Style {
     BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
     magi::Vec2 Pos () {
-        double Angle,Speed;
-        long long RelaT = magi::Timer::get() - StartT ;
-        Angle = 0.0001875 * RelaT + this -> angle ;
-        Speed = 0.0001 *RelaT + this -> speed ;
-        this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
-        this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
+        double Speed;
+        long long RealT = magi::Timer::get() ;
+        Speed = this -> speed + 0.000001 * RealT ;
+        this -> point.pos.x = cos(angle)*Speed*RealT + center.x ;
+        this -> point.pos.y = sin(angle)*Speed*RealT + center.y ;
         return this -> point.pos;
     }
 };
@@ -100,7 +99,7 @@ struct Bullet_ReverseArc : public Bullet_Style {
 shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color c , double r , magi::Vec2 center , double angle , double speed , Kind kind ) {
     shared_ptr<Bullet_Style> Re;
     switch (kind) {
-            case Line:
+            case Line:0
                 Re = make_shared<Bullet_Line> ( Bullet_Line(ID,c,r,center,angle,speed,StartT,EndT) );
                 ID++;
                 break;
@@ -126,6 +125,7 @@ shared_ptr<Bullet_Style> Creat ( long long StartT , long long EndT , magi::Color
 
 // 当前时间所有弹幕信息
 struct Bullets_Info {
+    Bullets_Info () {}
     Bullets_Info ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         this -> EndT = StartT + 10000;                                                  // EndT 计算
         for ( int i = 0 ; i < n ; i++ ) {
@@ -141,8 +141,8 @@ struct Bullets_Info {
 
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
-    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) : Bullets_Info (NUM,StartT,n,c,center,range,r,speed,kind) {
-        this -> EndT = StartT + 10000;                                                  // EndT 计算
+    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
+        this -> EndT = StartT + 100000;                                                  // EndT 计算
         double startt = this -> StartT;
         double endt = this -> EndT;
             for ( int i = 0 ; i < n ; i++ ) {
