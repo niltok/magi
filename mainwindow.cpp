@@ -24,7 +24,7 @@ namespace magiUI{
         ui->stageView->installEventFilter(this);
         ui->views->setCurrentIndex(0);
         for (auto s : Stage::stage)
-            ui->stageChooser->addItem(QString::fromLocal8Bit(s.name.c_str()));
+            ui->stageChooser->addItem(QString::fromStdString(s.name));
         ui->stageChooser->setCurrentRow(0);
         startTimer(1000 / fps);
         // std::cout << QDir::current().path().toStdString() << std::endl;
