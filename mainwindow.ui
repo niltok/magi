@@ -90,7 +90,7 @@ QCheckBox::indicator:hover {
     <item>
      <widget class="QStackedWidget" name="views">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="mainMenu">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -298,7 +298,7 @@ QCheckBox::indicator:hover {
             <property name="font">
              <font>
               <family>苹方 常规, 思源黑体 CN Regular, 黑体</family>
-              <pointsize>64</pointsize>
+              <pointsize>32</pointsize>
               <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
@@ -306,11 +306,15 @@ QCheckBox::indicator:hover {
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {
-	font-size: 64pt;
+	font-size: 32pt;
 }</string>
             </property>
             <property name="text">
-             <string>test</string>
+             <string>test
+test</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::PlainText</enum>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -368,7 +372,7 @@ QCheckBox::indicator:hover {
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>20</height>
                </size>
               </property>

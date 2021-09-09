@@ -2,7 +2,7 @@
 
 using namespace std;
 
-magi::Character ch{"qrc:/image/Paimon1", 5};                    // test 用 （删）
+magi::Character ch{":/image/Paimon1", magi::Vec2(0, -6), 5, magi::Color("ef233c")};                    // test 用 （删）
 long long EndTime = 1000000;             // test 用 （删）
 
 

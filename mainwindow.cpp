@@ -52,6 +52,9 @@ namespace magiUI{
         Q_UNUSED(event);
         if (!play) return;
         {
+            static time_point<system_clock> last = system_clock::now();
+            realFps = 1e9 / duration_cast<nanoseconds>(system_clock::now() - last).count();
+            last = system_clock::now();
             int step = 50;
             if (keyDown[74]) step += 50;
             if (keyDown[75]) step += 100;
@@ -73,7 +76,10 @@ namespace magiUI{
             if (--cLife == 0) {
                 ui->views->setCurrentIndex(2);
                 auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-                ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + "s");
+                ui->finalDisp->setText(
+                            QString::fromStdString("Time: " + std::to_string(d) +
+                            " s\nLife: " + std::to_string(cLife) + " / " + std::to_string(stage->character.lifeBase))
+                );
                 player->stop();
                 play = false;
             }
@@ -84,11 +90,17 @@ namespace magiUI{
         if (event->isAutoRepeat()) return;
         keyDown[event->key()] = true;
         // setWindowTitle(QString::number(event->key()));
-        if (event->key() == 32) Timer::reset();
+        if (event->key() == 32) {
+            stage->collision.clear();
+            Timer::reset();
+        }
         if (event->key() == 16777216 && play) {
             ui->views->setCurrentIndex(2);
             auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
-            ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + "s");
+            ui->finalDisp->setText(
+                        QString::fromStdString("Time: " + std::to_string(d) +
+                        " s\nLife: " + std::to_string(cLife) + " / " + std::to_string(stage->character.lifeBase))
+            );
             player->stop();
             play = false;
         }
@@ -109,6 +121,8 @@ namespace magiUI{
         }
         play = true;
         cLife = stage->character.lifeBase;
+        if (stage->character.pic != "")
+            cPic = std::make_shared<QImage>(QString::fromStdString(stage->character.pic));
         stage->collision.clear();
     }
 

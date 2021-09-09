@@ -23,6 +23,8 @@ namespace magi {
         Color(): Color(0, 0, 0) {}
 
         Color(std::string s) {
+            r = g = b = 0;
+            a = 255;
             switch (s.size()) {
             case 3:
                 r = fromHex(s[0]) * 17;
@@ -37,8 +39,6 @@ namespace magi {
                 b = fromHex(s[4]) * 16 + fromHex(s[5]);
                 break;
             default:
-                r = g = b = 0;
-                a = 255;
                 break;
             }
         }
@@ -65,6 +65,13 @@ namespace magi {
                 toHex(b / 16),
                 toHex(b % 16)
             };
+        }
+
+        Color operator+(const Color &c) const { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
+        Color operator*(double t) const { return Color(r * t, g * t, b * t); }
+
+        Color mix(const Color &c, double t) const {
+            return (*this) * t + c * (1 - t);
         }
 
         static char toHex(byte c) {
@@ -163,7 +170,9 @@ namespace magi {
 
     struct Character {
         std::string pic;
+        Vec2 picOffset;
         size_t lifeBase;
+        Color pointColor;
     };
     
     struct Stage {

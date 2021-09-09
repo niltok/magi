@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <iomanip>
 
 namespace magiUI {
     size_t s;
@@ -14,8 +15,10 @@ namespace magiUI {
     void drawState(QPainter &painter) {
         painter.save();
         std::stringstream ss;
+        ss << std::setprecision(2) << std::fixed;
         ss << "Time: " << Timer::get() << "\t ";
         ss << "Size: " << s << "\t ";
+        ss << "FPS: " << realFps << "\t ";
         ss << "Life: " << cLife << "/" << stage->character.lifeBase << "\t ";
         ss << "Key: ";
         for (auto kv : keyDown)
@@ -54,7 +57,16 @@ namespace magiUI {
 
     void drawCharacter(QPainter &painter) {
         painter.save();
-        painter.setPen(QPen(QColor(230, 57, 70), 2, Qt::PenStyle::DotLine));
+        const int usize = 20;
+        if (cPic) {
+            painter.drawImage(
+                        VRect((cPos - Vec2(usize) + stage->character.picOffset) * scale + center,
+                              (cPos + Vec2(usize) + stage->character.picOffset) * scale + center),
+                        *cPic, cPic->rect());
+        }
+        auto c = stage->character.pointColor;
+        painter.setPen(QPen(VColor(c), 3));
+        painter.setBrush(QColor(c.r, c.g, c.b, c.a * .75));
         int r = cR * scale;
         painter.drawEllipse(VPoint(cPos * scale + center), r, r);
         painter.restore();
@@ -62,9 +74,11 @@ namespace magiUI {
 
     void drawStage(QWidget *stage) {
         QPainter painter(stage);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
         drawBorder(painter);
-        drawBullets(painter);
         drawCharacter(painter);
+        drawBullets(painter);
         drawState(painter);
     }
 }

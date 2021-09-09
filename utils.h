@@ -16,7 +16,7 @@ namespace magiUI {
 
     Stage *stage;
 
-    double fps = 60;
+    double fps = 80, realFps;
     std::map<int, bool> keyDown;
 
     Vec2 widget, center;
@@ -31,6 +31,8 @@ namespace magiUI {
     QMediaPlayer *player;
 
     time_point<system_clock> dura;
+
+    std::shared_ptr<QImage> cPic;
 
     QPoint VPoint(Vec2 p) {
         return QPoint(p.x, p.y);
