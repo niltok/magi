@@ -85,8 +85,13 @@ namespace magiUI{
         keyDown[event->key()] = true;
         // setWindowTitle(QString::number(event->key()));
         if (event->key() == 32) Timer::reset();
-        if (event->key() == 16777216 && ui->views->currentIndex() == 1)
-            ui->views->setCurrentIndex(0);
+        if (event->key() == 16777216 && play) {
+            ui->views->setCurrentIndex(2);
+            auto d = duration_cast<seconds>(system_clock::now() - Timer::t).count();
+            ui->finalDisp->setText("" + QString::fromLocal8Bit(std::to_string(d).c_str()) + "s");
+            player->stop();
+            play = false;
+        }
     }
 
     void MainWindow::keyReleaseEvent(QKeyEvent *event) {
@@ -97,12 +102,13 @@ namespace magiUI{
     void stateReset() {
         Timer::reset();
         cPos = Vec2 { 0, 100 };
+        player->stop();
         if (stage->music != "") {
             player->setMedia(QUrl(QString::fromLocal8Bit(stage->music.c_str())));
             player->play();
         }
         play = true;
-        cLife = 10;
+        cLife = stage->character.lifeBase;
         stage->collision.clear();
     }
 

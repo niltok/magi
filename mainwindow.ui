@@ -36,6 +36,7 @@ QWidget {
 QPushButton {
 	border: 1px solid #212529;
 	padding: 10px 20px;
+	border-radius: 10px;
 }
 
 QPushButton:hover {
@@ -47,10 +48,11 @@ QListWidget {
 }
 QListWidget::item {
 	padding: 5px 10px;
+	border: 1px solid #f8f9fa;
+	border-radius: 5px;
 }
 QListWidget::item:hover {
-	padding-left: 10px;
-	border: 0;
+	border: 1px solid #adb5bd;
 }
 QListWidget::item:selected {
 	background-color: #212529;

@@ -22,7 +22,7 @@ namespace magiUI {
     Vec2 widget, center;
     double scale;
 
-    double cR = 2;
+    double cR = 3;
     Vec2 cPos;
     size_t cLife;
 
