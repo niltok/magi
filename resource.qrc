@@ -2,4 +2,7 @@
     <qresource prefix="/music">
         <file alias="OdeToJoy1">resource/OdeToJoy1.mp3</file>
     </qresource>
+    <qresource prefix="/image">
+        <file alias="Paimon1">resource/Paimon1.png</file>
+    </qresource>
 </RCC>
