@@ -66,7 +66,7 @@ struct BulletArc_SpeedUp : public Bullet_Style {
         long long RealT = magi::Timer::get() ;
         long long RelaT = magi::Timer::get() - StartT ;
         Angle = 0.00628 * RelaT + this -> angle ;
-        Speed = this -> speed - 0.000001 * RealT ;
+        Speed = this -> speed - 0.0000001 * RealT ;
         this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
         this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
         // cout << "(" << this -> point.pos.x << "," << this -> point.pos.y << ")" << Speed << endl ;
@@ -163,8 +163,10 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
         double startt = this -> StartT;
         double endt = this -> EndT;
         double angle = range.x ;
+        int size_ = magi::colors("graduatedBlue").size() ;
+        int colorsize = 5 ;
             for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM - 1].push_back( Creat ( startt , endt , c , r , center , angle , speed , kind ) );
+                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ] , r , center , angle , speed , kind ) );
                 startt += 10 ;
                 endt += 10 ;
                 angle += 0.01 ;

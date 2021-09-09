@@ -111,7 +111,7 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     },
     // 关卡4
     {
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
     },
     // 关卡5
     {
