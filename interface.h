@@ -190,6 +190,7 @@ namespace magi {
         long long endTime;
 
         bool check(Vec2 pos, double r) {
+            bool res = false;
             std::shared_ptr<Bullets> Re = this -> getBullet();
             int size = Re -> size();
             for (int i = 0 ; i < size ; i++){
@@ -201,10 +202,10 @@ namespace magi {
                     collisionLock.lockForWrite();
                     collision.insert((*Re)[i].id);
                     collisionLock.unlock();
-                    return true;
+                    res = true;
                 }
             }
-            return false;
+            return res;
         }
 
         bool visible(const Point &p) {

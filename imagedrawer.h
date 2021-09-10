@@ -99,6 +99,7 @@ public:
 
     void run() {
         timer = new QTimer();
+        timer->setInterval(1000 / fps);
         connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()), Qt::DirectConnection);
         timer->start();
         exec();
