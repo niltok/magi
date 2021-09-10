@@ -16,7 +16,7 @@ namespace magiUI {
 
     extern Vec2 rSize;
 
-    extern Stage *stage;
+    extern std::shared_ptr<Stage> stage;
 
     extern double fps, mainFps, drawFps, checkFps;
     extern std::map<int, bool> keyDown;

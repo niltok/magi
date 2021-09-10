@@ -75,5 +75,10 @@ endif(WIN32)
 
 target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia ${lav})
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resource
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+file(GLOB_RECURSE resources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resource/*")
+
+foreach(file ${resources})
+    string(REGEX REPLACE "(.*)/.*" "\\1" path ${file})
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${file}
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${path})
+endforeach()

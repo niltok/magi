@@ -60,12 +60,13 @@ class ImageDrawer : public QThread {
     void drawCharacter(QPainter &painter) {
         painter.save();
         // 角色图片
-        const int usize = 20;
         if (cPic) {
+            const double t = 20. / std::max(cPic->width(), cPic->height());
+            const Vec2 usize = Vec2(cPic->width(), cPic->height()) * t;
             painter.drawImage(
-                        VRect((cPos - Vec2(usize) + stage->character.picOffset) * scale + center,
-                              (cPos + Vec2(usize) + stage->character.picOffset) * scale + center),
-                        *cPic, cPic->rect());
+                        VRect((cPos - usize + stage->character.picOffset) * scale + center,
+                              (cPos + usize + stage->character.picOffset) * scale + center),
+                        *cPic);
         }
         // 判定点
         auto c = stage->character.pointColor;
@@ -104,7 +105,15 @@ class ImageDrawer : public QThread {
         QPainter painter(&pixmap);
         // painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
+
+        if (background) {
+            Vec2 bSize(background->width(), background->height());
+            double t = std::max(widget.x / bSize.x,
+                                widget.y / bSize.y);
+            painter.drawImage(VRect(center - bSize * t / 2, center + bSize * t / 2), *background);
+        }
+        else painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
+
         drawCharacter(painter);
         drawBullets(painter);
         drawUI(painter);

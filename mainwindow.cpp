@@ -106,6 +106,7 @@ namespace magiUI{
             collisionLock.lockForWrite();
             collision.clear();
             collisionLock.unlock();
+            stage = std::make_shared<Stage>(Stage::stage[ui->stageChooser->currentRow()]);
             Timer::reset();
         }
         if (event->key() == 16777216) {
@@ -121,10 +122,12 @@ namespace magiUI{
     void stateReset() {
         cPos = Vec2 { 0, 100 };
         cLife = stage->character.lifeBase;
-        if (stage->character.pic != "")
+        if (stage->character.pic != "") {
             cPic = std::make_shared<QImage>(QString::fromStdString("resource/image/" + stage->character.pic));
-        if (stage->background != "")
+        } else cPic = nullptr;
+        if (stage->background != "") {
             background = std::make_shared<QImage>(QString::fromStdString("resource/image/" + stage->background));
+        } else background = nullptr;
         collisionLock.lockForWrite();
         collision.clear();
         collisionLock.unlock();
@@ -138,7 +141,7 @@ namespace magiUI{
     }
 
     void MainWindow::on_startGameButton_clicked() {
-        stage = &Stage::stage[ui->stageChooser->currentRow()];
+        stage = std::make_shared<Stage>(Stage::stage[ui->stageChooser->currentRow()]);
         debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
         ui->views->setCurrentIndex(1);
         stateReset();
@@ -153,6 +156,7 @@ namespace magiUI{
     }
 
     void MainWindow::on_againButton_clicked() {
+        stage = std::make_shared<Stage>(Stage::stage[ui->stageChooser->currentRow()]);
         ui->views->setCurrentIndex(1);
         stateReset();
     }

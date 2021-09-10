@@ -19,7 +19,7 @@ using namespace std::chrono;
 
 Vec2 rSize(300, 500);
 
-Stage *stage;
+std::shared_ptr<Stage> stage;
 
 double fps = 100, mainFps, drawFps, checkFps;
 std::map<int, bool> keyDown;
