@@ -22,24 +22,27 @@ namespace magiUI{
     {
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
+        ui->views->setCurrentIndex(1);
+        ui->stageView->repaint();
         ui->views->setCurrentIndex(0);
-        for (auto s : Stage::stage)
+        for (auto &s : Stage::stage)
             ui->stageChooser->addItem(QString::fromStdString(s.name));
         ui->stageChooser->setCurrentRow(0);
         startTimer(1000 / fps);
-        // std::cout << QDir::current().path().toStdString() << std::endl;
         player = new QMediaPlayer(this);
-        // player->setMedia(QUrl("qrc:/music/OdeToJoy1"));
-        // player->play();
         play = false;
         initBullets();
         drawer = std::make_shared<ImageDrawer>();
         drawer->start();
+        checker = std::make_shared<CollisionChecker>();
+        checker->start();
     }
 
     MainWindow::~MainWindow() {
         drawer->quit();
         drawer->wait();
+        checker->quit();
+        checker->wait();
         delete ui;
     }
 
@@ -100,7 +103,9 @@ namespace magiUI{
         if (event->isAutoRepeat()) return;
         keyDown[event->key()] = true;
         if (event->key() == 32) {
-            stage->collision.clear();
+            collisionLock.lockForWrite();
+            collision.clear();
+            collisionLock.unlock();
             Timer::reset();
         }
         if (event->key() == 16777216) {
@@ -114,24 +119,26 @@ namespace magiUI{
     }
 
     void stateReset() {
-        Timer::reset();
         cPos = Vec2 { 0, 100 };
-        player->stop();
-        if (stage->music != "") {
-            player->setMedia(QUrl(QString::fromLocal8Bit(stage->music.c_str())));
-            player->play();
-        }
         cLife = stage->character.lifeBase;
         if (stage->character.pic != "")
             cPic = std::make_shared<QImage>(QString::fromStdString(stage->character.pic));
-        stage->collision.clear();
+        collisionLock.lockForWrite();
+        collision.clear();
+        collisionLock.unlock();
+        player->stop();
+        if (stage->music != "") {
+            player->setMedia(QUrl(QString::fromStdString(stage->music)));
+            player->play();
+        }
+        Timer::reset();
         play = true;
     }
 
     void MainWindow::on_startGameButton_clicked() {
         stage = &Stage::stage[ui->stageChooser->currentRow()];
-        ui->views->setCurrentIndex(1);
         debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
+        ui->views->setCurrentIndex(1);
         stateReset();
     }
 

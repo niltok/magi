@@ -18,14 +18,12 @@ namespace magiUI {
 
     extern Stage *stage;
 
-    extern double fps, mainFps, drawFps;
+    extern double fps, mainFps, drawFps, checkFps;
     extern std::map<int, bool> keyDown;
 
-    extern QMutex sizeLock;
     extern Vec2 widget, center;
     extern double scale;
 
-    extern QMutex cLock;
     extern double cR;
     extern Vec2 cPos;
     extern size_t cLife;

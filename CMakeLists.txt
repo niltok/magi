@@ -43,6 +43,7 @@ statement.h
 ${QRC}
 colors.cpp
 imagedrawer.h
+collisionchecker.h
 )
 
 target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia)

@@ -26,6 +26,7 @@ class ImageDrawer : public QThread {
         ss << "Time: " << Timer::get() << "    ";
         ss << "Size: " << s << "    ";
         ss << "drawFPS: " << std::setw(7) << drawFps << "    ";
+        ss << "checkFPS: " << std::setw(7) << checkFps << "    ";
         ss << "mainFPS: " << std::setw(7) << mainFps << "    ";
         ss << "Life: " << cLife << " / " << stage->character.lifeBase << "    ";
 //        ss << "Key: [";
@@ -53,11 +54,12 @@ class ImageDrawer : public QThread {
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
-            if (!stage->visible(p)) continue;
+            auto pos = p.pos * scale + center;
+            if (!pos.inRect(Vec2(-p.r), widget + Vec2(p.r)) || !stage->visible(p)) continue;
             int r = p.r * scale;
             painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
-            painter.drawEllipse(VPoint(p.pos * scale + center), r, r);
+            painter.drawEllipse(VPoint(pos), r, r);
             // std::cout << p.id << std::endl;
         }
         painter.restore();
@@ -89,7 +91,7 @@ class ImageDrawer : public QThread {
         drawState(painter);
     }
 public:
-    QPixmap buffer;
+    QPixmap buffer, pixmap;
     QMutex bufferLock;
 
     QTimer *timer;
@@ -98,6 +100,7 @@ public:
 
     void run() {
         timer = new QTimer();
+        timer->setInterval(1000 / fps);
         connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()), Qt::DirectConnection);
         timer->start();
         exec();
@@ -107,22 +110,21 @@ public:
 public slots:
 
     void onTimeout() {
+        static time_point<system_clock> last = system_clock::now();
+        auto offset = system_clock::now() - last;
+        drawFps = 1e9 / duration_cast<nanoseconds>(offset).count();
+        last = system_clock::now();
 
         if (!play) return;
 
-        QPixmap pixmap(VSize(widget));
+        if (pixmap.size() != VSize(widget))
+            pixmap = QPixmap(VSize(widget));
 
         drawPixmap(pixmap);
 
         bufferLock.lock();
         buffer.swap(pixmap);
         bufferLock.unlock();
-
-        bool collision = stage->check(cPos, cR);
-        if (!debug && collision || Timer::get() > stage->endTime)
-            if (--cLife == 0) {
-                play = false;
-            }
     }
 };
 }
