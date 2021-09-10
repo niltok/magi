@@ -81,7 +81,7 @@ namespace magi {
         }
 
         Color operator+(const Color &c) const { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
-        Color operator*(double t) const { return Color(r * t, g * t, b * t); }
+        Color operator*(double t) const { return Color(r * t, g * t, b * t, a * t); }
 
         Color mix(const Color &c, double t) const {
             return (*this) * (1 - t) + c * t;
