@@ -26,10 +26,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED Multimedia)
 
-set(CMAKE_AUTORCC ON)
-set(QRC_FILE resource.qrc)
-qt5_add_resources(QRC ${QRC_FILE})
-
 add_executable(magi
 main.cpp
 mainwindow.cpp
@@ -40,32 +36,44 @@ utils.h
 utils.cpp
 stage.cpp
 statement.h
-${QRC}
 colors.cpp
 imagedrawer.h
 collisionchecker.h
 )
 
-target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia)
-
 #隐藏console
 if(WIN32)
-        if(MSVC)
-                set_target_properties(${PROJECT_NAME} PROPERTIES
-                        WIN32_EXECUTABLE YES
-                        LINK_FLAGS "/ENTRY:mainCRTStartup"
-                )
-        elseif(CMAKE_COMPILER_IS_GNUCXX)
-                        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows") # Not tested
-        else()
-                message(SEND_ERROR "You are using an unsupported Windows compiler! (Not MSVC or GCC)")
-        endif(MSVC)
+#    add_library(lav SHARED
+#        lib/avcodec-lav-58.dll
+#        lib/avfilter-lav-7.dll
+#        lib/avformat-lav-58.dll
+#        lib/avresample-lav-4.dll
+#        lib/avutil-lav-56.dll
+#        lib/IntelQuickSyncDecoder.dll
+#        lib/libbluray.dll
+#        lib/swscale-lav-5.dll)
+    if(MSVC)
+            set_target_properties(${PROJECT_NAME} PROPERTIES
+                    WIN32_EXECUTABLE YES
+                    LINK_FLAGS "/ENTRY:mainCRTStartup"
+            )
+    elseif(CMAKE_COMPILER_IS_GNUCXX)
+                    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows") # Not tested
+    else()
+            message(SEND_ERROR "You are using an unsupported Windows compiler! (Not MSVC or GCC)")
+    endif(MSVC)
 elseif(APPLE)
-        set_target_properties(${PROJECT_NAME} PROPERTIES
-                        MACOSX_BUNDLE YES
-        )
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+                    MACOSX_BUNDLE YES
+    )
 elseif(UNIX)
         # Nothing special required
 else()
         message(SEND_ERROR "You are on an unsupported platform! (Not Win32, Mac OS X or Unix)")
 endif(WIN32)
+
+
+target_link_libraries(magi PRIVATE Qt5::Widgets Qt5::Multimedia ${lav})
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resource
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)

@@ -128,7 +128,7 @@ namespace magiUI{
         collisionLock.unlock();
         player->stop();
         if (stage->music != "") {
-            player->setMedia(QUrl(QString::fromStdString(stage->music)));
+            player->setMedia(QUrl::fromLocalFile(QString::fromStdString(stage->music)));
             player->play();
         }
         Timer::reset();
