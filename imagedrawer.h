@@ -70,7 +70,8 @@ class ImageDrawer : public QThread {
         // 判定点
         auto c = stage->character.pointColor;
         painter.setPen(QPen(VColor(c), 3));
-        painter.setBrush(QColor(c.r, c.g, c.b, c.a * .75));
+        c.a *= .75;
+        painter.setBrush(VColor(c));
         int r = cR * scale;
         painter.drawEllipse(VPoint(cPos * scale + center), r, r);
 
@@ -84,7 +85,8 @@ class ImageDrawer : public QThread {
         double width = 2.5, ly = 225,
                life = 50. * cLife / stage->character.lifeBase;
         Vec2 lp(-life, ly - width), rp(life, ly + width);
-        painter.drawRoundedRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center), width * scale, width * scale);
+        painter.drawRoundedRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center),
+                                width * scale, width * scale);
         painter.setBrush(VColor(Color("ef233ca0")));
         painter.setPen(QPen(QColor(0, 0, 0, 0), 0));
         painter.drawRoundedRect(VRect(lp * scale + center, rp * scale + center), width * scale, width * scale);
@@ -100,6 +102,8 @@ class ImageDrawer : public QThread {
 
     void drawPixmap(QPixmap &pixmap) {
         QPainter painter(&pixmap);
+        // painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
         painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
         drawCharacter(painter);
         drawBullets(painter);

@@ -37,7 +37,7 @@ QMediaPlayer *player;
 
 time_point<system_clock> dura;
 
-std::shared_ptr<QImage> cPic;
+std::shared_ptr<QImage> cPic, background;
 
 QPoint VPoint(Vec2 p) {
     return QPoint(p.x, p.y);

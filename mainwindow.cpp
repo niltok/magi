@@ -122,13 +122,15 @@ namespace magiUI{
         cPos = Vec2 { 0, 100 };
         cLife = stage->character.lifeBase;
         if (stage->character.pic != "")
-            cPic = std::make_shared<QImage>(QString::fromStdString(stage->character.pic));
+            cPic = std::make_shared<QImage>(QString::fromStdString("resource/image/" + stage->character.pic));
+        if (stage->background != "")
+            background = std::make_shared<QImage>(QString::fromStdString("resource/image/" + stage->background));
         collisionLock.lockForWrite();
         collision.clear();
         collisionLock.unlock();
         player->stop();
         if (stage->music != "") {
-            player->setMedia(QUrl::fromLocalFile(QString::fromStdString(stage->music)));
+            player->setMedia(QUrl::fromLocalFile(QString::fromStdString("resource/music/" + stage->music)));
             player->play();
         }
         Timer::reset();

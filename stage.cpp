@@ -2,7 +2,7 @@
 
 using namespace std;
 
-magi::Character ch{"resource/image/Paimon1", magi::Vec2(0, -6), 5, magi::Color("ef233c")};                    // test 用 （删）
+magi::Character ch{"Paimon1.png", magi::Vec2(0, -6), 5, magi::Color("ef233c")};                    // test 用 （删）
 long long EndTime = 1000000;             // test 用 （删）
 
 
@@ -165,11 +165,11 @@ struct getBullet_Re {
 } */
 
 vector<magi::Stage> magi::Stage::stage {
-    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "resource/music/OdeToJoy1.wav",EndTime},
-    magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime},
-    magi::Stage{"迷宫", getBullet_Re{2}, ch, "",EndTime},
-    magi::Stage{"缩圈",getBullet_Re{3},ch,"",EndTime},
-    magi::Stage{"烟花",getBullet_Re{4},ch,"",EndTime}
+    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "OdeToJoy1.wav",EndTime, "EVA1.jpg"},
+    magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime, ""},
+    magi::Stage{"迷宫", getBullet_Re{2}, ch, "",EndTime, ""},
+    magi::Stage{"缩圈",getBullet_Re{3},ch,"",EndTime, ""},
+    magi::Stage{"烟花",getBullet_Re{4},ch,"",EndTime, ""}
 };
 
 

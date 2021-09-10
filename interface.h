@@ -198,6 +198,7 @@ namespace magi {
         Character character;
         std::string music;
         long long endTime;
+        std::string background;
 
         bool check(Vec2 pos, double r) {
             bool res = false;

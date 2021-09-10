@@ -34,7 +34,7 @@ namespace magiUI {
 
     extern time_point<system_clock> dura;
 
-    extern std::shared_ptr<QImage> cPic;
+    extern std::shared_ptr<QImage> cPic, background;
 
     extern QPoint VPoint(Vec2 p);
     extern QRect VRect(Vec2 lr, Vec2 rb);
