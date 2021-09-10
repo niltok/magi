@@ -42,6 +42,7 @@ class ImageDrawer : public QThread {
 
     void drawBorder(QPainter &painter) {
         painter.save();
+        painter.setPen(QPen(VColor(Color("212529")), 2));
         //painter.setBrush(QColor(255, 160, 90));
         painter.drawRect(VRect(-0.5 * rSize * scale + center,
                                0.5 * rSize * scale + center));
@@ -67,6 +68,7 @@ class ImageDrawer : public QThread {
 
     void drawCharacter(QPainter &painter) {
         painter.save();
+        // 角色图片
         const int usize = 20;
         if (cPic) {
             painter.drawImage(
@@ -74,11 +76,25 @@ class ImageDrawer : public QThread {
                               (cPos + Vec2(usize) + stage->character.picOffset) * scale + center),
                         *cPic, cPic->rect());
         }
+        // 判定点
         auto c = stage->character.pointColor;
         painter.setPen(QPen(VColor(c), 3));
         painter.setBrush(QColor(c.r, c.g, c.b, c.a * .75));
         int r = cR * scale;
         painter.drawEllipse(VPoint(cPos * scale + center), r, r);
+
+        painter.restore();
+    }
+
+    void drawUI(QPainter &painter) {
+        // 血量条
+        painter.save();
+        painter.setPen(QPen(VColor(Color("212529")), 2));
+        double width = 2.5, ly = 225,
+               life = 50. * cLife / stage->character.lifeBase;
+        Vec2 lp(-life, ly - width), rp(life, ly + width);
+        painter.fillRect(VRect(lp * scale + center, rp * scale + center), VColor(Color("ff006e")));
+        painter.drawRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center));
         painter.restore();
     }
 
@@ -88,6 +104,7 @@ class ImageDrawer : public QThread {
         drawBorder(painter);
         drawCharacter(painter);
         drawBullets(painter);
+        drawUI(painter);
         drawState(painter);
     }
 public:

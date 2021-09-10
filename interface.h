@@ -50,10 +50,10 @@ namespace magi {
         }
 
         std::string toHexRGBA() {
-            byte r = this->r * 255,
-                 g = this->g * 255,
-                 b = this->b * 255,
-                 a = this->a * 255;
+            int r = this->r * 255,
+                g = this->g * 255,
+                b = this->b * 255,
+                a = this->a * 255;
             return std::string {
                 toHex(r / 16),
                 toHex(r % 16),
@@ -67,9 +67,9 @@ namespace magi {
         }
 
         std::string toHexRGB() {
-            byte r = this->r * 255,
-                 g = this->g * 255,
-                 b = this->b * 255;
+            int r = this->r * 255,
+                g = this->g * 255,
+                b = this->b * 255;
             return std::string {
                 toHex(r / 16),
                 toHex(r % 16),
@@ -87,13 +87,13 @@ namespace magi {
             return (*this) * (1 - t) + c * t;
         }
 
-        static char toHex(byte c) {
+        static char toHex(int c) {
             if (c <= 9) return '0' + c;
             if (c <= 15) return 'A' + c - 10;
             return '?';
         }
 
-        static byte fromHex(char c) {
+        static int fromHex(char c) {
             if ('0' <= c && c <= '9') return c - '0';
             if ('a' <= c && c <= 'f') return c - 'a' + 10;
             if ('A' <= c && c <= 'F') return c - 'A' + 10;
