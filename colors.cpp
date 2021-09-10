@@ -27,6 +27,18 @@ ColorPattern &colors(const std::string &name) {
         },
 
         {
+            "EVA",{
+                {48, 42, 67},
+                {157, 86, 174},
+                {140, 227, 96},
+                {113, 115, 224},
+                {51, 64, 106},
+                {193, 97, 36},
+
+            }
+        },
+
+        {
             "rainbowLight",
             Color::fromCoolors("https://coolors.co/ffadad-ffd6a5-fdffb6-caffbf-9bf6ff-a0c4ff-bdb2ff-ffc6ff-fffffc")
         },

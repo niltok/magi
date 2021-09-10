@@ -159,23 +159,18 @@ struct Bullets_Info {
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
-        this -> EndT = StartT + 200000;                                                  // EndT 计算
+        this -> EndT = StartT + 9000;                                                  // EndT 计算
         double startt = StartT;
         double endt = this -> EndT;
         double angle = range.x ;
         int size_ = magi::colors("graduatedBlue").size() ;
         int colorsize = 10 ;
             for ( int i = 0 ; i < n ; i++ ) {
-                int colsize = (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1)));
-                int colsizenext = (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1)));
-                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)) ,
+                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ].mix(magi::colors("graduatedBlue")[ (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1))) ],(i%colorsize)/(colorsize-1.0)) ,
                                                     r , center , angle , speed , kind ) );
-                // cout << "(" << magi::colors("graduatedBlue")[colsize].r << "," << magi::colors("graduatedBlue")[colsize].g << "," << magi::colors("graduatedBlue")[colsize].b << ")," ;
-                // cout << "(" << magi::colors("graduatedBlue")[colsizenext].r << "," << magi::colors("graduatedBlue")[colsizenext].g << "," << magi::colors("graduatedBlue")[colsizenext].b << ")" ;
-                // cout << "(" << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).r << "," << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).g << "," << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).b << ")," << endl ;                
-                startt += 10 ;
-                endt += 10 ;
-                angle += 0.01 ;
+                startt += 5 ;
+                endt += 5 ;
+                angle += 0.005 ;
         }
     }
 };
@@ -183,6 +178,14 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
 // 烟花
 struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
     Creat_BulletsInfo_Fireworks () {
+        
+    }
+};
+
+// EVA
+
+struct Creat_BulletsInfo_EVA : public Bullets_Info {
+    Creat_BulletsInfo_EVA () {
         
     }
 };
