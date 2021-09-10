@@ -159,14 +159,15 @@ struct Bullets_Info {
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
-        this -> EndT = StartT + 100000;                                                  // EndT 计算
+        this -> EndT = StartT + 200000;                                                  // EndT 计算
         double startt = StartT;
         double endt = this -> EndT;
         double angle = range.x ;
         int size_ = magi::colors("graduatedBlue").size() ;
         int colorsize = 5 ;
             for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ] , r , center , angle , speed , kind ) );
+                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ].mix( magi::colors("graduatedBlue")[ (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1))) ] , i%colorsize ) ,
+                                                    r , center , angle , speed , kind ) );
                 startt += 10 ;
                 endt += 10 ;
                 angle += 0.01 ;

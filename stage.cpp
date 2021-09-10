@@ -115,7 +115,6 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     // 关卡5
     {
         make_shared<Bullets_Info> ( Bullets_Info ( 5 , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
-
     }
 };
 
