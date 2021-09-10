@@ -19,11 +19,13 @@ namespace magi {
     const double PI = std::acos(-1), PI2 = 2 * PI;
     
     struct Color {
-        byte r, g, b, a;
+        double r, g, b, a;
 
-        Color(byte r, byte g, byte b, byte a): r(r), g(g), b(b), a(a) {}
-        Color(byte r, byte g, byte b): Color(r, g, b, 255) {}
-        Color(): Color(0, 0, 0) {}
+        Color(double r, double g, double b, double a): r(r), g(g), b(b), a(a) {}
+        Color(double r, double g, double b): Color(r, g, b, 1.) {}
+        Color(int r, int g, int b, int a): r(r / 255.), g(g / 255.), b(b / 255.), a(a / 255.) {}
+        Color(int r, int g, int b): Color(r, g, b, 255) {}
+        Color(): Color(0., 0., 0.) {}
 
         Color(std::string s) {
             r = g = b = 0;
@@ -44,9 +46,14 @@ namespace magi {
             default:
                 break;
             }
+            r /= 255, g /= 255, b /= 255, a /= 255;
         }
 
         std::string toHexRGBA() {
+            byte r = this->r * 255,
+                 g = this->g * 255,
+                 b = this->b * 255,
+                 a = this->a * 255;
             return std::string {
                 toHex(r / 16),
                 toHex(r % 16),
@@ -60,6 +67,9 @@ namespace magi {
         }
 
         std::string toHexRGB() {
+            byte r = this->r * 255,
+                 g = this->g * 255,
+                 b = this->b * 255;
             return std::string {
                 toHex(r / 16),
                 toHex(r % 16),
@@ -74,7 +84,7 @@ namespace magi {
         Color operator*(double t) const { return Color(r * t, g * t, b * t); }
 
         Color mix(const Color &c, double t) const {
-            return (*this) * t + c * (1 - t);
+            return (*this) * (1 - t) + c * t;
         }
 
         static char toHex(byte c) {

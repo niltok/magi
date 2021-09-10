@@ -48,7 +48,7 @@ QRect VRect(Vec2 lr, Vec2 rb) {
 }
 
 QColor VColor(Color c) {
-    return QColor(c.r, c.g, c.b, c.a);
+    return QColor(c.r * 255, c.g * 255, c.b * 255, c.a * 255);
 }
 
 QSize VSize(Vec2 s) {
