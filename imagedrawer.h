@@ -71,7 +71,7 @@ class ImageDrawer : public QThread {
         // 判定点
         auto c = stage->character.pointColor;
         painter.setPen(QPen(VColor(c), 3));
-        c.a *= .75;
+        c.a *= .5;
         painter.setBrush(VColor(c));
         int r = cR * scale;
         painter.drawEllipse(VPoint(cPos * scale + center), r, r);
