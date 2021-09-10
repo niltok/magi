@@ -166,8 +166,13 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
         int size_ = magi::colors("graduatedBlue").size() ;
         int colorsize = 5 ;
             for ( int i = 0 ; i < n ; i++ ) {
-                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ].mix( magi::colors("graduatedBlue")[ (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1))) ] , i%colorsize ) ,
+                int colsize = (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1)));
+                int colsizenext = (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1)));
+                bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)) ,
                                                     r , center , angle , speed , kind ) );
+                // cout << "(" << magi::colors("graduatedBlue")[colsize].r << "," << magi::colors("graduatedBlue")[colsize].g << "," << magi::colors("graduatedBlue")[colsize].b << ")," ;
+                // cout << "(" << magi::colors("graduatedBlue")[colsizenext].r << "," << magi::colors("graduatedBlue")[colsizenext].g << "," << magi::colors("graduatedBlue")[colsizenext].b << ")" ;
+                // cout << "(" << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).r << "," << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).g << "," << magi::colors("graduatedBlue")[colsize].mix(magi::colors("graduatedBlue")[colsizenext],(i%colorsize)/(colorsize-1.0)).b << ")," << endl ;                
                 startt += 10 ;
                 endt += 10 ;
                 angle += 0.01 ;
