@@ -164,12 +164,14 @@ struct getBullet_Re {
     };
 } */
 
+magi::Character ch_adam {"EVA_Adam.png", magi::Vec2(-1.4, 6.5), 10, magi::Color("78000000")};
+
 vector<magi::Stage> magi::Stage::stage {
-    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch, "OdeToJoy1.wav",EndTime, "EVA1.jpg"},
-    magi::Stage{"四冲", getBullet_Re{1}, ch, "",EndTime, ""},
-    magi::Stage{"迷宫", getBullet_Re{2}, ch, "",EndTime, ""},
-    magi::Stage{"缩圈",getBullet_Re{3},ch,"",EndTime, ""},
-    magi::Stage{"烟花",getBullet_Re{4},ch,"",EndTime, ""}
+    magi::Stage{"Interlaced Bullets Test", getBullet_Re{0}, ch_adam, "OdeToJoy1.mp3",EndTime, "EVA1.jpg"},
+    magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "",EndTime, ""},
+    magi::Stage{"迷宫", getBullet_Re{2}, ch, "Sis puella magica!.mp3",EndTime, ""},
+    magi::Stage{"缩圈",getBullet_Re{3},ch,"青花瓷.mp3",EndTime, ""},
+    magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
 };
 
 
