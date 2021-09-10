@@ -164,7 +164,7 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
         double endt = this -> EndT;
         double angle = range.x ;
         int size_ = magi::colors("graduatedBlue").size() ;
-        int colorsize = 5 ;
+        int colorsize = 10 ;
             for ( int i = 0 ; i < n ; i++ ) {
                 int colsize = (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1)));
                 int colsizenext = (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1)));
