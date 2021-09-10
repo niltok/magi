@@ -40,15 +40,6 @@ class ImageDrawer : public QThread {
         painter.restore();
     }
 
-    void drawBorder(QPainter &painter) {
-        painter.save();
-        painter.setPen(QPen(VColor(Color("212529")), 2));
-        //painter.setBrush(QColor(255, 160, 90));
-        painter.drawRect(VRect(-0.5 * rSize * scale + center,
-                               0.5 * rSize * scale + center));
-        painter.restore();
-    }
-
     void drawBullets(QPainter &painter) {
         painter.save();
         std::shared_ptr<Bullets> bullets = stage->getBullet();
@@ -89,19 +80,27 @@ class ImageDrawer : public QThread {
     void drawUI(QPainter &painter) {
         // 血量条
         painter.save();
-        painter.setPen(QPen(VColor(Color("212529")), 2));
+        painter.setPen(QPen(VColor(Color("d90429a0")), 2));
         double width = 2.5, ly = 225,
                life = 50. * cLife / stage->character.lifeBase;
         Vec2 lp(-life, ly - width), rp(life, ly + width);
-        painter.fillRect(VRect(lp * scale + center, rp * scale + center), VColor(Color("ff006e")));
-        painter.drawRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center));
+        painter.drawRoundedRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center), width * scale, width * scale);
+        painter.setBrush(VColor(Color("ef233ca0")));
+        painter.setPen(QPen(QColor(0, 0, 0, 0), 0));
+        painter.drawRoundedRect(VRect(lp * scale + center, rp * scale + center), width * scale, width * scale);
+        painter.restore();
+        // 边框
+        painter.save();
+        painter.setPen(QPen(VColor(Color("212529a0")), 2));
+        //painter.setBrush(QColor(255, 160, 90));
+        painter.drawRect(VRect(-0.5 * rSize * scale + center,
+                               0.5 * rSize * scale + center));
         painter.restore();
     }
 
     void drawPixmap(QPixmap &pixmap) {
         QPainter painter(&pixmap);
         painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
-        drawBorder(painter);
         drawCharacter(painter);
         drawBullets(painter);
         drawUI(painter);
