@@ -11,6 +11,7 @@
 #include <QList>
 #include <set>
 #include <QReadWriteLock>
+#include <QPainter>
 
 namespace magi {
     extern std::set<size_t> collision;
@@ -133,8 +134,8 @@ namespace magi {
         double length() const { return std::sqrt(x * x + y * y); }
         Vec2 abs() const { return Vec2 {std::abs(x), std::abs(y)}; }
         Vec2 rotate(double angle) const {
-            return Vec2 { x * (std::cos(angle) - std::sin(angle)),
-                          y * (std::sin(angle) + std::cos(angle)) };
+            return Vec2 { x * std::cos(angle) - y * std::sin(angle),
+                          x * std::sin(angle) + y * std::cos(angle) };
         }
         Vec2 max(const Vec2 &v) const {
             return Vec2 {std::max(x, v.x), std::max(y, v.y)};
@@ -199,6 +200,7 @@ namespace magi {
         std::string music;
         long long endTime;
         std::string background;
+        std::function<void(QPainter&)> drawEffect = emptyEffect;
 
         bool check(Vec2 pos, double r) {
             bool res = false;
@@ -229,6 +231,8 @@ namespace magi {
 
         // 关卡入口
         static std::vector<Stage> stage;
+
+        static void emptyEffect(QPainter&) {}
     };
 
     void initBullets();

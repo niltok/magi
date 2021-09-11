@@ -33,9 +33,8 @@ class ImageDrawer : public QThread {
 //        for (auto kv : keyDown)
 //            if (kv.second) ss << kv.first << ",";
 //        ss << "]    ";
-        QFont font;
-        font.setPointSize(10);
-        painter.setFont(font);
+        painter.setFont(QFont("苹方 常规", 10));
+        painter.setPen(VColor(Color("3fa7d6")));
         painter.drawText(10, 30, QString::fromStdString(ss.str()));
         painter.restore();
     }
@@ -89,16 +88,16 @@ class ImageDrawer : public QThread {
         painter.drawRoundedRect(VRect(Vec2(-50, ly - width) * scale + center, Vec2(50, ly + width) * scale + center),
                                 width * scale, width * scale);
         painter.setBrush(VColor(Color("ef233ca0")));
-        painter.setPen(QPen(QColor(0, 0, 0, 0), 0));
+        painter.setPen(Qt::PenStyle::NoPen);
         painter.drawRoundedRect(VRect(lp * scale + center, rp * scale + center), width * scale, width * scale);
         painter.restore();
         // 边框
-        painter.save();
-        painter.setPen(QPen(VColor(Color("212529a0")), 2));
-        //painter.setBrush(QColor(255, 160, 90));
-        painter.drawRect(VRect(-0.5 * rSize * scale + center,
-                               0.5 * rSize * scale + center));
-        painter.restore();
+//        painter.save();
+//        painter.setPen(QPen(VColor(Color("212529a0")), 2));
+//        //painter.setBrush(QColor(255, 160, 90));
+//        painter.drawRect(VRect(-0.5 * rSize * scale + center,
+//                               0.5 * rSize * scale + center));
+//        painter.restore();
     }
 
     void drawPixmap(QPixmap &pixmap) {
@@ -116,6 +115,7 @@ class ImageDrawer : public QThread {
 
         drawCharacter(painter);
         drawBullets(painter);
+        stage->drawEffect(painter);
         drawUI(painter);
         drawState(painter);
     }

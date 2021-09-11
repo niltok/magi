@@ -9,6 +9,7 @@
 #include <iostream>
 #include "QDir"
 #include <chrono>
+#include <QFontDatabase>
 
 using namespace magi;
 using namespace std::chrono;
@@ -20,6 +21,7 @@ namespace magiUI{
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
     {
+        QFontDatabase::addApplicationFont("resource/font/PingFang Regular.ttf");
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
         ui->views->setCurrentIndex(1);
@@ -150,8 +152,8 @@ namespace magiUI{
     void MainWindow::resizeEvent(QResizeEvent *event) {
         Q_UNUSED(event);
         widget = Vec2(width(), height());
-        scale = std::min((widget.x - 18) / rSize.x,
-                         (widget.y - 30) / rSize.y);
+        scale = std::min((widget.x - 24) / rSize.x,
+                         (widget.y - 40) / rSize.y);
         center = widget / 2;
     }
 

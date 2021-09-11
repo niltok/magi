@@ -39,6 +39,8 @@ statement.h
 colors.cpp
 imagedrawer.h
 collisionchecker.h
+effects.h
+effects.cpp
 )
 
 #隐藏console
