@@ -19,6 +19,7 @@ vector<vector<shared_ptr<Bullet_Style>>> bullets(5);
 vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     // 关卡1
     {
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_EVA (1 , 5000 , 250 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line) )
         // make_shared<Bullets_Info> ( Bullets_Info ( 1 , 1000 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
         // make_shared<Bullets_Info> ( Bullets_Info ( 1 , 1500 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , Line ) ),
         // make_shared<Bullets_Info> ( Bullets_Info ( 1 , 2000 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
@@ -110,7 +111,7 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     },
     // 关卡4
     {
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
     },
     // 关卡5
     {

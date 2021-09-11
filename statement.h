@@ -158,12 +158,12 @@ struct Bullets_Info {
 
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
-    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
+    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         this -> EndT = StartT + 9000;                                                  // EndT 计算
         double startt = StartT;
         double endt = this -> EndT;
         double angle = range.x ;
-        int size_ = magi::colors("graduatedBlue").size() ;
+        int size_ = magi::colors("EVA").size() ;
         int colorsize = 10 ;
             for ( int i = 0 ; i < n ; i++ ) {
                 bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ].mix(magi::colors("graduatedBlue")[ (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1))) ],(i%colorsize)/(colorsize-1.0)) ,
@@ -177,16 +177,27 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
 
 // 烟花
 struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
-    Creat_BulletsInfo_Fireworks () {
-        
+    Creat_BulletsInfo_Fireworks  () {
+
     }
 };
 
 // EVA
-
 struct Creat_BulletsInfo_EVA : public Bullets_Info {
-    Creat_BulletsInfo_EVA () {
-        
+    Creat_BulletsInfo_EVA ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
+        this -> EndT = StartT + 9000;                                                  // EndT 计算
+        double startt = StartT;
+        double endt = this -> EndT;
+        int size_ = magi::colors("EVA").size() ;
+            for ( int i = 0 ; i < n ; i++ ) {
+                for ( int j = 0 ; j < 60 ; j++ ) {
+                    bullets[NUM -1].push_back( Creat ( startt , endt , magi::colors("EVA")[i%size_] , r , center , (range.x + ((range.y-range.x)/60 * j)) , speed , kind ) );
+                }
+                range.x += pow(-1,i%2)*0.052359876 ;
+                range.y += pow(-1,i%2)*0.052359876 ;
+                startt += 500 ;
+                endt += 500 ;
+            }
     }
 };
 
