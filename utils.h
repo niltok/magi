@@ -38,6 +38,7 @@ namespace magiUI {
 
     extern std::shared_ptr<QImage> cPic, background;
 
+    extern long long audioBlock;
     extern int audioRate;
     extern std::vector<float> audioRaw;
     extern std::vector<std::vector<float>> audioInfo;

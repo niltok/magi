@@ -236,4 +236,6 @@ namespace magi {
     };
 
     void initBullets();
+
+    std::vector<float> audioFreq();
 }

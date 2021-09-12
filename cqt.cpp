@@ -159,7 +159,7 @@ namespace CQT {
     {
 
         // HOP長を計算
-        int hopLength = y.size(); // (int)round((1.0 / samples_per_second) * sr);
+        int hopLength =  (int)round((1.0 / samples_per_second) * sr);
 
         // 最小周波数をチューニングに合わせる
         fmin = fmin * pow(2.0f, (tuning / bins_per_octave));

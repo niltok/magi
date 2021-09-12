@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <QTimer>
 #include <iostream>
+#include <cmath>
 
 namespace magiUI {
 class ImageDrawer : public QThread {
@@ -29,6 +30,7 @@ class ImageDrawer : public QThread {
         ss << "checkFPS: " << std::setw(10) << checkFps << "    ";
         ss << "mainFPS: " << std::setw(10) << mainFps << "    ";
         ss << "audioFPS: " << std::setw(10) << audioFps << "    ";
+        if (audioInfo.size()) ss << "audioSize: " << std::setw(10) << audioInfo[0].size() << "     ";
         ss << "Life: " << cLife << " / " << stage->character.lifeBase << "    ";
 //        ss << "Key: [";
 //        for (auto kv : keyDown)
@@ -103,16 +105,15 @@ class ImageDrawer : public QThread {
     }
 
     void drawCQT(QPainter &painter) {
-        audioInfoLock.lock();
-        auto info = audioInfo;
-        audioInfoLock.unlock();
+        auto info = audioFreq();
+        if (info.size() == 0) return;
         painter.save();
         painter.setPen(Qt::PenStyle::NoPen);
         painter.setBrush(VColor(Color("e92c2480")));
         double w = rSize.x / info.size();
         for (auto i = 0ull; i < info.size(); i++) {
             double start = -rSize.x / 2 + i * w;
-            Vec2 lt(start, rSize.y / 2 - info[i][0] / 10), rb(start + w, rSize.y / 2);
+            Vec2 lt(start, rSize.y / 2 - std::max(0.f, info[i] / 10 - 50)), rb(start + w, rSize.y / 2);
             painter.drawRect(VRect(lt * scale + center, rb * scale + center));
         }
         painter.restore();

@@ -39,15 +39,18 @@ public slots:
         if (!play) return;
 
         audioRawLock.lock();
-        auto vbuf = audioRaw;
+        std::vector<float> vbuf;
+        vbuf.swap(audioRaw);
         auto rate = audioRate;
         audioRawLock.unlock();
 
         if (vbuf.empty()) return;
-        auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12 * 3, 20, 261.63, 20);
+
+        auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12, 100, 130.81, 20);
 
         audioInfoLock.lock();
         audioInfo.swap(res);
+        audioBlock = Timer::get();
         audioInfoLock.unlock();
     }
 };
