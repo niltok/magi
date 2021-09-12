@@ -41,6 +41,9 @@ imagedrawer.h
 collisionchecker.h
 effects.h
 effects.cpp
+cqt.h
+cqt.cpp
+audioprocesser.h
 )
 
 #隐藏console

@@ -5,6 +5,7 @@
 #include "interface.h"
 #include "imagedrawer.h"
 #include "collisionchecker.h"
+#include "audioprocesser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +25,7 @@ namespace magiUI {
         Ui::MainWindow *ui;
         std::shared_ptr<ImageDrawer> drawer;
         std::shared_ptr<CollisionChecker> checker;
+        std::shared_ptr<AudioProcesser> audio;
 
         // QObject interface
     public:
@@ -43,6 +45,8 @@ namespace magiUI {
         void on_againButton_clicked();
 
         void on_backButton_clicked();
+
+        void onProbe(const QAudioBuffer&);
 
     protected:
         void keyReleaseEvent(QKeyEvent *event);

@@ -7,6 +7,7 @@
 #include <chrono>
 #include "QtMultimedia/QMediaPlayer"
 #include <QReadWriteLock>
+#include <QAudioProbe>
 
 namespace magi {
 std::set<size_t> collision{};
@@ -21,7 +22,7 @@ Vec2 rSize(300, 500);
 
 std::shared_ptr<Stage> stage;
 
-double fps = 100, mainFps, drawFps, checkFps;
+double fps = 100, mainFps, drawFps, checkFps, audioFps;
 std::map<int, bool> keyDown;
 
 Vec2 widget, center;
@@ -34,10 +35,16 @@ size_t cLife;
 bool debug, play;
 
 QMediaPlayer *player;
+QAudioProbe *probe;
 
 time_point<system_clock> dura;
 
 std::shared_ptr<QImage> cPic, background;
+
+int audioRate;
+std::vector<float> audioRaw;
+std::vector<std::vector<float>> audioInfo;
+QMutex audioInfoLock, audioRawLock;
 
 QPoint VPoint(Vec2 p) {
     return QPoint(p.x, p.y);

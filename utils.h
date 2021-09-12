@@ -8,6 +8,7 @@
 #include <map>
 #include <chrono>
 #include "QtMultimedia/QMediaPlayer"
+#include <QAudioProbe>
 
 using namespace magi;
 
@@ -18,7 +19,7 @@ namespace magiUI {
 
     extern std::shared_ptr<Stage> stage;
 
-    extern double fps, mainFps, drawFps, checkFps;
+    extern double fps, mainFps, drawFps, checkFps, audioFps;
     extern std::map<int, bool> keyDown;
 
     extern Vec2 widget, center;
@@ -31,10 +32,16 @@ namespace magiUI {
     extern bool debug, play;
 
     extern QMediaPlayer *player;
+    extern QAudioProbe *probe;
 
     extern time_point<system_clock> dura;
 
     extern std::shared_ptr<QImage> cPic, background;
+
+    extern int audioRate;
+    extern std::vector<float> audioRaw;
+    extern std::vector<std::vector<float>> audioInfo;
+    extern QMutex audioInfoLock, audioRawLock;
 
     extern QPoint VPoint(Vec2 p);
     extern QRect VRect(Vec2 lr, Vec2 rb);
