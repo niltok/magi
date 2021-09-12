@@ -10,6 +10,9 @@
 #include "QDir"
 #include <chrono>
 #include <QFontDatabase>
+#include <QAudioProbe>
+#include "cqt.h"
+#include "audioprocesser.h"
 
 using namespace magi;
 using namespace std::chrono;
@@ -21,6 +24,7 @@ namespace magiUI{
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
     {
+        std::cout << (size_t)QThread::currentThreadId() << std::endl;
         QFontDatabase::addApplicationFont("resource/font/PingFang Regular.ttf");
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
@@ -32,6 +36,11 @@ namespace magiUI{
         ui->stageChooser->setCurrentRow(0);
         startTimer(1000 / fps);
         player = new QMediaPlayer(this);
+        audio = std::make_shared<AudioProcesser>();
+        audio->start();
+        probe = new QAudioProbe(this);
+        probe->setSource(player);
+        connect(probe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(onProbe(QAudioBuffer)));
         play = false;
         initBullets();
         drawer = std::make_shared<ImageDrawer>();
@@ -45,6 +54,8 @@ namespace magiUI{
         drawer->wait();
         checker->quit();
         checker->wait();
+        audio->quit();
+        audio->wait();
         delete ui;
     }
 
@@ -134,6 +145,12 @@ namespace magiUI{
         collision.clear();
         collisionLock.unlock();
         player->stop();
+        audioRawLock.lock();
+        audioRaw.clear();
+        audioRawLock.unlock();
+        audioInfoLock.lock();
+        audioInfo.clear();
+        audioInfoLock.unlock();
         if (stage->music != "") {
             player->setMedia(QUrl::fromLocalFile(QString::fromStdString("resource/music/" + stage->music)));
             player->play();
@@ -166,6 +183,18 @@ namespace magiUI{
     void MainWindow::on_backButton_clicked() {
         stage = nullptr;
         ui->views->setCurrentIndex(0);
+    }
+
+    void MainWindow::onProbe(const QAudioBuffer &buffer) {
+        auto raw = buffer.constData<quint16>();
+        auto size = buffer.sampleCount();
+        std::vector<float> vbuf(size);
+        for(int i = 0; i < size; i++)
+            vbuf[i] = raw[i];
+        audioRawLock.lock();
+        audioRate = buffer.format().sampleRate();
+        audioRaw.swap(vbuf);
+        audioRawLock.unlock();
     }
 }
 

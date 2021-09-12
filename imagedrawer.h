@@ -23,11 +23,12 @@ class ImageDrawer : public QThread {
         painter.save();
         std::stringstream ss;
         ss << std::setprecision(2) << std::fixed;
-        ss << "Time: " << Timer::get() << "    ";
-        ss << "Size: " << s << "    ";
-        ss << "drawFPS: " << std::setw(7) << drawFps << "    ";
-        ss << "checkFPS: " << std::setw(7) << checkFps << "    ";
-        ss << "mainFPS: " << std::setw(7) << mainFps << "    ";
+        ss << "Time: " << std::setw(10) << Timer::get() << "    ";
+        ss << "Size: " << std::setw(10) << s << "    ";
+        ss << "drawFPS: " << std::setw(10) << drawFps << "    ";
+        ss << "checkFPS: " << std::setw(10) << checkFps << "    ";
+        ss << "mainFPS: " << std::setw(10) << mainFps << "    ";
+        ss << "audioFPS: " << std::setw(10) << audioFps << "    ";
         ss << "Life: " << cLife << " / " << stage->character.lifeBase << "    ";
 //        ss << "Key: [";
 //        for (auto kv : keyDown)
@@ -59,6 +60,7 @@ class ImageDrawer : public QThread {
     void drawCharacter(QPainter &painter) {
         painter.save();
         // 角色图片
+        painter.setPen(Qt::PenStyle::NoPen);
         if (cPic) {
             const double t = 20. / std::max(cPic->width(), cPic->height());
             const Vec2 usize = Vec2(cPic->width(), cPic->height()) * t;
@@ -100,10 +102,26 @@ class ImageDrawer : public QThread {
 //        painter.restore();
     }
 
+    void drawCQT(QPainter &painter) {
+        audioInfoLock.lock();
+        auto info = audioInfo;
+        audioInfoLock.unlock();
+        painter.save();
+        painter.setPen(Qt::PenStyle::NoPen);
+        painter.setBrush(VColor(Color("e92c2480")));
+        double w = rSize.x / info.size();
+        for (auto i = 0ull; i < info.size(); i++) {
+            double start = -rSize.x / 2 + i * w;
+            Vec2 lt(start, rSize.y / 2 - info[i][0] / 10), rb(start + w, rSize.y / 2);
+            painter.drawRect(VRect(lt * scale + center, rb * scale + center));
+        }
+        painter.restore();
+    }
+
     void drawPixmap(QPixmap &pixmap) {
         QPainter painter(&pixmap);
         // painter.setRenderHint(QPainter::Antialiasing);
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        // painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
         if (background) {
             Vec2 bSize(background->width(), background->height());
@@ -117,6 +135,7 @@ class ImageDrawer : public QThread {
         drawBullets(painter);
         stage->drawEffect(painter);
         drawUI(painter);
+        drawCQT(painter);
         drawState(painter);
     }
 public:
