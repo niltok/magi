@@ -19,7 +19,7 @@ extern int StageNum;
 
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
-enum Kind { Line , Arc , ReverseLine , ReverseArc , Arc_SpeedUp };                  // 弹幕类型
+enum Kind { Line , Arc , ReverseLine , ReverseArc , Arc_SpeedUp , Line_ChangeSpeed };                  // 弹幕类型
 
 // 弹幕样式
 struct Bullet_Style {
@@ -58,6 +58,30 @@ struct Bullet_Arc : public Bullet_Style {
         return this -> point.pos;
     }
 };
+
+// 自定义变速反向直线
+struct BulletLine_ChangeSpeed : public Bullet_Style {
+    BulletLine_ChangeSpeed ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , double Afterspeed , long long ChangeT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,0,0) , ChangeT(ChangeT) , Afterspeed(Afterspeed) {
+        this -> BeforeT = 120/speed;
+        this -> AfterT = 120/Afterspeed;
+        this -> EndT = ChangeT + AfterT;
+        this -> StartT = this -> EndT - EndT;
+        }
+    magi::Vec2 Pos () {
+        long long RealT = magi::Timer::get() ;
+        long long RelaT = EndT - RealT + (BeforeT - AfterT);
+        double Speed = this -> speed ;
+        if ( this -> ChangeT < RealT ) { Speed = this -> Afterspeed; RelaT = EndT - RealT; }
+        this -> point.pos.x = cos(angle)*Speed*RelaT + center.x ;
+        this -> point.pos.y = sin(angle)*Speed*RelaT + center.y ;
+        // cout << "(" << StartT << "," << EndT << ")" << endl ;
+        return this -> point.pos;
+    }
+    long long ChangeT;
+    double Afterspeed;
+    long long BeforeT,AfterT;
+};
+
 // 变速曲线
 struct BulletArc_SpeedUp : public Bullet_Style {
     BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
@@ -156,6 +180,35 @@ struct Bullets_Info {
     // vector<shared_ptr<Bullet_Style>> bullets ;
 };
 
+// EVA
+struct Creat_BulletsInfo_EVA : public Bullets_Info {
+    Creat_BulletsInfo_EVA ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
+        this -> EndT = StartT + 9000;                                                  // EndT 计算
+        double startt = StartT;
+        double endt = this -> EndT;
+        int size_ = magi::colors("EVA").size() ;
+            for ( int i = 0 ; i < n ; i++ ) {
+                for ( int j = 0 ; j < 60 ; j++ ) {
+                    bullets[NUM -1].push_back( Creat ( startt , endt , magi::colors("EVA")[i%size_] , r , center , (range.x + ((range.y-range.x)/60 * j)) , speed , kind ) );
+                }
+                range.x += pow(-1,i%2)*0.052359876 ;
+                range.y += pow(-1,i%2)*0.052359876 ;
+                startt += 500 ;
+                endt += 500 ;
+            }
+    }
+};
+
+// 迷宫
+struct Creat_BulletsInfo_Maze : public Bullets_Info {
+    Creat_BulletsInfo_Maze ( int NUM , long long ChangeT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , double Afterspeed ) {
+        this -> EndT = 5000;
+        for (int i =0; i < n ; i++) {
+            bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center,(range.x + ((range.y-range.x)/n * i)),speed,Afterspeed,ChangeT,EndT)) );ID++;
+        }
+    }
+};
+
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
@@ -179,25 +232,6 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
 struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
     Creat_BulletsInfo_Fireworks  () {
 
-    }
-};
-
-// EVA
-struct Creat_BulletsInfo_EVA : public Bullets_Info {
-    Creat_BulletsInfo_EVA ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
-        this -> EndT = StartT + 9000;                                                  // EndT 计算
-        double startt = StartT;
-        double endt = this -> EndT;
-        int size_ = magi::colors("EVA").size() ;
-            for ( int i = 0 ; i < n ; i++ ) {
-                for ( int j = 0 ; j < 60 ; j++ ) {
-                    bullets[NUM -1].push_back( Creat ( startt , endt , magi::colors("EVA")[i%size_] , r , center , (range.x + ((range.y-range.x)/60 * j)) , speed , kind ) );
-                }
-                range.x += pow(-1,i%2)*0.052359876 ;
-                range.y += pow(-1,i%2)*0.052359876 ;
-                startt += 500 ;
-                endt += 500 ;
-            }
     }
 };
 
