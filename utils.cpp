@@ -3,6 +3,7 @@
 #include <cmath>
 #include "interface.h"
 #include <memory>
+#include <complex>
 #include <map>
 #include <chrono>
 #include "QtMultimedia/QMediaPlayer"
@@ -16,22 +17,21 @@ namespace magi {
 using namespace magiUI;
 std::set<size_t> collision{};
 QReadWriteLock collisionLock;
-void freqReduce(std::vector<float> &f) {
-    size_t len = 12;
-    for (size_t l = 0; l < len; l++) {
-        for (size_t i = l + l; i < f.size(); i += len)
-            f[l] = std::max(f[l], f[i]);
-    }
-    f.resize(len);
+double pitchFreq(double p) {
+    return 440 * pow(2, p / 12);
 }
-std::vector<float> audioFreq() {
+std::vector<double> audioFreq() {
     audioInfoLock.lock();
-    std::vector<float> res(audioInfo.size());
-    auto delta = Timer::get() - audioBlock;
-    for (size_t i = 0; i < res.size(); i++)
-        res[i] = audioInfo[i][(audioInfo[i].size() - 1) * std::max(0., std::min(1., delta / 100.))];
+    //std::vector<double> res(5 * 12);
+    std::vector<double> res(audioInfo.size());
+    for (size_t i = 0; i< res.size(); i++)
+        res[i] = audioInfo[i].length();
+    //auto rate = audioRate;
+    //auto delta = Timer::get() - audioBlock;
+    //if (audioInfo.size())
+    //    for (size_t i = 0; i < res.size(); i++)
+    //        res[i] = audioInfo[pitchFreq(i - 33) * audioInfo.size() / rate].length();
     audioInfoLock.unlock();
-    // freqReduce(res);
     return res;
 }
 }
@@ -65,8 +65,8 @@ std::shared_ptr<QImage> cPic, background;
 
 long long audioBlock;
 int audioRate;
-std::vector<float> audioRaw;
-std::vector<std::vector<float>> audioInfo;
+std::vector<Vec2> audioRaw;
+std::vector<Vec2> audioInfo;
 QMutex audioInfoLock, audioRawLock;
 
 QPoint VPoint(Vec2 p) {

@@ -30,7 +30,7 @@ class ImageDrawer : public QThread {
         ss << "checkFPS: " << std::setw(10) << checkFps << "    ";
         ss << "mainFPS: " << std::setw(10) << mainFps << "    ";
         ss << "audioFPS: " << std::setw(10) << audioFps << "    ";
-        if (audioInfo.size()) ss << "audioSize: " << std::setw(10) << audioInfo[0].size() << "     ";
+        if (audioInfo.size()) ss << "Freq/block: " << std::setw(10) << audioRate / audioInfo.size() << "     ";
         ss << "Life: " << cLife << " / " << stage->character.lifeBase << "    ";
 //        ss << "Key: [";
 //        for (auto kv : keyDown)
@@ -104,7 +104,7 @@ class ImageDrawer : public QThread {
 //        painter.restore();
     }
 
-    void drawCQT(QPainter &painter) {
+    void drawFreq(QPainter &painter) {
         auto info = audioFreq();
         if (info.size() == 0) return;
         painter.save();
@@ -113,7 +113,7 @@ class ImageDrawer : public QThread {
         double w = rSize.x / info.size();
         for (auto i = 0ull; i < info.size(); i++) {
             double start = -rSize.x / 2 + i * w;
-            Vec2 lt(start, rSize.y / 2 - std::max(0.f, info[i] / 10 - 50)), rb(start + w, rSize.y / 2);
+            Vec2 lt(start, rSize.y / 2 - info[i] / 20), rb(start + w, rSize.y / 2);
             painter.drawRect(VRect(lt * scale + center, rb * scale + center));
         }
         painter.restore();
@@ -136,7 +136,7 @@ class ImageDrawer : public QThread {
         drawBullets(painter);
         stage->drawEffect(painter);
         drawUI(painter);
-        drawCQT(painter);
+        drawFreq(painter);
         drawState(painter);
     }
 public:

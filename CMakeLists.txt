@@ -41,8 +41,8 @@ imagedrawer.h
 collisionchecker.h
 effects.h
 effects.cpp
-cqt.h
-cqt.cpp
+fft.h
+fft.cpp
 audioprocesser.h
 )
 

@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QMutex>
 #include <QTimer>
-#include "cqt.h"
+#include "fft.h"
 
 namespace magiUI {
 class AudioProcesser : public QThread {
@@ -39,17 +39,25 @@ public slots:
         if (!play) return;
 
         audioRawLock.lock();
-        std::vector<float> vbuf;
+        std::vector<Vec2> vbuf;
         vbuf.swap(audioRaw);
         auto rate = audioRate;
         audioRawLock.unlock();
 
         if (vbuf.empty()) return;
 
-        auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12, 100, 130.81, 20);
+        size_t originSize = vbuf.size(), frame = 5, psize = 1;
+        while (psize < vbuf.size()) psize <<= 1;
+        vbuf.resize(psize);
+//        for (int n = 1; n < frame; n++)
+//            for (int i = 0; i < originSize; i++)
+//                vbuf[n * originSize + i] = vbuf[i];
+        fft(vbuf.begin(), vbuf.end(), -1);
+        for (auto &i : vbuf) i /= vbuf.size();
+        //auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12, 100, 130.81, 20);
 
         audioInfoLock.lock();
-        audioInfo.swap(res);
+        audioInfo.swap(vbuf);
         audioBlock = Timer::get();
         audioInfoLock.unlock();
     }

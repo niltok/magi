@@ -9,6 +9,7 @@
 #include <chrono>
 #include "QtMultimedia/QMediaPlayer"
 #include <QAudioProbe>
+#include <complex>
 
 using namespace magi;
 
@@ -40,8 +41,8 @@ namespace magiUI {
 
     extern long long audioBlock;
     extern int audioRate;
-    extern std::vector<float> audioRaw;
-    extern std::vector<std::vector<float>> audioInfo;
+    extern std::vector<Vec2> audioRaw;
+    extern std::vector<Vec2> audioInfo;
     extern QMutex audioInfoLock, audioRawLock;
 
     extern QPoint VPoint(Vec2 p);

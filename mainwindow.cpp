@@ -11,7 +11,7 @@
 #include <chrono>
 #include <QFontDatabase>
 #include <QAudioProbe>
-#include "cqt.h"
+#include "fft.h"
 #include "audioprocesser.h"
 
 using namespace magi;
@@ -188,9 +188,9 @@ namespace magiUI{
     void MainWindow::onProbe(const QAudioBuffer &buffer) {
         auto raw = buffer.constData<quint16>();
         auto size = buffer.sampleCount();
-        std::vector<float> vbuf(size);
+        std::vector<Vec2> vbuf(size);
         for(int i = 0; i < size; i++)
-            vbuf[i] = raw[i];
+            vbuf[i] = Vec2(raw[i], 0);
         audioRawLock.lock();
         audioRate = buffer.format().sampleRate();
         audioRaw.swap(vbuf);

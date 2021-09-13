@@ -130,6 +130,7 @@ namespace magi {
         Vec2 &operator*=(double s) { x *= s, y *= s; return *this; }
         friend Vec2 operator*(double s, const Vec2 &v) { return v * s; }
         Vec2 operator/(double s) const { return Vec2 {x / s, y / s}; }
+        Vec2 &operator/=(double s) { x /= s, y /= s; return *this; }
 
         double length() const { return std::sqrt(x * x + y * y); }
         Vec2 abs() const { return Vec2 {std::abs(x), std::abs(y)}; }
@@ -154,6 +155,10 @@ namespace magi {
         double cross(Vec2 v) const { return x * v.y - y * v.x; }
         // 虚数乘
         Vec2 operator*(Vec2 v) const { return Vec2 {cross(v), dot(v)}; }
+        // 欧拉公式
+        Vec2 exp() const {
+            return std::exp(x) * Vec2 {std::cos(y), std::sin(y)};
+        }
     };
 
     struct Point {
@@ -237,5 +242,5 @@ namespace magi {
 
     void initBullets();
 
-    std::vector<float> audioFreq();
+    std::vector<double> audioFreq();
 }
