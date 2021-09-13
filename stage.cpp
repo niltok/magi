@@ -81,7 +81,24 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     },
     // 关卡4
     {
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , 10000 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 1000 , (15860 - 1000) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 19400 , (36150 - 19400) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 37230 , (51140 - 37230) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 55030 , (87300 - 55030) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 90815 , (100000 - 90815) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 100300 , (100500 - 100300) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 100850 , (101000 - 100850) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 101430 , (101600 - 101430) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 101960 , (102000 - 101960) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 102520 , (102650 - 102520) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 103070 , (103200 - 103070) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 103630 , (103730 - 103630) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 104185 , (104295 - 104185) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 104740 , (104850 - 104740) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 108320 , (125030 - 108329) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 126020 , (140030 - 125020) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 143930 , (176115 - 143930) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( 4 , 179480 , (211680 - 179480) / 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
     },
     // 关卡5
     {
@@ -141,7 +158,7 @@ vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Death and Rebirth", getBullet_Re{0}, ch_adam, "OdeToJoy1.mp3",140000, "EVA1.jpg", magiUI::EVAEffects},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "440.mp3",EndTime, ""},
     magi::Stage{"迷宫", getBullet_Re{2}, ch, "Sis puella magica!.mp3",EndTime, ""},
-    magi::Stage{"缩圈",getBullet_Re{3},ch,"青花瓷.mp3",EndTime, ""},
+    magi::Stage{"缩圈",getBullet_Re{3},ch,"青花瓷.mp3", 229333, ""},
     magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
 };
 
