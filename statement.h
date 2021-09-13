@@ -20,6 +20,7 @@ extern int StageNum;
 const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
 enum Kind { Line , Arc , ReverseLine , ReverseArc , Arc_SpeedUp , Line_ChangeSpeed };                  // 弹幕类型
+enum StageNum { Stage_One = 1 , Stage_Two = 2 , Stage_Three = 3 , Stage_Four = 4 , Stage_Five = 5 };
 
 // 弹幕样式
 struct Bullet_Style {
@@ -61,9 +62,9 @@ struct Bullet_Arc : public Bullet_Style {
 
 // 自定义变速反向直线
 struct BulletLine_ChangeSpeed : public Bullet_Style {
-    BulletLine_ChangeSpeed ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , double Afterspeed , long long ChangeT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,0,0) , ChangeT(ChangeT) , Afterspeed(Afterspeed) {
-        this -> BeforeT = 120/speed;
-        this -> AfterT = 120/Afterspeed;
+    BulletLine_ChangeSpeed ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , double Afterspeed , long long ChangeT , long long EndT , double ChangeR ) : Bullet_Style (id,c,r,center,angle,speed,0,0) , ChangeT(ChangeT) , Afterspeed(Afterspeed) {
+        this -> BeforeT = ChangeR/speed;
+        this -> AfterT = ChangeR/Afterspeed;
         this -> EndT = ChangeT + AfterT;
         this -> StartT = this -> EndT - EndT;
         }
@@ -74,7 +75,6 @@ struct BulletLine_ChangeSpeed : public Bullet_Style {
         if ( this -> ChangeT < RealT ) { Speed = this -> Afterspeed; RelaT = EndT - RealT; }
         this -> point.pos.x = cos(angle)*Speed*RelaT + center.x ;
         this -> point.pos.y = sin(angle)*Speed*RelaT + center.y ;
-        // cout << "(" << StartT << "," << EndT << ")" << endl ;
         return this -> point.pos;
     }
     long long ChangeT;
@@ -99,18 +99,6 @@ struct BulletArc_SpeedUp : public Bullet_Style {
         return this -> point.pos;
     }
 };
-/* struct BulletArc_SpeedUp : public Bullet_Style {
-    BulletArc_SpeedUp ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) {}
-    magi::Vec2 Pos () {
-        double Angle,Speed;
-        long long RelaT = magi::Timer::get() - StartT ;
-        Angle = 0.0001875 * RelaT + this -> angle ;
-        Speed = 0.0001 *RelaT + this -> speed ;
-        this -> point.pos.x = cos(Angle)*Speed*RelaT + center.x ;
-        this -> point.pos.y = sin(Angle)*Speed*RelaT + center.y ;
-        return this -> point.pos;
-    }
-}; */
 
 // 反向直线
 struct Bullet_ReverseLine : public Bullet_Style {
@@ -201,10 +189,10 @@ struct Creat_BulletsInfo_EVA : public Bullets_Info {
 
 // 迷宫
 struct Creat_BulletsInfo_Maze : public Bullets_Info {
-    Creat_BulletsInfo_Maze ( int NUM , long long ChangeT , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , double Afterspeed ) {
+    Creat_BulletsInfo_Maze ( int NUM , long long ChangeT , double ChangeR , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , double Afterspeed ) {
         this -> EndT = 5000;
         for (int i =0; i < n ; i++) {
-            bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center,(range.x + ((range.y-range.x)/n * i)),speed,Afterspeed,ChangeT,EndT)) );ID++;
+            bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center,(range.x + ((range.y-range.x)/n * i)),speed,Afterspeed,ChangeT,EndT,ChangeR)) );ID++;
         }
     }
 };

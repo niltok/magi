@@ -15,69 +15,79 @@ vector<vector<shared_ptr<Bullet_Style>>> bullets(5);
 
 
 
-// Bullets_Info : 关卡(int) ,开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double), 运动类型 (Kind)
+// Bullets_Info : 关卡(int) ,开始时间(long long) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double) ,运动类型 (Kind)
 
 vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     // 关卡1
     {
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_EVA (1 , 5000 , 250 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line) )
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_EVA ( Stage_One , 5000 , 250 , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) )
     },
     // 关卡2
     {
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 1000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 1500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 2000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 2500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 3000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 3500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 4000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 4500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 5000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 5500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 6000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 6500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 7000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 7500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 8000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 8500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 9000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 9500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 10000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 10500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 11000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 11500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 12000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 12500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 13000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 13500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 14000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 14500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 15000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 15500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 16000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 16500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 17000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 17500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 18000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 18500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 19000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 19500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Bullets_Info ( 2 , 20000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 1000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 1500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 2000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 2500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 3000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 3500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 4000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 4500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 5000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 5500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 6000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 6500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 7000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 7500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 8000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 8500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 9000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 9500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 10000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 10500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 11000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 11500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 12000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 12500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 13000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 13500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 14000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 14500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 15000 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 15500 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 16000 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 16500 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 17000 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 17500 , 30 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 18000 , 30 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 18500 , 30 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 19000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 19500 , 30 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,magi::PI2 + 0.052359876) , SMALL_ , LOW_ , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Two , 20000 , 30 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.0,magi::PI2) , SMALL_ , LOW_ , Line ) ),
 
     },
-    // 关卡3
-    // StarT = MusicT +3 - EndT ;
+    // 关卡3    3248+2435* n ; (0,17)
+    // Creat_BulletsInfo_Maze : 关卡(int) ,改变时间(long long) ,改变位置(double) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double),改变速度 (double)
     {
-        // make_shared<Bullets_Info> ( Bullets_Info ( 3 , 1000 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , 0.5 , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 3672 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 6037 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 8461 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 10870 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 13337 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 15775 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 18184 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 20666 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( 3 , 23104 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        // make_shared<Bullets_Info> ( Bullets_Info ( Stage_Three , 1000 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , 0.5 , ReverseLine ) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 3248 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 5683 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 8118 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 10553 , 60 , 60 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 12988 , 60 , 60 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 15423 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 17858 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 20293 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 22728 , 60 , 60 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 25163 , 60 , 60 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 27598 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 30033 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 32468 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 34903 , 60 , 60 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 37338 , 60 , 60 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 39773 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 42208 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 44643 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        
     },
     // 关卡4
     {
@@ -102,7 +112,7 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     },
     // 关卡5
     {
-        make_shared<Bullets_Info> ( Bullets_Info ( 5 , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
+        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Five , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
     }
 };
 
