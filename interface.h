@@ -199,6 +199,7 @@ namespace magi {
         Vec2 picOffset;
         size_t lifeBase;
         Color pointColor;
+        Vec2 startPos;
     };
     
     struct Stage {
