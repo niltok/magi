@@ -137,6 +137,10 @@ namespace magi {
         Vec2 abs() const { return Vec2 {std::abs(x), std::abs(y)}; }
         Vec2 norm() const { return (*this) / length(); }
         Vec2 addLen(double t) const { return norm() * (length() + t); }
+        Vec2 flipX() const { return Vec2 {-x, y}; }
+        Vec2 flipY() const { return Vec2 {x, -y}; }
+        Vec2 flip() const { return -*this; }
+        Vec2 flip(size_t i) const { return i ? flipY() : flipX(); }
         Vec2 rotate(double angle) const {
             return Vec2 { x * std::cos(angle) - y * std::sin(angle),
                           x * std::sin(angle) + y * std::cos(angle) };
