@@ -79,38 +79,95 @@ void drawSpin(QPainterPath &path, Vec2 pos, double radius, double angle, double 
     double division = PI / 4, times = len / division;
     drawSpin(path, times, pos, Vec2(1e-6, 0).rotate(angle), division, std::tan(division / 2) * radius / times);
 }
+struct ChinaEffectsType {
+    size_t count = 0, top = 0;
 
-void ChinaPattern(QPainter &painter) {
-    painter.save();
-
-    auto freq = audioFreq();
-    for (auto & i : freq) i = std::min(1.f, std::max(.0f, i - 1500) / 1000);
-
-    auto rand = [&freq](size_t x, size_t y) -> double {
-        double z = x * y * 25865.3498 + x * x * 1989875.237 + y * y * y * 887646.76 + y * 237868.98 + 70, res = 0;
-        size_t len = freq.size();
-        for (size_t i = 0; i < len; i++)
-            res += (i + 1) * freq[i];
-        res = std::sin(res + z) / 2 + .5;
-        return res;
-    };
-
-    auto mod = [] (double x, double m) { return x - (long long)(x / m) * m; };
-
-    QPainterPath path;
-    auto time = Timer::get() / 500.;
-    if (freq.size())
-    for (double i = -rSize.y / 2 + 30; i < rSize.y / 2; i += 30) {
-        drawSpin(path, Vec2(-rSize.x / 2, i), 8 * freq[std::abs(i) / rSize.y * 2 * freq.size()] + 7, PI2 - mod(time + i, PI2), 3 * PI2);
-        drawSpin(path, Vec2(rSize.x / 2, i), 8 * freq[(1 - std::abs(i) / rSize.y * 2) * freq.size()] + 7, PI2 - mod(time + i + 5, PI2), 3 * PI2);
+    void reflLine(QPainterPath &box, Vec2 a, Vec2 b) {
+        int d[] = {1, -1};
+        for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+        // std::cout <<  b.x * d[i] << " " << b.y * d[j] << std::endl,
+        box.moveTo(VPoint(Vec2(a.x * d[i], a.y * d[j]) * scale + center)),
+        box.lineTo(VPoint(Vec2(b.x * d[i], b.y * d[j]) * scale + center));
     }
-    painter.setPen(QPen(VColor(Color("0557D0a0")), 2 * scale, Qt::PenStyle::SolidLine, Qt::PenCapStyle::RoundCap, Qt::PenJoinStyle::RoundJoin));
-    painter.drawPath(path);
 
+    Vec2 nextP(size_t n, Vec2 p) {
+        // ^ | < <
+        // ^ < > ^
+        // > | ^ <
+        // ^ > > ^
+        // ^
+        static const Vec2 top(0, 2), bot(0, -2), left(2, 0), right(-2, 0);
+        static const Vec2 table[] = {
+            top, right, bot, right, right, top, left, top, right, top, left, left, bot, left, top, top
+        };
+        return p + table[n];
+    }
+
+    void ChinaPattern(QPainter &painter) {
+        painter.save();
+        painter.setPen(QPen(VColor(Color("0557D0a0")), 1 * scale, Qt::PenStyle::SolidLine, Qt::PenCapStyle::RoundCap, Qt::PenJoinStyle::RoundJoin));
+
+        auto freq = audioFreq();
+        for (auto & i : freq) i = std::min(1.f, std::max(.0f, i - 1500) / 500);
+        auto mf = 0.f;
+        for (auto i : freq) mf = std::max(mf, i);
+
+        //    auto rand = [&freq](size_t x, size_t y) -> double {
+        //        double z = x * y * 25865.3498 + x * x * 1989875.237 + y * y * y * 887646.76 + y * 237868.98 + 70, res = 0;
+        //        size_t len = freq.size();
+        //        for (size_t i = 0; i < len; i++)
+        //            res += (i + 1) * freq[i];
+        //        res = std::sin(res + z) / 2 + .5;
+        //        return res;
+        //    };
+
+        //    auto mod = [] (double x, double m) { return x - (long long)(x / m) * m; };
+
+        //    QPainterPath path;
+        //    auto time = Timer::get() / 500.;
+        //    if (freq.size())
+        //    for (double i = -rSize.x / 2 + 30; i < rSize.x / 2; i += 30) {
+        //        drawSpin(path, Vec2(i, -rSize.y / 2 + 7.5), 7.5 * freq[(i + rSize.x / 2) / rSize.x / 2 * freq.size()] + 7.5, PI2 - mod(time + i, PI2), 3 * PI2);
+        //        drawSpin(path, Vec2(i, rSize.y / 2 - 7.5), 7.5 * freq[((i + rSize.x / 2) / rSize.x / 2 + .5) * freq.size()] + 7.5, PI2 - mod(time + i + 15, PI2), 3 * PI2);
+        //    }
+        //    painter.drawPath(path);
+
+
+        QPainterPath box;
+
+        if (mf == 1) {
+            if (!top) {
+                count++, top = !top;
+                std::cout << count << std::endl;
+            }
+        } else if (top) top = !top;
+
+        Vec2 current {rSize.x / 2 + 3, 1};
+        reflLine(box, Vec2(rSize.x / 2 + 3, 0), Vec2(rSize.x / 2 + 3, 1));
+        for (size_t i = 0; i < std::min(500ull, count); i++) {
+            auto next = nextP(i % 16, current);
+            reflLine(box, current, next);
+            current = next;
+        }
+
+        painter.drawPath(box);
+
+        painter.restore();
+    }
+
+    void operator()(QPainter &painter) {
+        ChinaPattern(painter);
+    }
+};
+
+std::function<void(QPainter&)> ChinaEffects = ChinaEffectsType();
+
+void normalBorder(QPainter &painter) {
+    painter.save();
+    painter.setPen(QPen(VColor(Color("212529a0")), 1 * scale));
+    painter.drawRect(VRect(-0.5 * rSize * scale + center,
+                           0.5 * rSize * scale + center));
     painter.restore();
-}
-
-void ChinaEffects(QPainter &painter) {
-    ChinaPattern(painter);
 }
 }

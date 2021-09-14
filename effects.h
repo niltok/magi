@@ -1,8 +1,10 @@
 #pragma once
 
 #include <QPainter>
+#include <functional>
 
 namespace magiUI {
 void EVAEffects(QPainter &painter);
-void ChinaEffects(QPainter &painter);
+extern std::function<void(QPainter&)> ChinaEffects;
+void normalBorder(QPainter &painter);
 }

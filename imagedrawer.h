@@ -95,13 +95,6 @@ class ImageDrawer : public QThread {
         painter.setPen(Qt::PenStyle::NoPen);
         painter.drawRoundedRect(VRect(lp * scale + center, rp * scale + center), width * scale, width * scale);
         painter.restore();
-        // 边框
-//        painter.save();
-//        painter.setPen(QPen(VColor(Color("212529a0")), 2));
-//        //painter.setBrush(QColor(255, 160, 90));
-//        painter.drawRect(VRect(-0.5 * rSize * scale + center,
-//                               0.5 * rSize * scale + center));
-//        painter.restore();
     }
 
     void drawCQT(QPainter &painter) {
@@ -113,7 +106,7 @@ class ImageDrawer : public QThread {
         double w = rSize.x / info.size();
         for (auto i = 0ull; i < info.size(); i++) {
             double start = -rSize.x / 2 + i * w;
-            Vec2 lt(start, rSize.y / 2 - std::min(1.f, std::max(.0f, info[i] - 1500) / 1000) * rSize.y), rb(start + w, rSize.y / 2);
+            Vec2 lt(start, rSize.y / 2 - std::min(1.f, std::max(.0f, info[i] - 1500) / 500) * rSize.y), rb(start + w, rSize.y / 2);
             painter.drawRect(VRect(lt * scale + center, rb * scale + center));
         }
         painter.restore();
@@ -136,8 +129,8 @@ class ImageDrawer : public QThread {
         drawBullets(painter);
         stage->drawEffect(painter);
         drawUI(painter);
-        // drawCQT(painter);
-        drawState(painter);
+        drawCQT(painter);
+        if (debug) drawState(painter);
     }
 public:
     QPixmap buffer, pixmap;
