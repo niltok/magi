@@ -47,5 +47,6 @@ namespace magiUI {
     extern QPoint VPoint(Vec2 p);
     extern QRect VRect(Vec2 lr, Vec2 rb);
     extern QColor VColor(Color c);
+    extern QColor VColor(const std::string &s);
     extern QSize VSize(Vec2 s);
 }

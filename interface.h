@@ -28,7 +28,7 @@ namespace magi {
         Color(int r, int g, int b): Color(r, g, b, 255) {}
         Color(): Color(0., 0., 0.) {}
 
-        Color(std::string s) {
+        Color(const std::string &s) {
             r = g = b = 0;
             a = 255;
             switch (s.size()) {
@@ -199,6 +199,7 @@ namespace magi {
         Vec2 picOffset;
         size_t lifeBase;
         Color pointColor;
+        Vec2 startPos;
     };
     
     struct Stage {

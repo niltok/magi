@@ -133,7 +133,7 @@ namespace magiUI{
     }
 
     void stateReset() {
-        cPos = Vec2 { 0, 100 };
+        cPos = stage->character.startPos;
         cLife = stage->character.lifeBase;
         if (stage->character.pic != "") {
             cPic = std::make_shared<QImage>(QString::fromStdString("resource/image/" + stage->character.pic));

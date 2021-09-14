@@ -158,6 +158,10 @@ struct ChinaEffectsType {
 
     void operator()(QPainter &painter) {
         ChinaPattern(painter);
+        QRadialGradient radial(VPoint(widget / 2), (widget / 2).length());
+        radial.setColorAt(.5, Qt::GlobalColor::transparent);
+        radial.setColorAt(1, VColor("4361ee80"));
+        painter.fillRect(VRect(Vec2(), widget), QBrush(radial));
     }
 };
 
