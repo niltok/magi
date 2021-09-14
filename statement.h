@@ -190,7 +190,7 @@ struct Creat_BulletsInfo_EVA : public Bullets_Info {
 // 迷宫
 struct Creat_BulletsInfo_Maze : public Bullets_Info {
     Creat_BulletsInfo_Maze ( int NUM , long long ChangeT , double ChangeR , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , double Afterspeed ) {
-        this -> EndT = 5000;
+        this -> EndT = 10000;
         range.x = range.x * magi::PI / 180.0 ;
         range.y = magi::PI2 + range.x - range.y * magi::PI / 180.0 ;
         for (int i =0; i < n ; i++) {
@@ -221,9 +221,10 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
 // 烟花
 struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
     Creat_BulletsInfo_Fireworks  () {
-
+        
     }
 };
+
 
 
 /* // bulletsinfo 构建函数
