@@ -191,6 +191,8 @@ struct Creat_BulletsInfo_EVA : public Bullets_Info {
 struct Creat_BulletsInfo_Maze : public Bullets_Info {
     Creat_BulletsInfo_Maze ( int NUM , long long ChangeT , double ChangeR , int n , magi::Color c , magi::Vec2 center , magi::Vec2 range , double r , double speed , double Afterspeed ) {
         this -> EndT = 5000;
+        range.x = range.x * magi::PI / 180.0 ;
+        range.y = magi::PI2 + range.x - range.y * magi::PI / 180.0 ;
         for (int i =0; i < n ; i++) {
             bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center,(range.x + ((range.y-range.x)/n * i)),speed,Afterspeed,ChangeT,EndT,ChangeR)) );ID++;
         }
@@ -199,18 +201,18 @@ struct Creat_BulletsInfo_Maze : public Bullets_Info {
 
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
-    Creat_BulletsInfo_Circle ( int NUM , long long StartT , int n , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
-        this -> EndT = StartT + 20000;                                                  // EndT 计算
-        double startt = StartT;
-        double endt = this -> EndT;
+    Creat_BulletsInfo_Circle ( int NUM , long long StartT , long long EndT , double nT , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
+        long long endt = StartT + 20000;                                                  // EndT 计算
+        long long startt = StartT;
         double angle = range.x ;
+        int n = (EndT - StartT) / nT ;
         int size_ = magi::colors("graduatedBlue").size() ;
         int colorsize = 20 ;
             for ( int i = 0 ; i < n ; i++ ) {
                 bullets[NUM - 1].push_back( Creat ( startt , endt , magi::colors("graduatedBlue")[ (i/colorsize)%(2*(size_-1)) < 9 ? (i/colorsize)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize)%(2*(size_-1))) ].mix(magi::colors("graduatedBlue")[ (i/colorsize+1)%(2*(size_-1)) < 9 ? (i/colorsize+1)%(2*(size_-1)) : ((2*(size_-1))-(i/colorsize+1)%(2*(size_-1))) ],(i%colorsize)/(colorsize-1.0)) ,
                                                     r , center , angle , speed , kind ) );
-                startt += 5 ;
-                endt += 5 ;
+                startt += nT ;
+                endt += nT ;
                 angle += 0.005 ;
         }
     }
