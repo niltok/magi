@@ -81,6 +81,10 @@ QColor VColor(Color c) {
     return QColor(c.r * 255, c.g * 255, c.b * 255, c.a * 255);
 }
 
+QColor VColor(const std::string &s) {
+    return VColor(Color(s));
+}
+
 QSize VSize(Vec2 s) {
     return QSize(s.x, s.y);
 }

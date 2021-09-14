@@ -129,7 +129,7 @@ class ImageDrawer : public QThread {
         drawBullets(painter);
         stage->drawEffect(painter);
         drawUI(painter);
-        drawCQT(painter);
+        if (debug) drawCQT(painter);
         if (debug) drawState(painter);
     }
 public:
