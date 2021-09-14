@@ -113,7 +113,7 @@ class ImageDrawer : public QThread {
         double w = rSize.x / info.size();
         for (auto i = 0ull; i < info.size(); i++) {
             double start = -rSize.x / 2 + i * w;
-            Vec2 lt(start, rSize.y / 2 - std::max(0.f, info[i] / 10 - 50)), rb(start + w, rSize.y / 2);
+            Vec2 lt(start, rSize.y / 2 - std::min(1.f, std::max(.0f, info[i] - 1500) / 1000) * rSize.y), rb(start + w, rSize.y / 2);
             painter.drawRect(VRect(lt * scale + center, rb * scale + center));
         }
         painter.restore();
@@ -136,7 +136,7 @@ class ImageDrawer : public QThread {
         drawBullets(painter);
         stage->drawEffect(painter);
         drawUI(painter);
-        drawCQT(painter);
+        // drawCQT(painter);
         drawState(painter);
     }
 public:

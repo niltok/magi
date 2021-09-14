@@ -4,4 +4,5 @@
 
 namespace magiUI {
 void EVAEffects(QPainter &painter);
+void ChinaEffects(QPainter &painter);
 }

@@ -46,7 +46,8 @@ public slots:
 
         if (vbuf.empty()) return;
 
-        auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12, 100, 130.81, 20);
+        auto res = CQT::cqt(vbuf, "hamming", rate, 12 * 3, 12, 100, 130.81, 25);
+        for (auto &i : res) for (auto &j : i) j = j / vbuf.size() * 2000;
 
         audioInfoLock.lock();
         audioInfo.swap(res);

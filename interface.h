@@ -131,8 +131,12 @@ namespace magi {
         friend Vec2 operator*(double s, const Vec2 &v) { return v * s; }
         Vec2 operator/(double s) const { return Vec2 {x / s, y / s}; }
 
+        double operator[](size_t index) { return index ? y : x; }
+
         double length() const { return std::sqrt(x * x + y * y); }
         Vec2 abs() const { return Vec2 {std::abs(x), std::abs(y)}; }
+        Vec2 norm() const { return (*this) / length(); }
+        Vec2 addLen(double t) const { return norm() * (length() + t); }
         Vec2 rotate(double angle) const {
             return Vec2 { x * std::cos(angle) - y * std::sin(angle),
                           x * std::sin(angle) + y * std::cos(angle) };
