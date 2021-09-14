@@ -66,14 +66,14 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
 
     },
     // 关卡3    3248+2435* n ; (0,17)
-    // Creat_BulletsInfo_Maze : 关卡(int) ,改变时间(long long) ,改变位置(double) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2) ,半径 (double) ,速度 (double),改变速度 (double)
+    // Creat_BulletsInfo_Maze : 关卡(int) ,改变时间(long long) ,改变位置(double) ,弹幕数量 (int) ,颜色 (magi::Color) ,中心位置 (magi::Vec2) ,角度范围 (magi::Vec2)(起始位置,开口大小) ,半径 (double) ,速度 (double),改变速度 (double)
     {
         // make_shared<Bullets_Info> ( Bullets_Info ( Stage_Three , 1000 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , 0.5 , ReverseLine ) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 3248 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 5683 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 8118 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 10553 , 60 , 60 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
-        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 12988 , 60 , 60 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 3248 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(3.490659,40) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 5683 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.349066,40) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 8118 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(1.570796,40) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 10553 , 60 , 60 , magi::colors("orangeToWhite")[3] , magi::Vec2(0.0,0.0) , magi::Vec2(3.839724,40) , SMALL_ , LOW_ , 0.5) ),
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 12988 , 60 , 60 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(1.047198,40) , SMALL_ , LOW_ , 0.5) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 15423 , 60 , 60 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 17858 , 60 , 60 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 20293 , 60 , 60 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,6.0) , SMALL_ , LOW_ , 0.5) ),
