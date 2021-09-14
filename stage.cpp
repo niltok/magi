@@ -322,11 +322,7 @@ magi::Character ch_adam {"EVA_Adam.png", magi::Vec2(-1.4, 6.5), 10, magi::Color(
 vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Death and Rebirth", getBullet_Re{0}, ch_adam, "OdeToJoy1.mp3",140000, "EVA1.jpg", magiUI::EVAEffects},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "440.mp3",EndTime, ""},
-<<<<<<< HEAD
     magi::Stage{"Magica Quartet", getBullet_Re{2}, ch, "Sis puella magica!.mp3",EndTime, "madoka.png", magiUI::normalBorder},
-=======
-    magi::Stage{"迷宫", getBullet_Re{2}, ch, "Sis puella magica!.mp3",EndTime, "", magiUI::normalBorder},
->>>>>>> 814d971237e3b93da667738365ddf79d5492d151
     magi::Stage{"缩圈",getBullet_Re{3},ch,"青花瓷.mp3", 229333, "", magiUI::ChinaEffects},
     magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
 };
