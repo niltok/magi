@@ -174,4 +174,38 @@ void normalBorder(QPainter &painter) {
                            0.5 * rSize * scale + center));
     painter.restore();
 }
+
+void freqReduce(std::vector<float> &f) {
+    size_t len = 12;
+    for (size_t l = 0; l < len; l++) {
+        for (size_t i = l + l; i < f.size(); i += len)
+            f[l] = std::max(f[l], f[i]);
+    }
+    f.resize(len);
+}
+
+void AliceCircle(QPainter &painter) {
+    painter.save();
+
+    const double radius = 30, size = 3;
+    auto freq = audioFreq();
+    freqReduce(freq);
+    for (auto & i : freq) i = std::min(1.f, std::max(.0f, i - 1500) / 1000);
+
+    double w = PI2 / freq.size();
+
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(VColor("70d6ffa0"));
+
+    for (size_t i = 0; i < freq.size(); i++)
+        painter.drawEllipse(VPoint(Vec2(radius, 0).rotate(i * w).addLen(freq[i] * radius / 5) * scale + center),
+                            (int)(size * scale), (int)(size * scale));
+
+    painter.restore();
+}
+
+void MagicaEffects(QPainter &painter) {
+    AliceCircle(painter);
+    normalBorder(painter);
+}
 }

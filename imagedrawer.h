@@ -102,11 +102,11 @@ class ImageDrawer : public QThread {
         if (info.size() == 0) return;
         painter.save();
         painter.setPen(Qt::PenStyle::NoPen);
-        painter.setBrush(VColor(Color("e92c2480")));
+        painter.setBrush(VColor(Color("e92c2450")));
         double w = rSize.x / info.size();
         for (auto i = 0ull; i < info.size(); i++) {
             double start = -rSize.x / 2 + i * w;
-            Vec2 lt(start, rSize.y / 2 - std::min(1.f, std::max(.0f, info[i] - 1500) / 500) * rSize.y), rb(start + w, rSize.y / 2);
+            Vec2 lt(start, rSize.y / 2 - std::min(1.f, std::max(.0f, info[i] - 1500) / 500) * rSize.y / 2), rb(start + w, rSize.y / 2);
             painter.drawRect(VRect(lt * scale + center, rb * scale + center));
         }
         painter.restore();
