@@ -88,6 +88,13 @@ namespace magi {
             return (*this) * (1 - t) + c * t;
         }
 
+        Color mix(const Color &c, const Color &t) const {
+            return Color(r * (1 - t.r) + c.r * t.r,
+                         g * (1 - t.g) + c.g * t.g,
+                         b * (1 - t.b) + c.b * t.b,
+                         a * (1 - t.a) + c.a * t.a);
+        }
+
         static char toHex(int c) {
             if (c <= 9) return '0' + c;
             if (c <= 15) return 'A' + c - 10;
