@@ -26,10 +26,10 @@ namespace magiUI {
     extern double scale;
 
     extern double cR;
-    extern Vec2 cPos;
+    extern Vec2 cPos, mPos;
     extern size_t cLife;
 
-    extern bool debug, play;
+    extern bool debug, play, keyMode;
 
     extern QMediaPlayer *player;
     extern QAudioProbe *probe;

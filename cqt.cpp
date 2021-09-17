@@ -134,7 +134,7 @@ namespace CQT {
     * @fn
     * オーディオ信号の定数Q変換を計算する。
     *
-‎ • @param y 音频数据‎
+‎ • * @param y 音频数据‎
     * @param sr サンプリング周波数
     * @param blocks_per_seconds 一秒あたりの時間解像度
     * @param n_bins 周波数ビン数

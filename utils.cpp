@@ -43,10 +43,10 @@ Vec2 widget, center;
 double scale;
 
 double cR = 3;
-Vec2 cPos;
+Vec2 cPos, mPos;
 size_t cLife;
 
-bool debug, play;
+bool debug, play, keyMode;
 
 QMediaPlayer *player;
 QAudioProbe *probe;
