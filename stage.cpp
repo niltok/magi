@@ -318,12 +318,13 @@ struct getBullet_Re {
 } */
 
 magi::Character ch_adam {"EVA_Adam.png", magi::Vec2(-1.4, 6.5), 10, magi::Color("78000000"), magi::Vec2(0, 100)};
+magi::Character ch_empty {"", magi::Vec2(), 1, magi::Color("00000000"), magi::Vec2(0, 150)};
 
 vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"Death and Rebirth", getBullet_Re{0}, ch_adam, "OdeToJoy1.mp3",140000, "EVA1.jpg", magiUI::EVAEffects},
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "440.mp3",EndTime, ""},
     magi::Stage{"Magica Quartet", getBullet_Re{2}, ch, "Sis puella magica!.mp3", 167000, "madoka.png", magiUI::MagicaEffects},
-    magi::Stage{"缩圈",getBullet_Re{3},ch,"青花瓷.mp3", 229333, "", magiUI::ChinaEffects},
+    magi::Stage{"缩圈",getBullet_Re{3},ch_empty,"青花瓷.mp3", 229333, "", magiUI::ChinaEffects},
     magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
 };
 

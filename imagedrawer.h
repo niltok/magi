@@ -24,6 +24,8 @@ class ImageDrawer : public QThread {
         painter.save();
         std::stringstream ss;
         ss << std::setprecision(2) << std::fixed;
+        if (!keyMode) ss << "#";
+        ss << "(" << std::setw(5) << mPos.x << ", " << std::setw(5) << mPos.y << ")" << "    ";
         ss << "Time: " << std::setw(10) << Timer::get() << "    ";
         ss << "Size: " << std::setw(10) << s << "    ";
         ss << "drawFPS: " << std::setw(10) << drawFps << "    ";
@@ -113,17 +115,17 @@ class ImageDrawer : public QThread {
     }
 
     void drawPixmap(QPixmap &pixmap) {
+        pixmap.fill(Qt::transparent);
         QPainter painter(&pixmap);
         // painter.setRenderHint(QPainter::Antialiasing);
         // painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
-        if (background) {
-            Vec2 bSize(background->width(), background->height());
-            double t = std::max(widget.x / bSize.x,
-                                widget.y / bSize.y);
-            painter.drawImage(VRect(center - bSize * t / 2, center + bSize * t / 2), *background);
-        }
-        else painter.fillRect(pixmap.rect(), VColor(Color("f8f9fa")));
+//        if (background) {
+//            Vec2 bSize(background->width(), background->height());
+//            double t = std::max(widget.x / bSize.x,
+//                                widget.y / bSize.y);
+//            painter.drawImage(VRect(center - bSize * t / 2, center + bSize * t / 2), *background);
+//        }
 
         drawCharacter(painter);
         drawBullets(painter);

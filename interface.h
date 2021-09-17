@@ -137,6 +137,8 @@ namespace magi {
         Vec2 &operator*=(double s) { x *= s, y *= s; return *this; }
         friend Vec2 operator*(double s, const Vec2 &v) { return v * s; }
         Vec2 operator/(double s) const { return Vec2 {x / s, y / s}; }
+        bool operator==(const Vec2 &v) const { return x == v.x && y == v.y; }
+        bool operator!=(const Vec2 &v) const { return !(*this == v); }
 
         double operator[](size_t index) { return index ? y : x; }
 

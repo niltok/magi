@@ -8,10 +8,60 @@
 namespace magiUI {
 using namespace magi;
 
+struct Tail {
+    long long len;
+    double initSize;
+    std::list<std::pair<Vec2, long long>> history;
+    Tail(long long len, double initSize): len(len), initSize(initSize) {}
+    void add(const Vec2 &p) {
+        if (history.empty() || p != history.front().first)
+            history.push_front(std::make_pair(p, Timer::get()));
+    }
+    void operator()(QPainter &painter) {
+        if (history.empty()) return;
+        QPainterPath path;
+        path.setFillRule(Qt::FillRule::WindingFill);
+        auto now = Timer::get();
+        while (history.size() > 1 && now - history.back().second > len) history.pop_back();
+        path.moveTo(VPoint((history.front().first + Vec2(initSize, 0)) * scale + center));
+        double startAngle = 0, lenAngle = -360;
+        if (history.size() >= 3) {
+            double size = initSize, delta = initSize / history.size();
+            auto i2 = history.begin(), i1 = i2++;
+            auto dir = (i1->first - i2->first);
+            {
+                auto r = dir.rotate(-PI / 2);
+                startAngle = std::atan2(-r.y, r.x) / PI2 * 360;
+                lenAngle = -180;
+            }
+            path.moveTo(VPoint((i1->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+            size -= delta;
+            for (; i2 != history.end(); i1++, i2++, size -= delta) {
+                dir = (i1->first - i2->first);
+                path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+            }
+            size += delta;
+            for (auto i2 = history.rbegin(), i1 = i2++; i2 != history.rend(); i1++, i2++, size += delta) {
+                dir = (i1->first - i2->first);
+                path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+            }
+        }
+        path.arcTo(VRect((history.front().first - Vec2(initSize)) * scale + center,
+                         (history.front().first + Vec2(initSize)) * scale + center), startAngle, lenAngle);
+
+        path.closeSubpath();
+
+        painter.save();
+        painter.drawPath(path);
+        painter.restore();
+    }
+};
+
 const Vec2 border(5);
 
 void paintBorder(QPainter &painter, std::function<void(QPainter&)> drawer) {
     painter.save();
+
     // 让我想起了写 Cubical Type Theory 中的代码的时光
     //
     // left : i = 0, j = 0
@@ -28,6 +78,7 @@ void paintBorder(QPainter &painter, std::function<void(QPainter&)> drawer) {
     // c = 1 : top bot right
     // d = 0 : top
     // d = 1 : left bot right
+
     Vec2 box[] = {-rSize / 2, rSize / 2};
     QRegion region;
     for (size_t i = 0; i < 2; i++) for (size_t j = 0; j < 2; j++)
@@ -35,6 +86,7 @@ void paintBorder(QPainter &painter, std::function<void(QPainter&)> drawer) {
                         (Vec2(box[i || j].x, box[i || !j].y) + border) * scale + center);
     painter.setClipRegion(region);
     drawer(painter);
+
     painter.restore();
 }
 
@@ -81,6 +133,8 @@ void drawSpin(QPainterPath &path, Vec2 pos, double radius, double angle, double 
 }
 struct ChinaEffectsType {
     size_t count = 0, top = 0;
+
+    Tail characterTail {500, 3};
 
     void reflLine(QPainterPath &box, Vec2 a, Vec2 b) {
         int d[] = {1, -1};
@@ -139,7 +193,7 @@ struct ChinaEffectsType {
         if (mf == 1) {
             if (!top) {
                 count++, top = !top;
-                std::cout << count << std::endl;
+                //std::cout << count << std::endl;
             }
         } else if (top) top = !top;
 
@@ -157,11 +211,17 @@ struct ChinaEffectsType {
     }
 
     void operator()(QPainter &painter) {
+        painter.save();
         ChinaPattern(painter);
-        QRadialGradient radial(VPoint(widget / 2), (widget / 2).length());
-        radial.setColorAt(.5, Qt::GlobalColor::transparent);
-        radial.setColorAt(1, VColor("4361ee80"));
-        painter.fillRect(VRect(Vec2(), widget), QBrush(radial));
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(VColor("00a6fb80"));
+        characterTail.add(cPos);
+        characterTail(painter);
+//        QRadialGradient radial(VPoint(widget / 2), (widget / 2).length());
+//        radial.setColorAt(.5, Qt::GlobalColor::transparent);
+//        radial.setColorAt(1, VColor("4361ee80"));
+//        painter.fillRect(VRect(Vec2(), widget), QBrush(radial));
+        painter.restore();
     }
 };
 

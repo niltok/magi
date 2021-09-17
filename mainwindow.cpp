@@ -28,8 +28,8 @@ namespace magiUI{
         QFontDatabase::addApplicationFont("resource/font/PingFang Regular.ttf");
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);
-        ui->views->setCurrentIndex(1);
-        ui->stageView->repaint();
+        ui->stageView->setMouseTracking(true);
+        ui->stagePage->installEventFilter(this);
         ui->views->setCurrentIndex(0);
         for (auto &s : Stage::stage)
             ui->stageChooser->addItem(QString::fromStdString(s.name));
@@ -68,6 +68,22 @@ namespace magiUI{
             drawer->bufferLock.unlock();
             return true;
         }
+        if (watched == ui->stagePage
+                && event->type() == QEvent::Paint) {
+            QPainter painter(ui->stagePage);
+            if (background) {
+                Vec2 bSize(background->width(), background->height());
+                double t = std::max(widget.x / bSize.x,
+                                    widget.y / bSize.y);
+                painter.drawImage(VRect(center - bSize * t / 2, center + bSize * t / 2), *background);
+            }
+            return true;
+        }
+        if (watched == ui->stageView
+                && event->type() == QEvent::MouseMove) {
+            mPos = (Vec2(dynamic_cast<QMouseEvent*>(event)->x(), dynamic_cast<QMouseEvent*>(event)->y()) - center) / scale;
+            keyMode = false;
+        }
         return false;
     }
 
@@ -93,6 +109,7 @@ namespace magiUI{
         last = system_clock::now();
 
         {
+            double time = duration_cast<milliseconds>(offset).count() / 1000.;
             int step = 50;
             if (keyDown[74]) step += 50;
             if (keyDown[75]) step += 100;
@@ -105,7 +122,12 @@ namespace magiUI{
             for (int i = 0; i < 4; i++) {
                 auto iter = keyDown.find(mover[i][0]);
                 if (iter != keyDown.end() && iter->second)
-                    cPos += Vec2(mover[i][1], mover[i][2]) * duration_cast<milliseconds>(offset).count() / 1000;
+                    cPos += Vec2(mover[i][1], mover[i][2]) * time;
+            }
+            if (!keyMode) {
+                auto delta = mPos - cPos;
+                if (delta.length() > 1)
+                    cPos += delta.norm() * std::min(200., delta.length() * 50) * time;
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
@@ -114,6 +136,7 @@ namespace magiUI{
 
     void MainWindow::keyPressEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
+        keyMode = true;
         keyDown[event->key()] = true;
         if (event->key() == 32) {
             collisionLock.lockForWrite();
@@ -156,14 +179,15 @@ namespace magiUI{
             player->play();
         }
         Timer::reset();
+        keyMode = true;
         play = true;
     }
 
     void MainWindow::on_startGameButton_clicked() {
         stage = std::make_shared<Stage>(Stage::stage[ui->stageChooser->currentRow()]);
         debug = ui->debugBox->checkState() == Qt::CheckState::Checked;
-        ui->views->setCurrentIndex(1);
         stateReset();
+        ui->views->setCurrentIndex(1);
     }
 
     void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -176,8 +200,8 @@ namespace magiUI{
 
     void MainWindow::on_againButton_clicked() {
         stage = std::make_shared<Stage>(Stage::stage[ui->stageChooser->currentRow()]);
-        ui->views->setCurrentIndex(1);
         stateReset();
+        ui->views->setCurrentIndex(1);
     }
 
     void MainWindow::on_backButton_clicked() {
@@ -197,5 +221,6 @@ namespace magiUI{
         audioRawLock.unlock();
     }
 }
+
 
 
