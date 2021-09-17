@@ -145,7 +145,7 @@ struct ChinaEffectsType {
 
         Vec2 current {rSize.x / 2 + 3, 1};
         reflLine(box, Vec2(rSize.x / 2 + 3, 0), Vec2(rSize.x / 2 + 3, 1));
-        for (size_t i = 0; i < std::min(500ull, count); i++) {
+        for (size_t i = 0; i < std::min((size_t)500, count); i++) {
             auto next = nextP(i % 16, current);
             reflLine(box, current, next);
             current = next;

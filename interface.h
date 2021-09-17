@@ -95,6 +95,10 @@ namespace magi {
                          a * (1 - t.a) + c.a * t.a);
         }
 
+        Color setA(double Newa) {
+            return Color(r,g,b,Newa);
+        }
+
         static char toHex(int c) {
             if (c <= 9) return '0' + c;
             if (c <= 15) return 'A' + c - 10;

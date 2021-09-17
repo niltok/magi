@@ -17,7 +17,7 @@ extern long Size;
 extern long long ID;
 extern int StageNum;
 
-const double SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
+const double MINI_ = 3.0 , SMALL_ = 5.0 , MIDDLE_ = 7.0 , LARGE_ = 10.0 ;           // 弹幕大小
 const double LOW_ = 0.06 , NORMAL_ = 0.09 , FAST_ = 0.12 ;            // 弹幕速度
 enum Kind { Line , Arc , ReverseLine , ReverseArc , Arc_SpeedUp , Line_ChangeSpeed };                  // 弹幕类型
 enum StageNum { Stage_One = 1 , Stage_Two = 2 , Stage_Three = 3 , Stage_Four = 4 , Stage_Five = 5 };
@@ -58,6 +58,24 @@ struct Bullet_Arc : public Bullet_Style {
         this -> point.pos.y = sin(Angle)*speed*RelaT + center.y ;
         return this -> point.pos;
     }
+};
+
+// 渐变不可视
+struct Bullet_Enable : public Bullet_Style {
+    Bullet_Enable ( long long id , magi::Color c , double r , magi::Vec2 center , double angle , double speed , long long StartT , long long EndT , long long EnableT , long long ChangeT ) : Bullet_Style (id,c,r,center,angle,speed,StartT,EndT) , EnableT(EnableT) , ChangeT(ChangeT) {}
+    magi::Vec2 Pos () {
+        long long RealT = magi::Timer::get();
+        if ( RealT < EnableT ) {
+            long long RelaT = RealT - StartT ;
+            double Angle;
+            Angle = 0.0001875 * RelaT + this -> angle ;
+            this -> point.pos.x = cos(Angle)*speed*RelaT + center.x ;
+            this -> point.pos.y = sin(Angle)*speed*RelaT + center.y ;
+            return this -> point.pos;
+        }else this -> point.enable = true ;
+    }
+    long long EnableT ;
+    long long ChangeT ;
 };
 
 // 自定义变速反向直线
@@ -199,12 +217,25 @@ struct Creat_BulletsInfo_Maze : public Bullets_Info {
     }
 };
 
+struct Creat_BulletsInfo_Fall : public Bullets_Info {
+    Creat_BulletsInfo_Fall ( int NUM , long long ChangeT , double ChangeR , magi::Color c , magi::Vec2 center1 , magi::Vec2 center2 , double r , double speed , double Afterspeed ) {
+        this -> EndT = 8000;
+        double angle = atan2(-(center2 -center1).y , (center2 -center1).x) - magi::PI/2 ;
+        int n = (center2-center1).length() / 0.1 ;
+        magi::Vec2 center_add = (center2-center1)/n ;
+        cout << angle ;
+        for (int i =0; i < n ; i++) {
+            bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center1+center_add*i,angle,speed,Afterspeed,ChangeT,EndT,ChangeR)) );ID++;
+        }
+    }
+};
+
 // 缩圈
 struct Creat_BulletsInfo_Circle : public Bullets_Info {
     Creat_BulletsInfo_Circle ( int NUM , long long StartT , long long EndT , double nT , magi::Vec2 center , magi::Vec2 range , double r , double speed , Kind kind ) {
         long long endt = StartT + 20000;                                                  // EndT 计算
         long long startt = StartT;
-        double angle = range.x ;
+        static double angle = range.x ;
         int n = (EndT - StartT) / nT ;
         int size_ = magi::colors("graduatedBlue").size() ;
         int colorsize = 20 ;
@@ -220,11 +251,10 @@ struct Creat_BulletsInfo_Circle : public Bullets_Info {
 
 // 烟花
 struct Creat_BulletsInfo_Fireworks : public Bullets_Info {
-    Creat_BulletsInfo_Fireworks  () {
+    Creat_BulletsInfo_Fireworks  ( int NUM , long long StartT , long long EnableT , magi::Vec2 centerpos , magi::Vec2 sparkpos , double range , Kind kind ) {
         
     }
 };
-
 
 
 /* // bulletsinfo 构建函数

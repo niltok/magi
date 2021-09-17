@@ -242,7 +242,9 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 156519 , 80 , 500 , magi::colors("orangeToWhite")[4] , magi::Vec2(0.0,0.0) , magi::Vec2(340,40) , SMALL_ , LOW_ , 0.5) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 158539 , 80 , 500 , magi::colors("orangeToWhite")[0] , magi::Vec2(0.0,0.0) , magi::Vec2(140,40) , SMALL_ , LOW_ , 0.5) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Maze ( Stage_Three , 158949 , 80 , 500 , magi::colors("orangeToWhite")[1] , magi::Vec2(0.0,0.0) , magi::Vec2(160,40) , SMALL_ , LOW_ , 0.5) ),
-    
+    // 下落式
+        // Creat_BulletsInfo_Fall ( int NUM , long long ChangeT , double ChangeR , magi::Color c , magi::Vec2 center1 , magi::Vec2 center2 , double r , double speed , double Afterspeed ) {
+        make_shared<Bullets_Info> ( Creat_BulletsInfo_Fall ( Stage_Three , 5000 , 10 , magi::Color(0, 119, 182) , magi::Vec2(0,220) , magi::Vec2(30,220) , MINI_ , LOW_ , 0.5) )
     },
     // 关卡4
     {                                                                    // 起始时间，结束时间，生成时间间隔
@@ -264,6 +266,7 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( Stage_Four , 126020 , 140030 , 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( Stage_Four , 143930 , 176115 , 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
         make_shared<Bullets_Info> ( Creat_BulletsInfo_Circle ( Stage_Four , 179480 , 211680 , 5 , magi::Vec2(0.0,0.0) , magi::Vec2(0.0,magi::PI2) , MIDDLE_ , LOW_ , Arc_SpeedUp ) ),
+    
     },
     // 关卡5
     {
