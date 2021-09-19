@@ -51,7 +51,7 @@ class ImageDrawer : public QThread {
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
             auto pos = p.pos * scale + center;
-            if (!pos.inRect(Vec2(-p.r), widget + Vec2(p.r)) || !stage->visible(p)) continue;
+            if (!pos.inRect(Vec2(-p.r * scale), widget + Vec2(p.r * scale)) || !stage->visible(p)) continue;
             int r = p.r * scale;
             painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
