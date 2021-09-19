@@ -12,13 +12,27 @@
 #include <set>
 #include <QReadWriteLock>
 #include <QPainter>
+#include "effects.h"
+#include <list>
 
 namespace magi {
     extern std::set<size_t> collision;
     extern QReadWriteLock collisionLock;
     typedef unsigned char byte;
     const double PI = std::acos(-1), PI2 = 2 * PI;
-    
+
+    using namespace std::chrono;
+    struct Timer {
+        static time_point<system_clock> t;
+        // 关卡开始时调用
+        static void reset() {
+            t = system_clock::now();
+        }
+        static long long get() {
+            return duration_cast<milliseconds>(system_clock::now() - t).count();
+        }
+    };
+
     struct Color {
         double r, g, b, a;
 
@@ -177,13 +191,26 @@ namespace magi {
         Vec2 operator*(Vec2 v) const { return Vec2 {cross(v), dot(v)}; }
     };
 
+    struct Tail {
+        long long len;
+        double initSize;
+        std::list<std::pair<Vec2, long long>> history;
+        Tail(long long len, double initSize): len(len), initSize(initSize) {}
+        void add(const Vec2 &p) {
+            if (history.empty() || p != history.front().first)
+                history.push_front(std::make_pair(p, Timer::get()));
+        }
+        void operator()(QPainter &painter);
+    };
+
     struct Point {
-        Point () {}
-        Point ( long long id , Color c , double r ) : id(id) , c(c) , r(r) {}
+        Point (): tail(0, 0) {}
+        Point ( long long id , Color c , double r, long long tailLen = 0 ) : id(id) , c(c) , r(r), tail(tailLen, r) {}
         Color c;
         double r; // 半径
         Vec2 pos;
         size_t id;
+        Tail tail;
         bool enable = true;
     };
 
@@ -195,17 +222,6 @@ namespace magi {
         virtual Point operator[](size_t index) = 0;
     };
 
-    using namespace std::chrono;
-    struct Timer {
-        static time_point<system_clock> t;
-        // 关卡开始时调用
-        static void reset() {
-            t = system_clock::now();
-        }
-        static long long get() {
-            return duration_cast<milliseconds>(system_clock::now() - t).count();
-        }
-    };
 
     struct Character {
         std::string pic;
@@ -260,4 +276,5 @@ namespace magi {
     void initBullets();
 
     std::vector<float> audioFreq();
+
 }

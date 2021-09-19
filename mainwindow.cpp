@@ -24,7 +24,7 @@ namespace magiUI{
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
     {
-        std::cout << (size_t)QThread::currentThreadId() << std::endl;
+        // std::cout << (size_t)QThread::currentThreadId() << std::endl;
         QFontDatabase::addApplicationFont("resource/font/PingFang Regular.ttf");
         ui->setupUi(this);
         ui->stageView->installEventFilter(this);

@@ -8,55 +8,6 @@
 namespace magiUI {
 using namespace magi;
 
-struct Tail {
-    long long len;
-    double initSize;
-    std::list<std::pair<Vec2, long long>> history;
-    Tail(long long len, double initSize): len(len), initSize(initSize) {}
-    void add(const Vec2 &p) {
-        if (history.empty() || p != history.front().first)
-            history.push_front(std::make_pair(p, Timer::get()));
-    }
-    void operator()(QPainter &painter) {
-        if (history.empty()) return;
-        QPainterPath path;
-        path.setFillRule(Qt::FillRule::WindingFill);
-        auto now = Timer::get();
-        while (history.size() > 1 && now - history.back().second > len) history.pop_back();
-        path.moveTo(VPoint((history.front().first + Vec2(initSize, 0)) * scale + center));
-        double startAngle = 0, lenAngle = -360;
-        if (history.size() >= 3) {
-            double size = initSize, delta = initSize / history.size();
-            auto i2 = history.begin(), i1 = i2++;
-            auto dir = (i1->first - i2->first);
-            {
-                auto r = dir.rotate(-PI / 2);
-                startAngle = std::atan2(-r.y, r.x) / PI2 * 360;
-                lenAngle = -180;
-            }
-            path.moveTo(VPoint((i1->first + dir.norm().rotate(PI / 2) * size) * scale + center));
-            size -= delta;
-            for (; i2 != history.end(); i1++, i2++, size -= delta) {
-                dir = (i1->first - i2->first);
-                path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
-            }
-            size += delta;
-            for (auto i2 = history.rbegin(), i1 = i2++; i2 != history.rend(); i1++, i2++, size += delta) {
-                dir = (i1->first - i2->first);
-                path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
-            }
-        }
-        path.arcTo(VRect((history.front().first - Vec2(initSize)) * scale + center,
-                         (history.front().first + Vec2(initSize)) * scale + center), startAngle, lenAngle);
-
-        path.closeSubpath();
-
-        painter.save();
-        painter.drawPath(path);
-        painter.restore();
-    }
-};
-
 const Vec2 border(5);
 
 void paintBorder(QPainter &painter, std::function<void(QPainter&)> drawer) {
@@ -268,4 +219,45 @@ void MagicaEffects(QPainter &painter) {
     AliceCircle(painter);
     normalBorder(painter);
 }
+}
+
+void magi::Tail::operator()(QPainter &painter) {
+    using namespace magiUI;
+    auto &center = magiUI::center;
+    if (history.empty()) return;
+    QPainterPath path;
+    path.setFillRule(Qt::FillRule::WindingFill);
+    auto now = Timer::get();
+    while (history.size() > 1 && now - history.back().second > len) history.pop_back();
+    path.moveTo(VPoint((history.front().first + Vec2(initSize, 0)) * scale + center));
+    double startAngle = 0, lenAngle = -360;
+    if (history.size() >= 3) {
+        double size = initSize, delta = initSize / history.size();
+        auto i2 = history.begin(), i1 = i2++;
+        auto dir = (i1->first - i2->first);
+        {
+            auto r = dir.rotate(-PI / 2);
+            startAngle = std::atan2(-r.y, r.x) / PI2 * 360;
+            lenAngle = -180;
+        }
+        path.moveTo(VPoint((i1->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+        size -= delta;
+        for (; i2 != history.end(); i1++, i2++, size -= delta) {
+            dir = (i1->first - i2->first);
+            path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+        }
+        size += delta;
+        for (auto i2 = history.rbegin(), i1 = i2++; i2 != history.rend(); i1++, i2++, size += delta) {
+            dir = (i1->first - i2->first);
+            path.lineTo(VPoint((i2->first + dir.norm().rotate(PI / 2) * size) * scale + center));
+        }
+    }
+    path.arcTo(VRect((history.front().first - Vec2(initSize)) * scale + center,
+                     (history.front().first + Vec2(initSize)) * scale + center), startAngle, lenAngle);
+
+    path.closeSubpath();
+
+    painter.save();
+    painter.drawPath(path);
+    painter.restore();
 }

@@ -46,15 +46,17 @@ class ImageDrawer : public QThread {
 
     void drawBullets(QPainter &painter) {
         painter.save();
+        painter.setPen(Qt::NoPen);
         std::shared_ptr<Bullets> bullets = stage->getBullet();
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
             auto pos = p.pos * scale + center;
-            if (!pos.inRect(Vec2(-p.r * scale), widget + Vec2(p.r * scale)) || !stage->visible(p)) continue;
-            int r = p.r * scale;
-            painter.setPen(VColor(p.c));
             painter.setBrush(VColor(p.c));
+            if (!stage->visible(p)) continue;
+            p.tail(painter);
+            if (!pos.inRect(Vec2(-p.r * scale), widget + Vec2(p.r * scale))) continue;
+            int r = p.r * scale;
             painter.drawEllipse(VPoint(pos), r, r);
             // std::cout << p.id << std::endl;
         }
