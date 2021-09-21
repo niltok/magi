@@ -51,13 +51,14 @@ class ImageDrawer : public QThread {
         s = bullets->size();
         for (size_t i = 0; i < s; i++) {
             Point p = (*bullets)[i];
-            auto pos = p.pos * scale + center;
+            // auto pos = p.pos * scale + center;
             painter.setBrush(VColor(p.c));
             if (!stage->visible(p)) continue;
+            p.tail.add(p.pos);
             p.tail(painter);
-            if (!pos.inRect(Vec2(-p.r * scale), widget + Vec2(p.r * scale))) continue;
-            int r = p.r * scale;
-            painter.drawEllipse(VPoint(pos), r, r);
+            // if (!pos.inRect(Vec2(-p.r * scale), widget + Vec2(p.r * scale))) continue;
+            // int r = p.r * scale;
+            // painter.drawEllipse(VPoint(pos), r, r);
             // std::cout << p.id << std::endl;
         }
         painter.restore();
