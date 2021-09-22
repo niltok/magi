@@ -223,7 +223,6 @@ struct Creat_BulletsInfo_Fall : public Bullets_Info {
         double angle = atan2(-(center2 -center1).y , (center2 -center1).x) - magi::PI/2 ;
         int n = (center2-center1).length() / 0.1 ;
         magi::Vec2 center_add = (center2-center1)/n ;
-        cout << angle ;
         for (int i =0; i < n ; i++) {
             bullets[NUM -1].push_back( make_shared<BulletLine_ChangeSpeed> (BulletLine_ChangeSpeed(ID,c,r,center1+center_add*i,angle,speed,Afterspeed,ChangeT,EndT,ChangeR)) );ID++;
         }
