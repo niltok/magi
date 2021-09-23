@@ -126,8 +126,10 @@ namespace magiUI{
             }
             if (!keyMode) {
                 auto delta = mPos - cPos;
-                if (delta.length() > 1)
-                    cPos += delta.norm() * std::min(200., delta.length() * 50) * time;
+                auto speed = std::min(200., delta.length() * 50);
+                if (debug) speed = delta.length() * 30;
+                if (delta.length() > 3)
+                    cPos += delta.norm() * speed * time;
             }
             cPos = cPos.max(-rSize / 2).min(rSize / 2);
         }
