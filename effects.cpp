@@ -180,7 +180,7 @@ std::function<void(QPainter&)> ChinaEffects = ChinaEffectsType();
 
 void normalBorder(QPainter &painter) {
     painter.save();
-    painter.setPen(QPen(VColor(Color("212529a0")), 1 * scale));
+    // painter.setPen(QPen(VColor(Color("212529a0")), 1 * scale));
     painter.drawRect(VRect(-0.5 * rSize * scale + center,
                            0.5 * rSize * scale + center));
     painter.restore();
@@ -215,9 +215,17 @@ void AliceCircle(QPainter &painter) {
     painter.restore();
 }
 
+void lineOf(QPainter &painter, double y) {
+    painter.drawLine(VPoint(Vec2(0, y * scale + center.y)), VPoint(Vec2(widget.x, y * scale + center.y)));
+}
+
 void MagicaEffects(QPainter &painter) {
+    painter.save();
     AliceCircle(painter);
+    painter.setPen(QPen(VColor("e5383b80"), scale));
     normalBorder(painter);
+    lineOf(painter, 250 - 40);
+    painter.restore();
 }
 }
 
