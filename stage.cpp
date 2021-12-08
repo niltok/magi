@@ -579,9 +579,9 @@ vector<vector<shared_ptr<Bullets_Info>>> stage_info {
     
     },
     // 关卡5
-    {
-        make_shared<Bullets_Info> ( Bullets_Info ( Stage_Five , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
-    }
+    // {
+    //     make_shared<Bullets_Info> ( Bullets_Info ( Stage_Five , 1000 , 10 , magi::colors("orangeToWhite")[2] , magi::Vec2(0.0,-100.0) , magi::Vec2(0.052359876,1.0) , LARGE_ , LOW_ , Line ) ),
+    // }
 };
 
 
@@ -638,7 +638,7 @@ vector<magi::Stage> magi::Stage::stage {
     magi::Stage{"ReverseLine Bullets Test", getBullet_Re{1}, ch, "440.mp3",EndTime, ""},
     magi::Stage{"Magica Quartet", getBullet_Re{2}, ch, "Sis puella magica!.mp3", 167000, "madoka.png", magiUI::MagicaEffects},
     magi::Stage{"缩圈",getBullet_Re{3},ch_empty,"青花瓷.mp3", 229333, "", magiUI::ChinaEffects},
-    magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
+    // magi::Stage{"烟花",getBullet_Re{4},ch,"敬具.mp3",EndTime, ""}
 };
 
 
